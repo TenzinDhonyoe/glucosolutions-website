@@ -31,7 +31,7 @@ export function Footer() {
         <div>
           <Logo variant="light" size={28} />
           <p className="mt-5 max-w-sm text-[14px] leading-relaxed text-white/55">
-            Eat with confidence. Glycemic trend awareness for daily life.
+            Non-invasive glycemic trend awareness for daily life.
           </p>
         </div>
 
