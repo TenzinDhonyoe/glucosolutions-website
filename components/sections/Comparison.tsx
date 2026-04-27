@@ -67,8 +67,10 @@ export function Comparison() {
                     key={c.label}
                     scope="col"
                     className={cn(
-                      "px-5 py-5 text-[12px] font-semibold uppercase tracking-[0.18em] text-left",
-                      c.primary ? "text-white" : "text-white/35"
+                      "px-5 py-5 text-left",
+                      c.primary
+                        ? "text-[14px] font-bold tracking-tight brand-text-gradient"
+                        : "text-[12px] font-semibold uppercase tracking-[0.18em] text-white/35"
                     )}
                   >
                     {c.label}
