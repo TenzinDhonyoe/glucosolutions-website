@@ -1,26 +1,119 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Brand gradient: deep blue → teal → vivid green (matches logo geometry). */
+  --color-brand-blue: #0E5C7E;
+  --color-brand-teal: #138B92;
+  --color-brand-mid: #1FA77E;
+  --color-brand-green: #2DBE6C;
+  --color-brand-led: #3DDB7E;
+
+  /* Ink scale — neutral darks for the monochrome canvas. */
+  --color-ink-0: #07090A;   /* page background */
+  --color-ink-1: #0B0E10;   /* elevated surface */
+  --color-ink-2: #14181B;   /* cards, accordion-open */
+  --color-ink-3: #1B2024;   /* hover, raised state */
+
+  /* Aliases retained for legacy components. */
+  --color-gluco-teal: #138B92;
+  --color-gluco-teal-dark: #0E5C7E;
+  --color-gluco-black: #07090A;
+  --color-gluco-white: #FFFFFF;
+
+  --font-sans: var(--font-nunito-sans), ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-instrument-serif), Georgia, "Times New Roman", serif;
+
+  --tracking-display: -0.03em;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  background: var(--color-ink-0);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ink-0);
+  color: #FFFFFF;
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Brand gradient — used sparingly: text accent, single CTA, hairline rule. */
+.brand-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--color-brand-blue) 0%,
+    var(--color-brand-teal) 48%,
+    var(--color-brand-green) 100%
+  );
+}
+
+.brand-text-gradient {
+  background: linear-gradient(
+    135deg,
+    #2BA3D6 0%,
+    var(--color-brand-teal) 48%,
+    var(--color-brand-led) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Editorial italic display accent — used once per page max. */
+.display-serif {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+/* Hairline divider that fades with the brand gradient. */
+.brand-rule {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(45, 190, 108, 0.4) 50%,
+    transparent 100%
+  );
+}
+
+/* Subtle grid noise overlay — adds product-photography texture without decoration. */
+.noise-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 3px 3px;
+  mix-blend-mode: overlay;
+  opacity: 0.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+*:focus-visible {
+  outline: 2px solid var(--color-brand-led);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--color-brand-led);
+  color: var(--color-ink-0);
 }
