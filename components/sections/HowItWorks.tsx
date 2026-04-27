@@ -39,23 +39,12 @@ export function HowItWorks() {
         </div>
 
         <ol className="mt-20 grid gap-y-14 gap-x-12 md:grid-cols-3 relative">
-          {/* Hairline rule connecting the steps on desktop */}
-          <div
-            aria-hidden
-            className="hidden md:block absolute left-[8%] right-[8%] top-[58px] h-px bg-gradient-to-r from-transparent via-white/15 to-transparent"
-          />
-          {STEPS.map((step, i) => (
+          {STEPS.map((step) => (
             <li key={step.n} className="relative">
-              <div className="flex items-baseline gap-4">
-                <span className="text-[64px] sm:text-[76px] leading-none font-extrabold tracking-[-0.04em] brand-text-gradient">
-                  {step.n}
-                </span>
-                <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/40">
-                  Step {i + 1}
-                </span>
-              </div>
-
-              <h3 className="mt-6 text-[26px] sm:text-[30px] font-bold tracking-[-0.02em] text-white">
+              <span className="block text-[68px] sm:text-[80px] leading-none font-extrabold tracking-[-0.04em] brand-text-gradient">
+                {step.n}
+              </span>
+              <h3 className="mt-7 text-[26px] sm:text-[30px] font-bold tracking-[-0.02em] text-white">
                 {step.title}
               </h3>
               <p className="mt-3 max-w-sm text-[16px] leading-[1.6] text-white/60">
