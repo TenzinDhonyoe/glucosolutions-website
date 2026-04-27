@@ -46,7 +46,7 @@ export function Team() {
           </div>
           <h2
             id="team-title"
-            className="mt-5 text-[40px] sm:text-[52px] md:text-[64px] leading-[1.02] font-extrabold tracking-[-0.035em] text-white"
+            className="mt-5 text-[40px] sm:text-[52px] md:text-[64px] leading-[1.02] font-extrabold tracking-[-0.035em] text-white text-balance"
           >
             Founders building from the silicon up.
           </h2>

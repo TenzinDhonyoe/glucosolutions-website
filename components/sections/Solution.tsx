@@ -33,7 +33,7 @@ export function Solution() {
             </div>
             <h2
               id="solution-title"
-              className="mt-5 text-[44px] sm:text-[56px] md:text-[68px] leading-[1.02] font-extrabold tracking-[-0.035em] text-white"
+              className="mt-5 text-[44px] sm:text-[56px] md:text-[68px] leading-[1.02] font-extrabold tracking-[-0.035em] text-white text-balance"
             >
               Trends, not pricks.
             </h2>

@@ -54,7 +54,7 @@ export function Hero() {
             <motion.h1
               {...stagger(1)}
               id="hero-headline"
-              className="mt-7 text-[44px] sm:text-[58px] md:text-[72px] lg:text-[84px] leading-[0.98] font-extrabold tracking-[-0.035em]"
+              className="mt-7 text-[44px] sm:text-[58px] md:text-[72px] lg:text-[84px] leading-[0.98] font-extrabold tracking-[-0.035em] text-balance"
             >
               Prediabetes is silent.
               <br />

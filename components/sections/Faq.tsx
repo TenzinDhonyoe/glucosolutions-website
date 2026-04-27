@@ -48,7 +48,7 @@ export function Faq() {
           </div>
           <h2
             id="faq-title"
-            className="mt-5 text-[40px] sm:text-[52px] md:text-[60px] leading-[1.02] font-extrabold tracking-[-0.035em] text-white"
+            className="mt-5 text-[40px] sm:text-[52px] md:text-[60px] leading-[1.02] font-extrabold tracking-[-0.035em] text-white text-balance"
           >
             Questions, answered.
           </h2>

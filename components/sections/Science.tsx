@@ -21,7 +21,7 @@ export function Science() {
             </div>
             <h2
               id="science-title"
-              className="mt-5 text-[40px] sm:text-[52px] md:text-[64px] leading-[1.02] font-extrabold tracking-[-0.035em] text-white"
+              className="mt-5 text-[40px] sm:text-[52px] md:text-[64px] leading-[1.02] font-extrabold tracking-[-0.035em] text-white text-balance"
             >
               Built on real signal.
             </h2>

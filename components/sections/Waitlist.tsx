@@ -97,7 +97,7 @@ export function Waitlist() {
         </div>
         <h2
           id="waitlist-title"
-          className="mt-5 text-[44px] sm:text-[56px] md:text-[68px] leading-[1.02] font-extrabold tracking-[-0.035em]"
+          className="mt-5 text-[44px] sm:text-[56px] md:text-[68px] leading-[1.02] font-extrabold tracking-[-0.035em] text-balance"
         >
           Eat with confidence.
           <br />
