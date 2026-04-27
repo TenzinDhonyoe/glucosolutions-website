@@ -32,9 +32,9 @@ export function Solution() {
           </div>
           <h2
             id="solution-title"
-            className="mt-5 text-[44px] sm:text-[56px] md:text-[68px] leading-[1.02] font-extrabold tracking-[-0.035em]"
+            className="mt-5 text-[44px] sm:text-[56px] md:text-[68px] leading-[1.02] font-extrabold tracking-[-0.035em] text-white"
           >
-            Trends, <span className="display-serif font-normal text-white/70">not pricks.</span>
+            Trends, not pricks.
           </h2>
           <p className="mt-6 max-w-xl text-[17px] sm:text-[18px] leading-relaxed text-white/60">
             Glycemic trend awareness designed to fit a real life — at your

@@ -46,12 +46,9 @@ export function Team() {
           </div>
           <h2
             id="team-title"
-            className="mt-5 text-[40px] sm:text-[52px] md:text-[64px] leading-[1.02] font-extrabold tracking-[-0.035em]"
+            className="mt-5 text-[40px] sm:text-[52px] md:text-[64px] leading-[1.02] font-extrabold tracking-[-0.035em] text-white"
           >
-            Founders building{" "}
-            <span className="display-serif font-normal text-white/70">
-              from the silicon up.
-            </span>
+            Founders building from the silicon up.
           </h2>
         </div>
 

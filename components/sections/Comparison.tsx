@@ -51,12 +51,9 @@ export function Comparison() {
           </div>
           <h2
             id="compare-title"
-            className="mt-5 text-[40px] sm:text-[52px] md:text-[64px] leading-[1.02] font-extrabold tracking-[-0.035em]"
+            className="mt-5 text-[40px] sm:text-[52px] md:text-[64px] leading-[1.02] font-extrabold tracking-[-0.035em] text-white"
           >
-            Not a CGM.{" "}
-            <span className="display-serif font-normal text-white/70">
-              Not a smartwatch.
-            </span>
+            Not a CGM. Not a smartwatch.
           </h2>
         </div>
 

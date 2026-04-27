@@ -50,12 +50,9 @@ export function Advisors() {
           </div>
           <h2
             id="advisors-title"
-            className="mt-5 text-[40px] sm:text-[52px] md:text-[64px] leading-[1.02] font-extrabold tracking-[-0.035em]"
+            className="mt-5 text-[40px] sm:text-[52px] md:text-[64px] leading-[1.02] font-extrabold tracking-[-0.035em] text-white"
           >
-            Clinically{" "}
-            <span className="display-serif font-normal text-white/70">
-              grounded.
-            </span>
+            Clinically grounded.
           </h2>
         </div>
 

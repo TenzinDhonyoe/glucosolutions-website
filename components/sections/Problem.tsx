@@ -34,12 +34,9 @@ export function Problem() {
             </div>
             <h2
               id="problem-title"
-              className="mt-5 text-[40px] sm:text-[52px] md:text-[64px] leading-[1.02] font-extrabold tracking-[-0.03em]"
+              className="mt-5 text-[40px] sm:text-[52px] md:text-[64px] leading-[1.02] font-extrabold tracking-[-0.03em] text-white"
             >
-              The biggest health crisis{" "}
-              <span className="display-serif font-normal text-white/70">
-                nobody is watching.
-              </span>
+              The biggest health crisis nobody is watching.
             </h2>
           </div>
 
