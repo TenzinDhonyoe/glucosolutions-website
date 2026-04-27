@@ -26,19 +26,21 @@ export function Solution() {
       className="relative bg-ink-0 text-white border-t border-white/[0.06]"
     >
       <div className="mx-auto max-w-7xl px-5 sm:px-8 py-28 md:py-36">
-        <div className="max-w-3xl">
-          <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
-            The solution
+        <div className="grid gap-10 md:gap-16 md:grid-cols-[1.1fr_1fr] md:items-end">
+          <div>
+            <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
+              The solution
+            </div>
+            <h2
+              id="solution-title"
+              className="mt-5 text-[44px] sm:text-[56px] md:text-[68px] leading-[1.02] font-extrabold tracking-[-0.035em] text-white"
+            >
+              Trends, not pricks.
+            </h2>
           </div>
-          <h2
-            id="solution-title"
-            className="mt-5 text-[44px] sm:text-[56px] md:text-[68px] leading-[1.02] font-extrabold tracking-[-0.035em] text-white"
-          >
-            Trends, not pricks.
-          </h2>
-          <p className="mt-6 max-w-xl text-[17px] sm:text-[18px] leading-relaxed text-white/60">
-            Glycemic trend awareness designed to fit a real life — at your
-            desk, at the dinner table, on the trail.
+          <p className="md:pb-4 max-w-xl text-[17px] sm:text-[18px] leading-[1.6] text-white/60">
+            Glycemic trend awareness designed to fit a real life. At your desk,
+            at the dinner table, on the trail.
           </p>
         </div>
 

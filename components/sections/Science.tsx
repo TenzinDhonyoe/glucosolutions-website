@@ -14,17 +14,19 @@ export function Science() {
       className="relative bg-ink-0 text-white border-t border-white/[0.06]"
     >
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8 py-28 md:py-36">
-        <div className="max-w-3xl">
-          <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
-            The science
+        <div className="grid gap-10 md:gap-16 md:grid-cols-[1.1fr_1fr] md:items-end">
+          <div>
+            <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
+              The science
+            </div>
+            <h2
+              id="science-title"
+              className="mt-5 text-[40px] sm:text-[52px] md:text-[64px] leading-[1.02] font-extrabold tracking-[-0.035em] text-white"
+            >
+              Built on real signal.
+            </h2>
           </div>
-          <h2
-            id="science-title"
-            className="mt-5 text-[40px] sm:text-[52px] md:text-[64px] leading-[1.02] font-extrabold tracking-[-0.035em] text-white"
-          >
-            Built on real signal.
-          </h2>
-          <p className="mt-6 max-w-xl text-[17px] sm:text-[18px] leading-relaxed text-white/60">
+          <p className="md:pb-3 max-w-xl text-[17px] sm:text-[18px] leading-[1.6] text-white/60">
             Years of optics, electronics, and ML research distilled into a
             wearable form factor.
           </p>
