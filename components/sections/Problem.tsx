@@ -41,7 +41,7 @@ export function Problem() {
           </div>
 
           <div>
-            <div className="text-[120px] sm:text-[160px] md:text-[200px] leading-[0.85] font-extrabold tracking-[-0.05em] brand-text-gradient">
+            <div className="text-[120px] sm:text-[160px] md:text-[200px] leading-[0.85] font-extrabold tracking-[-0.05em] brand-text-gradient whitespace-nowrap">
               {HEADLINE_STAT.big}
             </div>
             <div className="mt-6 max-w-sm text-[18px] sm:text-[20px] text-white/85 font-medium">
