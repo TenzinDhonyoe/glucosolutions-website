@@ -1,10 +1,6 @@
 import { MotionSection } from "@/components/MotionSection";
-
-const STAT_STRIP = [
-  { n: "4", label: "wavelengths" },
-  { n: "9", label: "glucose concentrations" },
-  { n: "~80%", label: "trend accuracy (benchtop)" },
-];
+import { CounterStat } from "@/components/interactive/CounterStat";
+import { GlucoseChart } from "@/components/product/GlucoseChart";
 
 export function Science() {
   return (
@@ -32,8 +28,35 @@ export function Science() {
           </p>
         </div>
 
-        <div className="mt-20 grid gap-px bg-white/[0.06] rounded-2xl overflow-hidden lg:grid-cols-2">
-          <article className="bg-ink-1 p-8 sm:p-10">
+        {/* Animated illustrative trend chart — communicates "live data" without
+            implying these are real readings. Used as the visual lead-in to the
+            hardware/ML detail cards below. */}
+        <div className="mt-20 rounded-2xl border border-white/[0.06] bg-ink-1 p-6 sm:p-8">
+          <div className="flex items-baseline justify-between gap-4 mb-3">
+            <div>
+              <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-led/80">
+                Illustrative trend
+              </div>
+              <div className="mt-1 text-[14px] text-white/55">
+                What the wearable sees over a typical day
+              </div>
+            </div>
+            <div className="hidden sm:flex items-center gap-4 text-[12px] text-white/50">
+              <span className="flex items-center gap-2">
+                <span className="block h-2 w-2 rounded-full bg-brand-led/40" />
+                target band
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="block h-2 w-6 rounded-full brand-gradient" />
+                trend
+              </span>
+            </div>
+          </div>
+          <GlucoseChart />
+        </div>
+
+        <div className="mt-12 grid gap-px bg-white/[0.06] rounded-2xl overflow-hidden lg:grid-cols-2">
+          <article className="bg-ink-1 p-8 sm:p-10 lift hover:bg-ink-2 hover:border-white/10">
             <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-led/80">
               Hardware
             </div>
@@ -47,7 +70,7 @@ export function Science() {
             </p>
           </article>
 
-          <article className="bg-ink-1 p-8 sm:p-10">
+          <article className="bg-ink-1 p-8 sm:p-10 lift hover:bg-ink-2">
             <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-led/80">
               Machine learning
             </div>
@@ -64,14 +87,28 @@ export function Science() {
         </div>
 
         <div className="mt-12 flex flex-wrap items-baseline gap-x-12 gap-y-6">
-          {STAT_STRIP.map((s) => (
-            <div key={s.label} className="flex items-baseline gap-3">
-              <span className="text-[28px] sm:text-[32px] font-extrabold tracking-[-0.03em] brand-text-gradient">
-                {s.n}
-              </span>
-              <span className="text-[14px] text-white/55">{s.label}</span>
-            </div>
-          ))}
+          <div className="flex items-baseline gap-3">
+            <span className="text-[28px] sm:text-[32px] font-extrabold tracking-[-0.03em] brand-text-gradient tabular-nums">
+              <CounterStat to={4} duration={1100} />
+            </span>
+            <span className="text-[14px] text-white/55">wavelengths</span>
+          </div>
+          <div className="flex items-baseline gap-3">
+            <span className="text-[28px] sm:text-[32px] font-extrabold tracking-[-0.03em] brand-text-gradient tabular-nums">
+              <CounterStat to={9} duration={1100} />
+            </span>
+            <span className="text-[14px] text-white/55">
+              glucose concentrations
+            </span>
+          </div>
+          <div className="flex items-baseline gap-3">
+            <span className="text-[28px] sm:text-[32px] font-extrabold tracking-[-0.03em] brand-text-gradient tabular-nums">
+              <CounterStat to={80} prefix="~" suffix="%" duration={1500} />
+            </span>
+            <span className="text-[14px] text-white/55">
+              trend accuracy (benchtop)
+            </span>
+          </div>
         </div>
 
         <p className="mt-12 text-[12px] italic text-white/35 max-w-2xl">

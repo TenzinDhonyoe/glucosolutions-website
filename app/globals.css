@@ -9,10 +9,10 @@
   --color-brand-led: #3DDB7E;
 
   /* Ink scale — neutral darks for the monochrome canvas. */
-  --color-ink-0: #07090A;   /* page background */
-  --color-ink-1: #0B0E10;   /* elevated surface */
-  --color-ink-2: #14181B;   /* cards, accordion-open */
-  --color-ink-3: #1B2024;   /* hover, raised state */
+  --color-ink-0: #07090A;
+  --color-ink-1: #0B0E10;
+  --color-ink-2: #14181B;
+  --color-ink-3: #1B2024;
 
   /* Aliases retained for legacy components. */
   --color-gluco-teal: #138B92;
@@ -30,6 +30,8 @@
 html {
   scroll-behavior: smooth;
   background: var(--color-ink-0);
+  /* Anchor offset so #section jumps clear the fixed nav. */
+  scroll-padding-top: 88px;
 }
 
 body {
@@ -40,6 +42,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  /* Subtle ambient grain — adds depth without decoration */
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(19, 139, 146, 0.04), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(45, 190, 108, 0.03), transparent 50%);
+  background-attachment: fixed;
 }
 
 /* Brand gradient — used sparingly: text accent, single CTA, hairline rule. */
@@ -65,7 +72,34 @@ body {
   color: transparent;
 }
 
-/* Editorial italic display accent — used once per page max. */
+/* Animated gradient sweep — perpetual subtle motion across an element. */
+.brand-text-gradient-sweep {
+  background: linear-gradient(
+    100deg,
+    #2BA3D6 0%,
+    var(--color-brand-teal) 30%,
+    var(--color-brand-led) 50%,
+    var(--color-brand-teal) 70%,
+    #2BA3D6 100%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: gradient-sweep 8s ease-in-out infinite;
+}
+
+@keyframes gradient-sweep {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Editorial italic display accent — used twice per page max (hero + waitlist). */
 .display-serif {
   font-family: var(--font-display);
   font-style: italic;
@@ -84,16 +118,83 @@ body {
   );
 }
 
-/* Subtle grid noise overlay — adds product-photography texture without decoration. */
-.noise-overlay::after {
+/* Shine sweep — single pass on hover, used for high-emphasis CTAs. */
+.shine {
+  position: relative;
+  overflow: hidden;
+}
+.shine::before {
   content: "";
   position: absolute;
   inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.18) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
   pointer-events: none;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-  background-size: 3px 3px;
-  mix-blend-mode: overlay;
-  opacity: 0.6;
+}
+.shine:hover::before {
+  transform: translateX(100%);
+}
+
+/* Card lift — applied on group hover for product/feature cards. */
+.lift {
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.5s ease, box-shadow 0.5s ease;
+}
+.lift:hover {
+  transform: translateY(-3px);
+}
+
+/* Pulsing dot — used for status pills and live indicators. */
+.pulse-dot {
+  position: relative;
+}
+.pulse-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: var(--color-brand-led);
+  animation: pulse-ring 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  80%, 100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* Subtle ambient breathing on hero glow elements */
+@keyframes ambient-breathe {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+.ambient-breathe {
+  animation: ambient-breathe 9s ease-in-out infinite;
+}
+
+/* Slow orbit — used on avatar gradient rings */
+@keyframes ring-orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.ring-orbit {
+  animation: ring-orbit 30s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -105,12 +206,19 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+  .brand-text-gradient-sweep {
+    animation: none;
+  }
 }
 
+/* Custom focus ring — brand-LED glow, not a clinical browser outline. */
 *:focus-visible {
-  outline: 2px solid var(--color-brand-led);
-  outline-offset: 3px;
-  border-radius: 4px;
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--color-ink-0),
+    0 0 0 4px var(--color-brand-led),
+    0 0 18px rgba(61, 219, 126, 0.4);
+  border-radius: 6px;
 }
 
 ::selection {

@@ -1,23 +1,5 @@
 import { MotionSection } from "@/components/MotionSection";
-
-const HEADLINE_STAT = {
-  big: "1 in 3",
-  label: "US adults has prediabetes",
-  source: "CDC, National Diabetes Statistics Report (2024)",
-};
-
-const SUPPORTING = [
-  {
-    big: "80%",
-    label: "don't know they have it",
-    source: "CDC Prediabetes Surveillance",
-  },
-  {
-    big: "70%",
-    label: "progress to type 2 within a decade",
-    source: "American Diabetes Association",
-  },
-];
+import { CounterStat } from "@/components/interactive/CounterStat";
 
 export function Problem() {
   return (
@@ -41,28 +23,41 @@ export function Problem() {
           </div>
 
           <div>
-            <div className="text-[120px] sm:text-[160px] md:text-[200px] leading-[0.85] font-extrabold tracking-[-0.05em] brand-text-gradient whitespace-nowrap">
-              {HEADLINE_STAT.big}
+            <div className="text-[120px] sm:text-[160px] md:text-[200px] leading-[0.85] font-extrabold tracking-[-0.05em] brand-text-gradient-sweep whitespace-nowrap">
+              1 in 3
             </div>
             <div className="mt-6 max-w-sm text-[18px] sm:text-[20px] text-white/85 font-medium">
-              {HEADLINE_STAT.label}.
+              US adults has prediabetes.
             </div>
             <div className="mt-3 text-[12px] text-white/40">
-              {HEADLINE_STAT.source}
+              CDC, National Diabetes Statistics Report (2024)
             </div>
           </div>
         </div>
 
         <div className="mt-24 grid gap-12 sm:grid-cols-2 sm:gap-16 border-t border-white/[0.08] pt-12">
-          {SUPPORTING.map((s) => (
-            <div key={s.big}>
-              <div className="text-[56px] sm:text-[72px] leading-none font-extrabold tracking-[-0.03em] text-white">
-                {s.big}
-              </div>
-              <div className="mt-4 text-[17px] text-white/75">{s.label}</div>
-              <div className="mt-2 text-[12px] text-white/40">{s.source}</div>
+          <div>
+            <div className="text-[56px] sm:text-[72px] leading-none font-extrabold tracking-[-0.03em] text-white tabular-nums">
+              <CounterStat to={80} suffix="%" duration={1600} />
             </div>
-          ))}
+            <div className="mt-4 text-[17px] text-white/75">
+              don&rsquo;t know they have it
+            </div>
+            <div className="mt-2 text-[12px] text-white/40">
+              CDC Prediabetes Surveillance
+            </div>
+          </div>
+          <div>
+            <div className="text-[56px] sm:text-[72px] leading-none font-extrabold tracking-[-0.03em] text-white tabular-nums">
+              <CounterStat to={70} suffix="%" duration={1800} />
+            </div>
+            <div className="mt-4 text-[17px] text-white/75">
+              progress to type 2 within a decade
+            </div>
+            <div className="mt-2 text-[12px] text-white/40">
+              American Diabetes Association
+            </div>
+          </div>
         </div>
       </div>
     </MotionSection>

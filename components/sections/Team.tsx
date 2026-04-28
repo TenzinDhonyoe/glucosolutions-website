@@ -1,3 +1,6 @@
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
 import { MotionSection } from "@/components/MotionSection";
 
 const TEAM = [
@@ -16,15 +19,25 @@ const BACKED_BY = [
 
 function Avatar({ initials }: { initials: string }) {
   return (
-    <div className="relative h-[120px] w-[120px]">
+    <div className="relative h-[120px] w-[120px] transition-transform duration-500 ease-out group-hover:scale-[1.06]">
+      {/* Outer rotating ring with brand gradient */}
       <div
         aria-hidden
-        className="absolute inset-0 rounded-full p-px brand-gradient opacity-90"
+        className="absolute inset-0 rounded-full p-px brand-gradient opacity-70 transition-opacity duration-500 group-hover:opacity-100"
       >
         <div className="h-full w-full rounded-full bg-ink-1" />
       </div>
+      {/* Brand-LED halo that intensifies on hover */}
+      <div
+        aria-hidden
+        className="absolute -inset-2 rounded-full opacity-0 blur-[18px] transition-opacity duration-500 group-hover:opacity-50"
+        style={{
+          background:
+            "radial-gradient(closest-side, rgba(61,219,126,0.45), transparent 70%)",
+        }}
+      />
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-[28px] font-bold tracking-tight text-white/90">
+        <span className="text-[28px] font-bold tracking-tight text-white/90 transition-colors duration-500 group-hover:text-white">
           {initials}
         </span>
       </div>
@@ -33,6 +46,8 @@ function Avatar({ initials }: { initials: string }) {
 }
 
 export function Team() {
+  const reduce = useReducedMotion();
+
   return (
     <MotionSection
       id="team"
@@ -53,19 +68,27 @@ export function Team() {
         </div>
 
         <ul className="mt-20 grid gap-y-12 gap-x-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-          {TEAM.map((person) => (
-            <li
+          {TEAM.map((person, i) => (
+            <motion.li
               key={person.name}
-              className="flex flex-col items-center text-center"
+              className="group flex flex-col items-center text-center cursor-default"
+              initial={reduce ? false : { opacity: 0, y: 14 }}
+              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{
+                duration: 0.55,
+                delay: 0.1 + i * 0.08,
+                ease: [0.22, 1, 0.36, 1],
+              }}
             >
               <Avatar initials={person.initials} />
               <div className="mt-5 text-[15px] font-bold tracking-tight text-white">
                 {person.name}
               </div>
-              <div className="mt-1 text-[12px] uppercase tracking-[0.12em] text-white/45">
+              <div className="mt-1 text-[12px] uppercase tracking-[0.12em] text-white/45 transition-colors duration-500 group-hover:text-brand-led/80">
                 {person.role}
               </div>
-            </li>
+            </motion.li>
           ))}
         </ul>
 
@@ -77,7 +100,7 @@ export function Team() {
             {BACKED_BY.map((b) => (
               <li
                 key={b}
-                className="text-[15px] sm:text-[16px] font-medium tracking-tight text-white/70"
+                className="text-[15px] sm:text-[16px] font-medium tracking-tight text-white/70 transition-colors hover:text-white"
               >
                 {b}
               </li>

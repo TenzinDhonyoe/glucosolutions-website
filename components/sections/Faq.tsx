@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Minus } from "lucide-react";
+import { Plus } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { MotionSection } from "@/components/MotionSection";
 import { cn } from "@/lib/utils";
 
@@ -16,7 +17,7 @@ const FAQS = [
   },
   {
     q: "How accurate is it?",
-    a: "Roughly 80% trend classification accuracy in benchtop testing. We classify glycemic trends — rising, stable, falling — rather than reporting absolute mg/dL values.",
+    a: "Roughly 80% trend classification accuracy in benchtop testing. We classify glycemic trends, rising, stable, falling, rather than reporting absolute mg/dL values.",
   },
   {
     q: "iOS or Android?",
@@ -34,6 +35,7 @@ const FAQS = [
 
 export function Faq() {
   const [open, setOpen] = useState<number | null>(0);
+  const reduce = useReducedMotion();
 
   return (
     <MotionSection
@@ -69,33 +71,60 @@ export function Faq() {
                 >
                   <span
                     className={cn(
-                      "text-[17px] sm:text-[18px] font-medium tracking-tight transition-colors",
-                      isOpen ? "text-white" : "text-white/85 group-hover:text-white"
+                      "text-[17px] sm:text-[18px] font-medium tracking-tight transition-colors duration-300",
+                      isOpen
+                        ? "text-white"
+                        : "text-white/85 group-hover:text-white"
                     )}
                   >
                     {item.q}
                   </span>
-                  <span
+                  <motion.span
                     aria-hidden
+                    animate={{ rotate: isOpen ? 45 : 0 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 280,
+                      damping: 18,
+                    }}
                     className={cn(
-                      "shrink-0 h-8 w-8 rounded-full grid place-items-center transition-colors",
+                      "shrink-0 h-8 w-8 rounded-full grid place-items-center transition-colors duration-300",
                       isOpen
                         ? "bg-white text-ink-0"
-                        : "bg-white/[0.06] text-white/70 group-hover:bg-white/10"
+                        : "bg-white/[0.06] text-white/70 group-hover:bg-white/10 group-hover:text-white"
                     )}
                   >
-                    {isOpen ? <Minus size={16} /> : <Plus size={16} />}
-                  </span>
+                    <Plus size={16} strokeWidth={2.5} />
+                  </motion.span>
                 </button>
-                <div
-                  id={`faq-panel-${i}`}
-                  role="region"
-                  aria-labelledby={`faq-trigger-${i}`}
-                  hidden={!isOpen}
-                  className="pb-7 pr-12 text-[15px] sm:text-[16px] leading-[1.7] text-white/65"
-                >
-                  {item.a}
-                </div>
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      key="content"
+                      id={`faq-panel-${i}`}
+                      role="region"
+                      aria-labelledby={`faq-trigger-${i}`}
+                      initial={
+                        reduce ? false : { height: 0, opacity: 0, y: -4 }
+                      }
+                      animate={{ height: "auto", opacity: 1, y: 0 }}
+                      exit={reduce ? undefined : { height: 0, opacity: 0, y: -4 }}
+                      transition={{
+                        height: {
+                          duration: 0.45,
+                          ease: [0.22, 1, 0.36, 1],
+                        },
+                        opacity: { duration: 0.35 },
+                        y: { duration: 0.4 },
+                      }}
+                      className="overflow-hidden"
+                    >
+                      <div className="pb-7 pr-12 text-[15px] sm:text-[16px] leading-[1.7] text-white/65">
+                        {item.a}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </li>
             );
           })}

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Nunito_Sans, Instrument_Serif } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { ScrollProgress } from "@/components/interactive/ScrollProgress";
 import "./globals.css";
 
 const nunitoSans = Nunito_Sans({
@@ -104,6 +105,7 @@ export default function RootLayout({
             }),
           }}
         />
+        <ScrollProgress />
         {children}
         <Analytics />
         <SpeedInsights />

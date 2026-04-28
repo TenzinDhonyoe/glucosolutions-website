@@ -1,12 +1,28 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { useRef } from "react";
 import { track } from "@/lib/analytics";
+import { MouseParallax } from "@/components/interactive/MouseParallax";
+import { MagneticButton } from "@/components/interactive/MagneticButton";
 
 export function Hero() {
   const reduce = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Scroll-driven device tilt-away: as the user scrolls past the hero, the
+  // device subtly recedes (smaller, slightly down, slight rotation).
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const deviceY = useTransform(scrollYProgress, [0, 1], [0, 60]);
+  const deviceScale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
+  const deviceRotate = useTransform(scrollYProgress, [0, 1], [0, -3]);
+  const deviceOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.4]);
+
   const stagger = (i: number) =>
     reduce
       ? {}
@@ -23,13 +39,14 @@ export function Hero() {
   return (
     <section
       id="hero"
+      ref={sectionRef}
       aria-labelledby="hero-headline"
       className="relative overflow-hidden bg-ink-0 text-white"
     >
-      {/* Primary ambient glow — bigger and more saturated since the device is the hero */}
+      {/* Primary ambient glow — bigger, breathing, since the device is the hero */}
       <div
         aria-hidden
-        className="pointer-events-none absolute right-[-10%] top-[10%] h-[820px] w-[820px] rounded-full opacity-55 blur-[160px]"
+        className="ambient-breathe pointer-events-none absolute right-[-10%] top-[10%] h-[820px] w-[820px] rounded-full blur-[160px]"
         style={{
           background:
             "radial-gradient(closest-side, rgba(45,190,108,0.36), rgba(19,139,146,0.18) 40%, transparent 72%)",
@@ -84,26 +101,31 @@ export function Hero() {
               {...stagger(3)}
               className="mt-9 flex flex-col sm:flex-row sm:items-center gap-4"
             >
-              <Link
+              <MagneticButton
                 href="#waitlist"
                 onClick={() => track("cta_click", { location: "hero-primary" })}
-                className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-[15px] font-semibold text-ink-0 hover:bg-white/90 transition-all"
+                strength={10}
+                range={140}
+                className="shine group inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-4 text-[15px] font-semibold text-ink-0 hover:bg-white transition-colors"
               >
                 Join the waitlist
                 <ArrowRight
                   size={16}
-                  className="transition-transform group-hover:translate-x-0.5"
+                  className="transition-transform duration-500 ease-out group-hover:translate-x-1"
                 />
-              </Link>
+              </MagneticButton>
               <Link
                 href="#science"
                 onClick={() =>
                   track("cta_click", { location: "hero-secondary" })
                 }
-                className="inline-flex items-center justify-center gap-2 px-2 py-3.5 text-[15px] font-medium text-white/70 hover:text-white transition-colors"
+                className="group inline-flex items-center justify-center gap-2 px-2 py-3.5 text-[15px] font-medium text-white/70 hover:text-white transition-colors"
               >
                 See the science
-                <ArrowRight size={14} className="opacity-60" />
+                <ArrowRight
+                  size={14}
+                  className="opacity-60 transition-transform duration-500 group-hover:translate-x-1 group-hover:opacity-100"
+                />
               </Link>
             </motion.div>
 
@@ -119,46 +141,52 @@ export function Hero() {
           <motion.div
             {...stagger(2)}
             className="relative mx-auto w-full lg:max-w-none lg:-mr-8 xl:-mr-16"
+            style={{
+              y: deviceY,
+              scale: deviceScale,
+              rotate: deviceRotate,
+              opacity: deviceOpacity,
+            }}
           >
-            {/* LED-position bloom — positioned to back-light the LED display */}
+            {/* LED-position bloom — back-lights the device's LED display */}
             <div
               aria-hidden
-              className="pointer-events-none absolute left-[28%] top-[34%] h-[180px] w-[260px] rounded-full opacity-60 blur-[60px]"
+              className="ambient-breathe pointer-events-none absolute left-[28%] top-[34%] h-[180px] w-[260px] rounded-full blur-[60px]"
               style={{
                 background:
                   "radial-gradient(closest-side, rgba(61,219,126,0.55), rgba(45,190,108,0.18) 50%, transparent 80%)",
               }}
             />
 
-            <motion.img
-              src="/product/wearable.svg"
-              alt="GlucoSolutions wearable: a slim black band with embedded LED indicators"
-              className="relative w-full h-auto select-none"
-              style={{
-                filter:
-                  "drop-shadow(0 50px 90px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 60px rgba(45, 190, 108, 0.12))",
-              }}
-              draggable={false}
-              animate={
-                reduce
-                  ? undefined
-                  : {
-                      y: [0, -10, 0],
-                      rotate: [0, 0.4, 0],
-                    }
-              }
-              transition={{
-                duration: 7,
-                ease: "easeInOut",
-                repeat: Infinity,
-                repeatType: "loop",
-              }}
-            />
+            <MouseParallax strength={18} tilt={4}>
+              <motion.img
+                src="/product/wearable.svg"
+                alt="GlucoSolutions wearable: a slim black band with embedded LED indicators"
+                className="relative w-full h-auto select-none"
+                style={{
+                  filter:
+                    "drop-shadow(0 50px 90px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 60px rgba(45, 190, 108, 0.12))",
+                }}
+                draggable={false}
+                animate={
+                  reduce
+                    ? undefined
+                    : {
+                        y: [0, -10, 0],
+                      }
+                }
+                transition={{
+                  duration: 7,
+                  ease: "easeInOut",
+                  repeat: Infinity,
+                  repeatType: "loop",
+                }}
+              />
+            </MouseParallax>
           </motion.div>
         </div>
       </div>
 
-      {/* Hairline brand-gradient divider into the next section */}
       <div className="relative">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div className="brand-rule" />

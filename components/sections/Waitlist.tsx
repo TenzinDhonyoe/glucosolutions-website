@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useRef } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import { Check, ArrowRight } from "lucide-react";
@@ -13,13 +13,13 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-[14px] font-semibold text-ink-0 hover:bg-white/90 disabled:opacity-60 disabled:cursor-not-allowed transition-all whitespace-nowrap"
+      className="shine group inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-[14px] font-semibold text-ink-0 hover:bg-white disabled:opacity-60 disabled:cursor-not-allowed transition-all whitespace-nowrap"
     >
       {pending ? "Joining…" : "Join waitlist"}
       {!pending && (
         <ArrowRight
           size={15}
-          className="transition-transform group-hover:translate-x-0.5"
+          className="transition-transform duration-500 ease-out group-hover:translate-x-1"
         />
       )}
     </button>
@@ -29,7 +29,7 @@ function SubmitButton() {
 function SuccessBurst() {
   const reduce = useReducedMotion();
   if (reduce) return null;
-  const dots = Array.from({ length: 14 });
+  const dots = Array.from({ length: 18 });
   return (
     <div
       aria-hidden
@@ -45,8 +45,9 @@ function SuccessBurst() {
             key={i}
             initial={{ x: 0, y: 0, opacity: 1, scale: 0.6 }}
             animate={{ x, y, opacity: 0, scale: 1 }}
-            transition={{ duration: 1.1, ease: "easeOut" }}
+            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
             className="absolute left-1/2 top-1/2 h-1 w-1 rounded-full bg-brand-led"
+            style={{ boxShadow: "0 0 6px rgba(61, 219, 126, 0.7)" }}
           />
         );
       })}
@@ -59,8 +60,10 @@ export function Waitlist() {
     joinWaitlist,
     null
   );
+  const [isFocused, setIsFocused] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const referrerRef = useRef<HTMLInputElement>(null);
+  const reduce = useReducedMotion();
 
   useEffect(() => {
     if (referrerRef.current && typeof document !== "undefined") {
@@ -81,13 +84,51 @@ export function Waitlist() {
       aria-labelledby="waitlist-title"
       className="relative overflow-hidden bg-ink-0 text-white border-t border-white/[0.06]"
     >
-      {/* Single ambient glow — anchors the form */}
-      <div
+      {/* Layered ambient glow — slow breathing for atmospheric energy */}
+      <motion.div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[520px] w-[520px] rounded-full opacity-30 blur-[120px]"
+        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[680px] w-[680px] rounded-full blur-[140px]"
         style={{
           background:
             "radial-gradient(closest-side, rgba(45,190,108,0.45), rgba(19,139,146,0.2) 50%, transparent)",
+        }}
+        animate={
+          reduce
+            ? undefined
+            : {
+                opacity: [0.32, 0.5, 0.32],
+                scale: [1, 1.08, 1],
+              }
+        }
+        transition={{
+          duration: 10,
+          ease: "easeInOut",
+          repeat: Infinity,
+          repeatType: "loop",
+        }}
+      />
+      {/* Counter-glow drift */}
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute left-[15%] top-[30%] h-[320px] w-[320px] rounded-full blur-[100px]"
+        style={{
+          background:
+            "radial-gradient(closest-side, rgba(14,92,126,0.35), transparent 70%)",
+        }}
+        animate={
+          reduce
+            ? undefined
+            : {
+                opacity: [0.25, 0.42, 0.25],
+                x: [0, 30, 0],
+                y: [0, -18, 0],
+              }
+        }
+        transition={{
+          duration: 14,
+          ease: "easeInOut",
+          repeat: Infinity,
+          repeatType: "loop",
         }}
       />
 
@@ -111,7 +152,12 @@ export function Waitlist() {
 
         <div className="relative mt-12">
           {state?.ok ? (
-            <div className="relative mx-auto inline-flex">
+            <motion.div
+              className="relative mx-auto inline-flex"
+              initial={{ scale: 0.85, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ type: "spring", stiffness: 220, damping: 18 }}
+            >
               <SuccessBurst />
               <div className="relative inline-flex items-center gap-3 rounded-2xl border border-brand-led/30 bg-white/[0.03] px-6 py-5">
                 <span className="grid place-items-center h-9 w-9 rounded-full brand-gradient text-white">
@@ -126,9 +172,13 @@ export function Waitlist() {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ) : (
-            <form ref={formRef} action={formAction} className="mx-auto max-w-lg">
+            <form
+              ref={formRef}
+              action={formAction}
+              className="mx-auto max-w-lg relative"
+            >
               <input type="hidden" name="source" value="website" />
               <input
                 ref={referrerRef}
@@ -145,7 +195,20 @@ export function Waitlist() {
                 className="hidden"
               />
 
-              <div className="flex flex-col sm:flex-row gap-2 rounded-full bg-white/[0.04] p-1.5 border border-white/[0.08] focus-within:border-white/20 transition-colors">
+              {/* Brand-gradient halo behind the input — appears only on focus */}
+              <div
+                aria-hidden
+                className="absolute -inset-1 rounded-full opacity-0 blur-[18px] transition-opacity duration-500 brand-gradient"
+                style={{ opacity: isFocused ? 0.45 : 0 }}
+              />
+
+              <div
+                className={`relative flex flex-col sm:flex-row gap-2 rounded-full bg-white/[0.04] p-1.5 border transition-all duration-300 ${
+                  isFocused
+                    ? "border-brand-led/50 bg-white/[0.06]"
+                    : "border-white/[0.08]"
+                }`}
+              >
                 <label htmlFor="email" className="sr-only">
                   Email address
                 </label>
@@ -157,7 +220,10 @@ export function Waitlist() {
                   inputMode="email"
                   autoComplete="email"
                   placeholder="you@example.com"
-                  className="flex-1 bg-transparent px-5 py-3 text-[15px] text-white placeholder:text-white/35 focus:outline-none"
+                  onFocus={() => setIsFocused(true)}
+                  onBlur={() => setIsFocused(false)}
+                  className="flex-1 bg-transparent px-5 py-3 text-[15px] text-white placeholder:text-white/35 focus:outline-none focus:shadow-none"
+                  style={{ boxShadow: "none" }}
                 />
                 <SubmitButton />
               </div>

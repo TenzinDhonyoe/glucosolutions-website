@@ -1,3 +1,6 @@
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
 import { MotionSection } from "@/components/MotionSection";
 
 const FEATURES = [
@@ -19,6 +22,8 @@ const FEATURES = [
 ];
 
 export function Solution() {
+  const reduce = useReducedMotion();
+
   return (
     <MotionSection
       id="solution"
@@ -46,20 +51,38 @@ export function Solution() {
 
         <ul className="mt-20 grid gap-x-12 gap-y-14 md:grid-cols-3">
           {FEATURES.map((f, i) => (
-            <li key={f.title} className="relative">
+            <motion.li
+              key={f.title}
+              className="relative group cursor-default"
+              initial={reduce ? false : { opacity: 0, y: 16 }}
+              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-12%" }}
+              transition={{
+                duration: 0.7,
+                delay: 0.15 + i * 0.12,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            >
+              {/* Hairline that draws on hover beneath the label row */}
               <div className="flex items-baseline gap-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">
-                <span className="text-brand-led/80">
+                <span className="text-brand-led/80 tabular-nums">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <span>{f.label}</span>
               </div>
-              <h3 className="mt-5 text-[24px] sm:text-[26px] font-bold tracking-[-0.02em] text-white">
+              <div className="mt-2 h-px w-full bg-white/[0.06] relative overflow-hidden">
+                <span
+                  aria-hidden
+                  className="absolute inset-y-0 left-0 w-0 brand-gradient transition-[width] duration-700 ease-out group-hover:w-full"
+                />
+              </div>
+              <h3 className="mt-5 text-[24px] sm:text-[26px] font-bold tracking-[-0.02em] text-white transition-colors duration-500 group-hover:brand-text-gradient">
                 {f.title}
               </h3>
-              <p className="mt-3 text-[16px] leading-[1.6] text-white/60">
+              <p className="mt-3 text-[16px] leading-[1.6] text-white/60 transition-colors duration-500 group-hover:text-white/75">
                 {f.body}
               </p>
-            </li>
+            </motion.li>
           ))}
         </ul>
       </div>

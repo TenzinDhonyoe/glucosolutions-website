@@ -1,3 +1,6 @@
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
 import { MotionSection } from "@/components/MotionSection";
 
 const ADVISORS = [
@@ -20,15 +23,23 @@ const ADVISORS = [
 
 function AdvisorAvatar({ initials }: { initials: string }) {
   return (
-    <div className="relative h-[112px] w-[112px]">
+    <div className="relative h-[112px] w-[112px] transition-transform duration-500 ease-out group-hover:scale-[1.06]">
       <div
         aria-hidden
-        className="absolute inset-0 rounded-full p-px brand-gradient opacity-80"
+        className="absolute inset-0 rounded-full p-px brand-gradient opacity-70 transition-opacity duration-500 group-hover:opacity-100"
       >
         <div className="h-full w-full rounded-full bg-ink-1" />
       </div>
+      <div
+        aria-hidden
+        className="absolute -inset-2 rounded-full opacity-0 blur-[16px] transition-opacity duration-500 group-hover:opacity-45"
+        style={{
+          background:
+            "radial-gradient(closest-side, rgba(61,219,126,0.4), transparent 70%)",
+        }}
+      />
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-[24px] font-bold tracking-tight text-white/85">
+        <span className="text-[24px] font-bold tracking-tight text-white/85 transition-colors duration-500 group-hover:text-white">
           {initials}
         </span>
       </div>
@@ -37,6 +48,8 @@ function AdvisorAvatar({ initials }: { initials: string }) {
 }
 
 export function Advisors() {
+  const reduce = useReducedMotion();
+
   return (
     <MotionSection
       id="advisors"
@@ -57,19 +70,27 @@ export function Advisors() {
         </div>
 
         <ul className="mt-20 grid gap-y-14 gap-x-10 sm:grid-cols-2 md:grid-cols-3">
-          {ADVISORS.map((a) => (
-            <li
+          {ADVISORS.map((a, i) => (
+            <motion.li
               key={a.name}
-              className="flex flex-col items-center text-center"
+              className="group flex flex-col items-center text-center cursor-default"
+              initial={reduce ? false : { opacity: 0, y: 14 }}
+              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{
+                duration: 0.6,
+                delay: 0.1 + i * 0.12,
+                ease: [0.22, 1, 0.36, 1],
+              }}
             >
               <AdvisorAvatar initials={a.initials} />
               <div className="mt-5 text-[17px] font-bold tracking-tight text-white">
                 {a.name}
               </div>
-              <div className="mt-2 max-w-[260px] text-[13px] leading-relaxed text-white/55">
+              <div className="mt-2 max-w-[260px] text-[13px] leading-relaxed text-white/55 transition-colors duration-500 group-hover:text-white/75">
                 {a.credentials}
               </div>
-            </li>
+            </motion.li>
           ))}
         </ul>
       </div>
