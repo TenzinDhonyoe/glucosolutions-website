@@ -17,35 +17,29 @@ export function Hero() {
   const reduce = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
 
-  // Track scroll progress through the hero. Each layer translates by a
-  // different amount, creating real depth as the user scrolls past.
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
   });
 
-  // Device — moves the most (foreground), recedes as user scrolls past.
   const deviceY = useTransform(scrollYProgress, [0, 1], [0, 80]);
   const deviceScale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
   const deviceRotate = useTransform(scrollYProgress, [0, 1], [0, -3]);
   const deviceOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.35]);
 
-  // Title — moves at a moderate rate (mid layer).
   const titleY = useTransform(scrollYProgress, [0, 1], [0, -30]);
   const titleOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0.55]);
 
-  // Body, CTAs, disclaimer — slower than title (creates depth contrast).
   const bodyY = useTransform(scrollYProgress, [0, 1], [0, -50]);
   const bodyOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0.4]);
 
-  // Badge — slowest of the text elements (deepest text layer).
   const badgeY = useTransform(scrollYProgress, [0, 1], [0, -10]);
 
-  // Ambient glow — subtle vertical drift creates atmospheric parallax.
   const glowY = useTransform(scrollYProgress, [0, 1], [0, 120]);
   const counterGlowX = useTransform(scrollYProgress, [0, 1], [0, 40]);
-  // Floor-glow drifts subtly with scroll for the "showcase surface" feel.
   const floorGlowOpacity = useTransform(scrollYProgress, [0, 0.6], [0.7, 0.2]);
+  const pipOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
+  const pipY = useTransform(scrollYProgress, [0, 1], [0, 60]);
 
   const stagger = (i: number) =>
     reduce
@@ -65,11 +59,9 @@ export function Hero() {
       id="hero"
       ref={sectionRef}
       aria-labelledby="hero-headline"
-      className="relative overflow-hidden bg-ink-0 text-white"
+      className="relative overflow-hidden bg-ink-0 text-white min-h-[100svh] flex flex-col"
     >
-      {/* Layer 1: vertical gradient from pure ink at top to a slightly warmer,
-          richer dark at the bottom. Creates depth and gives the device a
-          "ground" to sit on, like Oura's beige gradient does for the ring. */}
+      {/* Layer 1: vertical gradient gives the canvas a horizon line */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
@@ -79,8 +71,7 @@ export function Hero() {
         }}
       />
 
-      {/* Layer 2: subtle film grain so flat dark areas have texture (Oura's
-          gradient is photographed with lens grain, ours fakes it). */}
+      {/* Layer 2: subtle film grain */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-[0.04] mix-blend-overlay"
@@ -91,8 +82,7 @@ export function Hero() {
         }}
       />
 
-      {/* Layer 3: primary teal/green ambient glow behind the device,
-          parallax-drifting */}
+      {/* Layer 3: primary teal/green ambient glow behind the device */}
       <motion.div
         aria-hidden
         className="ambient-breathe pointer-events-none absolute right-[-12%] top-[8%] h-[940px] w-[940px] rounded-full blur-[180px]"
@@ -103,8 +93,7 @@ export function Hero() {
         }}
       />
 
-      {/* Layer 4: deep blue counter-glow on the lower left for atmospheric
-          weight, drifts laterally with scroll */}
+      {/* Layer 4: deep blue counter-glow lower-left */}
       <motion.div
         aria-hidden
         className="pointer-events-none absolute -bottom-44 -left-44 h-[640px] w-[640px] rounded-full opacity-50 blur-[160px]"
@@ -115,8 +104,7 @@ export function Hero() {
         }}
       />
 
-      {/* Layer 5: floor-glow under the device (acts as a soft cast light /
-          surface reflection) — sells the "product on a podium" feel. */}
+      {/* Layer 5: floor-glow under the device — soft "podium" reflection */}
       <motion.div
         aria-hidden
         className="pointer-events-none absolute right-[5%] bottom-[8%] h-[280px] w-[760px] rounded-[50%] blur-[80px]"
@@ -127,8 +115,12 @@ export function Hero() {
         }}
       />
 
-      <div className="relative mx-auto max-w-7xl px-5 sm:px-8 pt-32 sm:pt-36 md:pt-44 pb-24 md:pb-32">
-        <div className="grid gap-12 md:gap-14 lg:grid-cols-[0.85fr_1.4fr] lg:items-center">
+      {/* Inner container fills available height and centres content
+          vertically. This guarantees the entire hero fits within one
+          viewport at any height (720, 800, 900, 1080, etc.) while keeping
+          generous breathing room. */}
+      <div className="relative mx-auto max-w-7xl w-full px-5 sm:px-8 pt-24 sm:pt-28 lg:pt-28 pb-12 sm:pb-16 lg:pb-20 flex-1 flex flex-col justify-center">
+        <div className="grid gap-8 md:gap-10 lg:gap-12 lg:grid-cols-[0.85fr_1.4fr] lg:items-center">
           <div className="relative z-10">
             <motion.div
               {...stagger(0)}
@@ -146,13 +138,13 @@ export function Hero() {
               {...stagger(1)}
               id="hero-headline"
               style={reduce ? undefined : { y: titleY, opacity: titleOpacity }}
-              className="mt-7 text-[48px] sm:text-[64px] md:text-[80px] lg:text-[96px] leading-[0.95] font-extrabold tracking-[-0.04em] text-balance"
+              className="mt-5 sm:mt-6 text-[40px] sm:text-[52px] md:text-[60px] lg:text-[64px] xl:text-[80px] leading-[0.96] font-extrabold tracking-[-0.04em] text-balance"
             >
               Prediabetes
               <br />
               is silent.
               <br />
-              <span className="display-serif font-normal text-white/85 text-[52px] sm:text-[68px] md:text-[84px] lg:text-[104px]">
+              <span className="display-serif font-normal text-white/85 text-[44px] sm:text-[56px] md:text-[64px] lg:text-[70px] xl:text-[88px]">
                 Until it isn&rsquo;t.
               </span>
             </motion.h1>
@@ -162,7 +154,7 @@ export function Hero() {
             >
               <motion.p
                 {...stagger(2)}
-                className="mt-8 max-w-[460px] text-[16px] sm:text-[17px] leading-[1.55] text-white/55"
+                className="mt-5 sm:mt-6 max-w-[440px] text-[15px] sm:text-[16px] md:text-[17px] leading-[1.55] text-white/55"
               >
                 A non-invasive wearable and AI coach for glycemic trend
                 awareness. Eat with confidence.
@@ -170,7 +162,7 @@ export function Hero() {
 
               <motion.div
                 {...stagger(3)}
-                className="mt-8 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4"
+                className="mt-6 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4"
               >
                 <MagneticButton
                   href="#waitlist"
@@ -204,7 +196,7 @@ export function Hero() {
 
               <motion.p
                 {...stagger(4)}
-                className="mt-10 text-[11px] text-white/30 max-w-md leading-relaxed"
+                className="mt-6 text-[11px] text-white/30 max-w-md leading-relaxed"
               >
                 Wellness device. Not a substitute for medical-grade glucose
                 measurement.
@@ -214,7 +206,7 @@ export function Hero() {
 
           <motion.div
             {...stagger(2)}
-            className="relative mx-auto w-full lg:max-w-none lg:-mr-16 xl:-mr-32"
+            className="relative mx-auto w-full lg:max-w-none lg:-mr-8 xl:-mr-16 aspect-[5/3]"
             style={{
               y: deviceY,
               scale: deviceScale,
@@ -223,25 +215,20 @@ export function Hero() {
               perspective: 1600,
             }}
           >
-            {/* LED-position bloom — back-lights the device's LED display.
-                Strengthened so the green LEDs feel emissive against the
-                richer canvas. */}
+            {/* LED-position bloom — back-lights the device's LED display */}
             <div
               aria-hidden
-              className="ambient-breathe pointer-events-none absolute left-[26%] top-[32%] h-[220px] w-[300px] rounded-full blur-[70px]"
+              className="ambient-breathe pointer-events-none absolute left-[26%] top-[28%] h-[40%] w-[40%] rounded-full blur-[70px]"
               style={{
                 background:
                   "radial-gradient(closest-side, rgba(61,219,126,0.65), rgba(45,190,108,0.22) 50%, transparent 80%)",
               }}
             />
 
-            {/* Perpetual product-turntable motion. Slower and gentler than
-                before — Oura's hero is calm. The device drifts like a
-                premium display, not a spinning toy. */}
             <motion.img
               src="/product/wearable.svg"
               alt="GlucoSolutions wearable: a slim black band with embedded LED indicators"
-              className="relative w-full h-auto select-none"
+              className="absolute inset-0 w-full h-full object-contain select-none"
               style={{
                 transformStyle: "preserve-3d",
                 filter:
@@ -278,28 +265,37 @@ export function Hero() {
                 },
               }}
             />
-
-            {/* Floating supplemental card — bottom-right of device area, like
-                Oura's "Charging Case" PIP. Tiny, always-visible product
-                reinforcement that fills negative space in the hero. */}
-            <motion.div
-              {...stagger(4)}
-              className="hidden md:block absolute bottom-[3%] right-[4%] w-[230px] rounded-2xl border border-white/[0.08] bg-ink-1/85 backdrop-blur-md p-4 shadow-[0_20px_60px_rgba(0,0,0,0.45)]"
-            >
-              <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/45">
-                Live trend
-              </div>
-              <div className="mt-2.5 flex items-baseline gap-2">
-                <TrendPill />
-              </div>
-              <div className="mt-2 text-[12px] text-white/55 leading-snug">
-                Reads rising, stable, or falling at a glance.
-              </div>
-            </motion.div>
           </motion.div>
         </div>
       </div>
 
+      {/* PIP "Live trend" card — anchored to the section bottom-right inside
+          the safe-zone padding. Lives outside the inner container so it
+          doesn't get pushed around by content height. Hidden below md to
+          avoid crowding small viewports. Recedes with scroll. */}
+      <motion.div
+        className="hidden md:block absolute right-5 sm:right-8 lg:right-10 bottom-12 lg:bottom-14 w-[230px] rounded-2xl border border-white/[0.08] bg-ink-1/85 backdrop-blur-md p-4 shadow-[0_20px_60px_rgba(0,0,0,0.45)] z-20"
+        style={reduce ? undefined : { opacity: pipOpacity, y: pipY }}
+        initial={reduce ? undefined : { opacity: 0, y: 16 }}
+        animate={reduce ? undefined : { opacity: 1, y: 0 }}
+        transition={{
+          duration: 0.7,
+          delay: 0.65,
+          ease: [0.22, 1, 0.36, 1] as const,
+        }}
+      >
+        <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/45">
+          Live trend
+        </div>
+        <div className="mt-2.5 flex items-baseline gap-2">
+          <TrendPill />
+        </div>
+        <div className="mt-2 text-[12px] text-white/55 leading-snug">
+          Reads rising, stable, or falling at a glance.
+        </div>
+      </motion.div>
+
+      {/* Brand-rule divider sits at the very bottom of the hero */}
       <div className="relative">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div className="brand-rule" />
