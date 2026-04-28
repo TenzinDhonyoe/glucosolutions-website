@@ -1,7 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useRef } from "react";
 import { track } from "@/lib/analytics";
@@ -12,16 +17,33 @@ export function Hero() {
   const reduce = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
 
-  // Scroll-driven device tilt-away: as the user scrolls past the hero, the
-  // device subtly recedes (smaller, slightly down, slight rotation).
+  // Track scroll progress through the hero. Each layer translates by a
+  // different amount, creating real depth as the user scrolls past.
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
   });
-  const deviceY = useTransform(scrollYProgress, [0, 1], [0, 60]);
-  const deviceScale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
+
+  // Device — moves the most (foreground), recedes as user scrolls past.
+  const deviceY = useTransform(scrollYProgress, [0, 1], [0, 80]);
+  const deviceScale = useTransform(scrollYProgress, [0, 1], [1, 0.9]);
   const deviceRotate = useTransform(scrollYProgress, [0, 1], [0, -3]);
-  const deviceOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.4]);
+  const deviceOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.35]);
+
+  // Title — moves at a moderate rate (mid layer).
+  const titleY = useTransform(scrollYProgress, [0, 1], [0, -30]);
+  const titleOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0.55]);
+
+  // Body, CTAs, disclaimer — slower than title (creates depth contrast).
+  const bodyY = useTransform(scrollYProgress, [0, 1], [0, -50]);
+  const bodyOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0.4]);
+
+  // Badge — slowest of the text elements (deepest text layer).
+  const badgeY = useTransform(scrollYProgress, [0, 1], [0, -10]);
+
+  // Ambient glow — subtle vertical drift creates atmospheric parallax.
+  const glowY = useTransform(scrollYProgress, [0, 1], [0, 120]);
+  const counterGlowX = useTransform(scrollYProgress, [0, 1], [0, 40]);
 
   const stagger = (i: number) =>
     reduce
@@ -43,22 +65,24 @@ export function Hero() {
       aria-labelledby="hero-headline"
       className="relative overflow-hidden bg-ink-0 text-white"
     >
-      {/* Primary ambient glow — bigger, breathing, since the device is the hero */}
-      <div
+      {/* Primary ambient glow — bigger, breathing, parallax-drifting */}
+      <motion.div
         aria-hidden
         className="ambient-breathe pointer-events-none absolute right-[-10%] top-[10%] h-[820px] w-[820px] rounded-full blur-[160px]"
         style={{
           background:
             "radial-gradient(closest-side, rgba(45,190,108,0.36), rgba(19,139,146,0.18) 40%, transparent 72%)",
+          y: reduce ? 0 : glowY,
         }}
       />
-      {/* Counter-glow on the lower left for depth */}
-      <div
+      {/* Counter-glow on the lower left, drifts horizontally with scroll */}
+      <motion.div
         aria-hidden
         className="pointer-events-none absolute -bottom-40 -left-40 h-[560px] w-[560px] rounded-full opacity-40 blur-[140px]"
         style={{
           background:
             "radial-gradient(closest-side, rgba(14,92,126,0.45), rgba(0,0,0,0) 70%)",
+          x: reduce ? 0 : counterGlowX,
         }}
       />
 
@@ -67,6 +91,7 @@ export function Hero() {
           <div>
             <motion.div
               {...stagger(0)}
+              style={reduce ? undefined : { y: badgeY }}
               className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/75"
             >
               <span className="relative flex h-1.5 w-1.5">
@@ -79,6 +104,7 @@ export function Hero() {
             <motion.h1
               {...stagger(1)}
               id="hero-headline"
+              style={reduce ? undefined : { y: titleY, opacity: titleOpacity }}
               className="mt-7 text-[44px] sm:text-[58px] md:text-[72px] lg:text-[84px] leading-[0.98] font-extrabold tracking-[-0.035em] text-balance"
             >
               Prediabetes is silent.
@@ -88,54 +114,58 @@ export function Hero() {
               </span>
             </motion.h1>
 
-            <motion.p
-              {...stagger(2)}
-              className="mt-7 max-w-[520px] text-[17px] sm:text-[18px] leading-[1.55] text-white/60"
-            >
-              A non-invasive wearable and AI coach that help you eat with
-              confidence and reverse glycemic trends, before they become
-              disease.
-            </motion.p>
+            <motion.div style={reduce ? undefined : { y: bodyY, opacity: bodyOpacity }}>
+              <motion.p
+                {...stagger(2)}
+                className="mt-7 max-w-[520px] text-[17px] sm:text-[18px] leading-[1.55] text-white/60"
+              >
+                A non-invasive wearable and AI coach that help you eat with
+                confidence and reverse glycemic trends, before they become
+                disease.
+              </motion.p>
 
-            <motion.div
-              {...stagger(3)}
-              className="mt-9 flex flex-col sm:flex-row sm:items-center gap-4"
-            >
-              <MagneticButton
-                href="#waitlist"
-                onClick={() => track("cta_click", { location: "hero-primary" })}
-                strength={10}
-                range={140}
-                className="shine group inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-4 text-[15px] font-semibold text-ink-0 hover:bg-white transition-colors"
+              <motion.div
+                {...stagger(3)}
+                className="mt-9 flex flex-col sm:flex-row sm:items-center gap-4"
               >
-                Join the waitlist
-                <ArrowRight
-                  size={16}
-                  className="transition-transform duration-500 ease-out group-hover:translate-x-1"
-                />
-              </MagneticButton>
-              <Link
-                href="#science"
-                onClick={() =>
-                  track("cta_click", { location: "hero-secondary" })
-                }
-                className="group inline-flex items-center justify-center gap-2 px-2 py-3.5 text-[15px] font-medium text-white/70 hover:text-white transition-colors"
+                <MagneticButton
+                  href="#waitlist"
+                  onClick={() =>
+                    track("cta_click", { location: "hero-primary" })
+                  }
+                  strength={10}
+                  range={140}
+                  className="shine group inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-4 text-[15px] font-semibold text-ink-0 hover:bg-white transition-colors"
+                >
+                  Join the waitlist
+                  <ArrowRight
+                    size={16}
+                    className="transition-transform duration-500 ease-out group-hover:translate-x-1"
+                  />
+                </MagneticButton>
+                <Link
+                  href="#science"
+                  onClick={() =>
+                    track("cta_click", { location: "hero-secondary" })
+                  }
+                  className="group inline-flex items-center justify-center gap-2 px-2 py-3.5 text-[15px] font-medium text-white/70 hover:text-white transition-colors"
+                >
+                  See the science
+                  <ArrowRight
+                    size={14}
+                    className="opacity-60 transition-transform duration-500 group-hover:translate-x-1 group-hover:opacity-100"
+                  />
+                </Link>
+              </motion.div>
+
+              <motion.p
+                {...stagger(4)}
+                className="mt-10 text-[12px] text-white/35 max-w-md leading-relaxed"
               >
-                See the science
-                <ArrowRight
-                  size={14}
-                  className="opacity-60 transition-transform duration-500 group-hover:translate-x-1 group-hover:opacity-100"
-                />
-              </Link>
+                Wellness device. Not a substitute for medical-grade glucose
+                measurement.
+              </motion.p>
             </motion.div>
-
-            <motion.p
-              {...stagger(4)}
-              className="mt-10 text-[12px] text-white/35 max-w-md leading-relaxed"
-            >
-              Wellness device. Not a substitute for medical-grade glucose
-              measurement.
-            </motion.p>
           </div>
 
           <motion.div

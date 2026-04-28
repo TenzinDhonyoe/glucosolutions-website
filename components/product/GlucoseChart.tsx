@@ -1,13 +1,18 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import { useEffect, useState } from "react";
+import {
+  motion,
+  useMotionValue,
+  useTransform,
+  useReducedMotion,
+  type MotionValue,
+} from "framer-motion";
 
 const WIDTH = 560;
 const HEIGHT = 200;
 const PADDING = { top: 18, right: 18, bottom: 28, left: 36 };
 
-// Y range in mg/dL. Roughly maps to a real continuous glucose monitor.
 const Y_MIN = 70;
 const Y_MAX = 180;
 const TARGET_LO = 95;
@@ -15,18 +20,17 @@ const TARGET_HI = 140;
 
 const PADDED_W = WIDTH - PADDING.left - PADDING.right;
 const PADDED_H = HEIGHT - PADDING.top - PADDING.bottom;
+const SAMPLES = 72;
 
 function yToPx(value: number) {
   const t = (value - Y_MIN) / (Y_MAX - Y_MIN);
   return PADDING.top + (1 - t) * PADDED_H;
 }
 
-/** A plausible 24-hour glucose curve — meal spikes at breakfast, lunch, dinner. */
 function buildSeries(samples: number, drift: number) {
   const pts: { x: number; y: number }[] = [];
   for (let i = 0; i < samples; i++) {
     const t = i / (samples - 1);
-    // Three meal bumps centred at 0.18, 0.5, 0.78 with falling tails.
     const bump = (centre: number, height: number, width: number) => {
       const d = (t - centre) / width;
       return height * Math.exp(-d * d);
@@ -34,10 +38,10 @@ function buildSeries(samples: number, drift: number) {
     const baseline = 100;
     const value =
       baseline +
-      bump(0.18, 38, 0.07) + // breakfast
-      bump(0.5, 28, 0.08) + // lunch
-      bump(0.78, 32, 0.07) + // dinner
-      Math.sin(t * Math.PI * 18) * 3 + // small noise
+      bump(0.18, 38, 0.07) +
+      bump(0.5, 28, 0.08) +
+      bump(0.78, 32, 0.07) +
+      Math.sin(t * Math.PI * 18) * 3 +
       drift;
     const x = PADDING.left + t * PADDED_W;
     const y = yToPx(Math.max(Y_MIN + 5, Math.min(Y_MAX - 5, value)));
@@ -59,23 +63,26 @@ function pathFromPoints(points: { x: number; y: number }[]) {
   return d.join(" ");
 }
 
-/**
- * An animated SVG glucose trend chart. Draws on first scroll-in via SVG path
- * stroke-dashoffset, then enters a slow undulation (Y values drift gently)
- * to communicate "live data" without ever being distracting.
- *
- * Used in the Science section as the supporting visual for the trend-classification
- * story.
- */
-export function GlucoseChart({ className }: { className?: string }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const inView = useInView(containerRef, { once: true, margin: "-15%" });
+type Props = {
+  className?: string;
+  /**
+   * Optional MotionValue (0..1) that drives the chart's draw progress and
+   * cursor position. When provided, the chart scrubs based on this value
+   * (pinned scroll storytelling). When omitted, the chart uses its default
+   * behaviour: line draws on first scroll-into-view, then a perpetual gentle
+   * drift makes the curve feel "live".
+   */
+  scrollProgress?: MotionValue<number>;
+};
+
+export function GlucoseChart({ className, scrollProgress }: Props) {
   const reduce = useReducedMotion();
   const [drift, setDrift] = useState(0);
+  const isScrollDriven = !!scrollProgress;
 
-  // Subtle perpetual undulation — drift oscillates with a 12s period.
+  // Subtle perpetual undulation only when not scroll-driven.
   useEffect(() => {
-    if (reduce) return;
+    if (reduce || isScrollDriven) return;
     let raf = 0;
     let start = 0;
     function tick(now: number) {
@@ -86,17 +93,43 @@ export function GlucoseChart({ className }: { className?: string }) {
     }
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [reduce]);
+  }, [reduce, isScrollDriven]);
 
-  const points = buildSeries(72, drift);
+  const points = buildSeries(SAMPLES, drift);
   const path = pathFromPoints(points);
   const areaPath =
     path +
     ` L ${PADDING.left + PADDED_W} ${PADDING.top + PADDED_H}` +
     ` L ${PADDING.left} ${PADDING.top + PADDED_H} Z`;
 
+  // Always create a fallback motion value so hooks are unconditional.
+  // When scroll-driven, the parent passes scrollProgress and we ignore the
+  // fallback. When auto, the fallback stays at 0 and we use whileInView.
+  const fallback = useMotionValue(0);
+  const driver = scrollProgress ?? fallback;
+
+  // For scroll-driven mode: derive draw progress and cursor coords from driver.
+  const drawnPathLength = useTransform(driver, (v) => v);
+  const drawnOpacity = useTransform(driver, [0, 0.04], [0, 1]);
+  const areaOpacity = useTransform(driver, [0, 0.3], [0, 1]);
+  const cursorX = useTransform(driver, (v) => {
+    const idx = Math.max(
+      0,
+      Math.min(SAMPLES - 1, Math.round(v * (SAMPLES - 1)))
+    );
+    return points[idx]?.x ?? PADDING.left;
+  });
+  const cursorY = useTransform(driver, (v) => {
+    const idx = Math.max(
+      0,
+      Math.min(SAMPLES - 1, Math.round(v * (SAMPLES - 1)))
+    );
+    return points[idx]?.y ?? PADDING.top + PADDED_H / 2;
+  });
+  const cursorOpacity = useTransform(driver, (v) => (v > 0.02 ? 1 : 0));
+
   return (
-    <div ref={containerRef} className={className}>
+    <div className={className}>
       <svg
         viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
         className="w-full h-auto"
@@ -140,7 +173,6 @@ export function GlucoseChart({ className }: { className?: string }) {
           strokeDasharray="3 4"
         />
 
-        {/* Y axis labels */}
         {[180, 140, 95, 70].map((v) => (
           <text
             key={v}
@@ -155,7 +187,6 @@ export function GlucoseChart({ className }: { className?: string }) {
           </text>
         ))}
 
-        {/* Time axis labels */}
         {[
           { t: 0, label: "6a" },
           { t: 0.25, label: "10a" },
@@ -176,40 +207,72 @@ export function GlucoseChart({ className }: { className?: string }) {
           </text>
         ))}
 
-        {/* Filled area below the curve */}
-        <motion.path
-          d={areaPath}
-          fill="url(#gc-area)"
-          initial={reduce ? false : { opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 1.4, delay: 0.6, ease: "easeOut" }}
-        />
+        {isScrollDriven ? (
+          <motion.path
+            d={areaPath}
+            fill="url(#gc-area)"
+            style={{ opacity: areaOpacity }}
+          />
+        ) : (
+          <motion.path
+            d={areaPath}
+            fill="url(#gc-area)"
+            initial={reduce ? false : { opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: "-15%" }}
+            transition={{ duration: 1.4, delay: 0.6, ease: "easeOut" }}
+          />
+        )}
 
-        {/* Trend line draws in on first view */}
-        <motion.path
-          d={path}
-          fill="none"
-          stroke="url(#gc-stroke)"
-          strokeWidth={2}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          initial={reduce ? false : { pathLength: 0, opacity: 0 }}
-          animate={inView ? { pathLength: 1, opacity: 1 } : {}}
-          transition={{
-            pathLength: { duration: 1.8, ease: [0.22, 1, 0.36, 1] },
-            opacity: { duration: 0.4 },
-          }}
-        />
+        {isScrollDriven ? (
+          <motion.path
+            d={path}
+            fill="none"
+            stroke="url(#gc-stroke)"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            style={{ pathLength: drawnPathLength, opacity: drawnOpacity }}
+          />
+        ) : (
+          <motion.path
+            d={path}
+            fill="none"
+            stroke="url(#gc-stroke)"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            initial={reduce ? false : { pathLength: 0, opacity: 0 }}
+            whileInView={{ pathLength: 1, opacity: 1 }}
+            viewport={{ once: true, margin: "-15%" }}
+            transition={{
+              pathLength: { duration: 1.8, ease: [0.22, 1, 0.36, 1] },
+              opacity: { duration: 0.4 },
+            }}
+          />
+        )}
 
-        {/* Live cursor — pulsing dot at the most recent point */}
-        {!reduce && inView && (
+        {!reduce && isScrollDriven && (
+          <motion.circle
+            r={5}
+            fill="#3DDB7E"
+            style={{
+              cx: cursorX,
+              cy: cursorY,
+              opacity: cursorOpacity,
+              filter: "drop-shadow(0 0 8px rgba(61, 219, 126, 0.6))",
+            }}
+          />
+        )}
+        {!reduce && !isScrollDriven && (
           <motion.circle
             cx={points[points.length - 1].x}
             cy={points[points.length - 1].y}
             r={4}
             fill="#3DDB7E"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: "-15%" }}
             transition={{ delay: 1.8, duration: 0.4 }}
           >
             <animate
