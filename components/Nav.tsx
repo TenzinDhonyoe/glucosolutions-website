@@ -8,8 +8,7 @@ import { cn } from "@/lib/utils";
 import { track } from "@/lib/analytics";
 
 const LINKS = [
-  { href: "#science", label: "Science" },
-  { href: "#how", label: "How it works" },
+  { href: "#science", label: "How it works" },
   { href: "#team", label: "Team" },
   { href: "#faq", label: "FAQ" },
 ];

@@ -2,7 +2,6 @@ import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/sections/Hero";
 import { Problem } from "@/components/sections/Problem";
 import { Solution } from "@/components/sections/Solution";
-import { HowItWorks } from "@/components/sections/HowItWorks";
 import { Science } from "@/components/sections/Science";
 import { Comparison } from "@/components/sections/Comparison";
 import { Team } from "@/components/sections/Team";
@@ -32,7 +31,6 @@ export default function Home() {
         <Problem />
         <Science />
         <Solution />
-        <HowItWorks />
         <Comparison />
         <Team />
         <Advisors />

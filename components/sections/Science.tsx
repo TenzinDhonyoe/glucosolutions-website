@@ -80,7 +80,7 @@ export function Science() {
               {/* Left: heading + chart */}
               <div>
                 <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
-                  How it works inside
+                  How it works
                 </div>
                 <h2
                   id="science-title"
@@ -197,7 +197,7 @@ export function Science() {
       {/* MOBILE / TABLET — plain stack, no scroll story */}
       <div className="lg:hidden mx-auto max-w-7xl px-5 sm:px-8 py-24 md:py-28">
         <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
-          How it works inside
+          How it works
         </div>
         <h2 className="mt-4 text-[36px] sm:text-[44px] leading-[1.02] font-extrabold tracking-[-0.035em] text-white text-balance">
           See your day, before it happens.
