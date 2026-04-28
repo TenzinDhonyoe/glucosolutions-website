@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
-import { Logo } from "@/components/brand/Logo";
 import { cn } from "@/lib/utils";
 import { track } from "@/lib/analytics";
 
@@ -31,21 +31,18 @@ export function Nav() {
   }, [open]);
 
   return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-        scrolled || open
-          ? "bg-ink-0/75 backdrop-blur-xl border-b border-white/[0.06]"
-          : "bg-transparent border-b border-transparent"
-      )}
-    >
+    <header className="fixed inset-x-0 top-0 z-50 pointer-events-none">
       <nav
         aria-label="Primary"
-        className="mx-auto flex max-w-7xl items-center justify-between px-5 sm:px-8 h-16 md:h-[72px]"
+        className={cn(
+          "pointer-events-auto relative mx-auto grid grid-cols-[1fr_auto_1fr] items-center transition-[max-width,height,margin,padding,background-color,border-color,border-radius,box-shadow] duration-200 ease-out",
+          scrolled || open
+            ? "mt-3 max-w-3xl rounded-full border border-white/10 bg-ink-0/70 backdrop-blur-xl px-4 sm:px-5 h-14 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.6)]"
+            : "mt-0 max-w-7xl rounded-none border border-transparent bg-transparent px-5 sm:px-8 h-20 md:h-24"
+        )}
       >
-        <Logo variant="light" size={32} showWordmark={false} />
-
-        <ul className="hidden md:flex items-center gap-9">
+        {/* Left: links */}
+        <ul className="hidden md:flex items-center gap-9 justify-self-start">
           {LINKS.map((l) => (
             <li key={l.href}>
               <a
@@ -58,11 +55,37 @@ export function Nav() {
           ))}
         </ul>
 
-        <div className="flex items-center gap-3">
+        {/* Mobile: empty left slot to keep grid balanced */}
+        <div className="md:hidden" />
+
+        {/* Center: wordmark */}
+        <Link
+          href="/"
+          aria-label="GlucoSolutions home"
+          onClick={(e) => {
+            if (window.location.pathname === "/") {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+          }}
+          className="justify-self-center inline-flex items-center hover:opacity-90 transition-opacity"
+        >
+          <Image
+            src="/wordmark.png"
+            alt="GlucoSolutions"
+            width={1920}
+            height={300}
+            priority
+            className="h-5 sm:h-6 w-auto"
+          />
+        </Link>
+
+        {/* Right: CTA + mobile menu button */}
+        <div className="flex items-center gap-3 justify-self-end">
           <Link
             href="#waitlist"
             onClick={() => track("cta_click", { location: "nav" })}
-            className="hidden sm:inline-flex items-center justify-center rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-[13px] font-semibold text-white hover:bg-white/[0.08] hover:border-white/25 transition-all"
+            className="hidden sm:inline-flex items-center justify-center rounded-full border border-white/30 bg-white/[0.12] px-4 py-2 text-[13px] font-semibold text-white hover:bg-white hover:text-ink-0 hover:border-white transition-all"
           >
             Join waitlist
           </Link>
@@ -83,9 +106,9 @@ export function Nav() {
       {open && (
         <div
           id="mobile-menu"
-          className="md:hidden border-t border-white/[0.06] bg-ink-0/95 backdrop-blur-xl"
+          className="pointer-events-auto md:hidden mt-2 mx-3 rounded-2xl border border-white/10 bg-ink-0/90 backdrop-blur-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.6)]"
         >
-          <ul className="mx-auto max-w-7xl px-5 py-5 flex flex-col">
+          <ul className="px-5 py-5 flex flex-col">
             {LINKS.map((l) => (
               <li key={l.href}>
                 <a

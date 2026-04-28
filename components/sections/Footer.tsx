@@ -1,5 +1,5 @@
+import Image from "next/image";
 import Link from "next/link";
-import { Logo } from "@/components/brand/Logo";
 
 const NAV = [
   { href: "#science", label: "How it works" },
@@ -9,7 +9,7 @@ const NAV = [
 
 const CONNECT = [
   {
-    href: "https://x.com/_tenZdhon_",
+    href: "https://x.com/gluco_solutions",
     label: "X / Twitter",
     external: true,
   },
@@ -27,7 +27,13 @@ export function Footer() {
     <footer className="bg-ink-0 text-white border-t border-white/[0.08]">
       <div className="mx-auto max-w-7xl px-5 sm:px-8 py-20 grid gap-14 md:grid-cols-[1.6fr_1fr_1fr]">
         <div>
-          <Logo variant="light" size={28} />
+          <Image
+            src="/wordmark.png"
+            alt="GlucoSolutions"
+            width={1920}
+            height={300}
+            className="h-7 w-auto"
+          />
           <p className="mt-5 max-w-sm text-[14px] leading-relaxed text-white/55">
             Non-invasive glycemic trend awareness for daily life.
           </p>

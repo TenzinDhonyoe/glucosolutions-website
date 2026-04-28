@@ -10,7 +10,6 @@ import {
 import { ArrowRight } from "lucide-react";
 import { useRef } from "react";
 import { track } from "@/lib/analytics";
-import { MagneticButton } from "@/components/interactive/MagneticButton";
 import { CinematicBackground } from "@/components/interactive/CinematicBackground";
 import { TrendPill } from "@/components/product/TrendPill";
 
@@ -33,8 +32,6 @@ export function Hero() {
 
   const bodyY = useTransform(scrollYProgress, [0, 1], [0, -50]);
   const bodyOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0.4]);
-
-  const badgeY = useTransform(scrollYProgress, [0, 1], [0, -10]);
 
   const floorGlowOpacity = useTransform(scrollYProgress, [0, 0.6], [0.7, 0.2]);
   const pipOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
@@ -79,32 +76,19 @@ export function Hero() {
           viewport at any height (720, 800, 900, 1080, etc.) while keeping
           generous breathing room. */}
       <div className="relative mx-auto max-w-7xl w-full px-5 sm:px-8 pt-24 sm:pt-28 lg:pt-28 pb-12 sm:pb-16 lg:pb-20 flex-1 flex flex-col justify-center">
-        <div className="grid gap-8 md:gap-10 lg:gap-12 lg:grid-cols-[0.85fr_1.4fr] lg:items-center">
+        <div className="grid gap-8 md:gap-10 lg:gap-12 lg:grid-cols-[0.9fr_1.3fr] lg:items-center">
           <div className="relative z-10">
-            <motion.div
-              {...stagger(0)}
-              style={reduce ? undefined : { y: badgeY }}
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/75"
-            >
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-led opacity-75" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-brand-led" />
-              </span>
-              iOS beta · App Store review
-            </motion.div>
-
             <motion.h1
               {...stagger(1)}
               id="hero-headline"
               style={reduce ? undefined : { y: titleY, opacity: titleOpacity }}
-              className="mt-5 sm:mt-6 text-[40px] sm:text-[52px] md:text-[60px] lg:text-[64px] xl:text-[80px] leading-[0.96] font-extrabold tracking-[-0.04em] text-balance"
+              className="text-[42px] sm:text-[52px] md:text-[60px] lg:text-[60px] xl:text-[72px] leading-[1.02] font-extrabold tracking-[-0.04em] text-balance"
             >
-              Prediabetes
+              Know your
               <br />
-              is silent.
-              <br />
-              <span className="display-serif font-normal text-white/85 text-[44px] sm:text-[56px] md:text-[64px] lg:text-[70px] xl:text-[88px]">
-                Until it isn&rsquo;t.
+              glucose trends.
+              <span className="display-serif font-normal text-white/85 block mt-3 sm:mt-4 text-[30px] sm:text-[40px] md:text-[46px] lg:text-[50px] xl:text-[60px] leading-[1.05] tracking-[-0.015em]">
+                No needles, no hassle.
               </span>
             </motion.h1>
 
@@ -113,23 +97,21 @@ export function Hero() {
             >
               <motion.p
                 {...stagger(2)}
-                className="mt-5 sm:mt-6 max-w-[440px] text-[15px] sm:text-[16px] md:text-[17px] leading-[1.55] text-white/55"
+                className="mt-4 sm:mt-5 max-w-[460px] text-[16px] sm:text-[17px] md:text-[19px] leading-[1.5] text-white/60"
               >
-                A wearable and AI coach that learn how food affects your
-                body, so you can eat with confidence.
+                A wearable and AI coach that learns how food moves your
+                glucose, so you can eat with confidence.
               </motion.p>
 
               <motion.div
                 {...stagger(3)}
-                className="mt-6 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4"
+                className="mt-8 sm:mt-9 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4"
               >
-                <MagneticButton
+                <Link
                   href="#waitlist"
                   onClick={() =>
                     track("cta_click", { location: "hero-primary" })
                   }
-                  strength={10}
-                  range={140}
                   className="shine group inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-[14px] font-semibold text-ink-0 hover:bg-white transition-colors"
                 >
                   Join the waitlist
@@ -137,7 +119,7 @@ export function Hero() {
                     size={15}
                     className="transition-transform duration-500 ease-out group-hover:translate-x-1"
                   />
-                </MagneticButton>
+                </Link>
                 <Link
                   href="#science"
                   onClick={() =>
@@ -165,7 +147,7 @@ export function Hero() {
 
           <motion.div
             {...stagger(2)}
-            className="relative mx-auto w-full lg:max-w-none lg:-mr-8 xl:-mr-16 aspect-[5/3]"
+            className="relative mx-auto w-full lg:max-w-none lg:-mr-16 xl:-mr-28 aspect-[4/3]"
             style={{
               y: deviceY,
               scale: deviceScale,

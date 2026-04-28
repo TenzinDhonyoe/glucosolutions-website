@@ -95,14 +95,14 @@ export function Waitlist() {
           id="waitlist-title"
           className="mt-5 text-[44px] sm:text-[56px] md:text-[68px] leading-[1.02] font-extrabold tracking-[-0.035em] text-balance"
         >
-          Eat with confidence.
+          Your first reading is
           <br />
           <span className="display-serif font-normal text-white/75">
-            Starting soon.
+            closer than you think.
           </span>
         </h2>
-        <p className="mt-6 mx-auto max-w-md text-[16px] sm:text-[17px] leading-relaxed text-white/60">
-          Join early access. iOS first. Limited beta cohort.
+        <p className="mt-6 mx-auto text-[15px] sm:text-[16px] md:text-[17px] leading-relaxed text-white/60 sm:whitespace-nowrap">
+          Be among the first to experience painless glucose trend monitoring.
         </p>
 
         <div className="relative mt-12">
@@ -153,14 +153,14 @@ export function Waitlist() {
               {/* Brand-gradient halo behind the input — appears only on focus */}
               <div
                 aria-hidden
-                className="absolute -inset-1 rounded-full opacity-0 blur-[18px] transition-opacity duration-500 brand-gradient"
-                style={{ opacity: isFocused ? 0.45 : 0 }}
+                className="pointer-events-none absolute -inset-2 rounded-full opacity-0 blur-[36px] transition-opacity duration-700 ease-out brand-gradient"
+                style={{ opacity: isFocused ? 0.22 : 0 }}
               />
 
               <div
-                className={`relative flex flex-col sm:flex-row gap-2 rounded-full bg-white/[0.04] p-1.5 border transition-all duration-300 ${
+                className={`relative flex flex-col sm:flex-row gap-2 rounded-full bg-white/[0.04] p-1.5 border transition-all duration-500 ease-out ${
                   isFocused
-                    ? "border-brand-led/50 bg-white/[0.06]"
+                    ? "border-brand-led/35 bg-white/[0.06] shadow-[0_0_0_3px_rgba(61,219,126,0.08)]"
                     : "border-white/[0.08]"
                 }`}
               >
