@@ -115,9 +115,9 @@ export function Science() {
               </div>
 
               {/* Right: cards stacked, crossfade */}
-              <div className="relative h-[400px] xl:h-[420px]">
+              <div className="relative h-[290px] xl:h-[310px]">
                 <motion.article
-                  className="absolute inset-0 rounded-2xl border border-white/[0.06] bg-ink-1 p-8 xl:p-9 flex flex-col justify-center"
+                  className="absolute inset-0 rounded-2xl border border-white/[0.06] bg-ink-1 p-7 xl:p-8 flex flex-col justify-center"
                   style={
                     reduce
                       ? undefined
@@ -143,7 +143,7 @@ export function Science() {
                 </motion.article>
 
                 <motion.article
-                  className="absolute inset-0 rounded-2xl border border-white/[0.06] bg-ink-1 p-8 xl:p-9 flex flex-col justify-center"
+                  className="absolute inset-0 rounded-2xl border border-white/[0.06] bg-ink-1 p-7 xl:p-8 flex flex-col justify-center"
                   style={
                     reduce
                       ? undefined
