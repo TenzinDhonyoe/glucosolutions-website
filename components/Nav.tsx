@@ -45,7 +45,7 @@ export function Nav() {
         aria-label="Primary"
         className="mx-auto flex max-w-7xl items-center justify-between px-5 sm:px-8 h-16 md:h-[72px]"
       >
-        <Logo variant="light" size={28} />
+        <Logo variant="light" size={32} showWordmark={false} />
 
         <ul className="hidden md:flex items-center gap-9">
           {LINKS.map((l) => (
