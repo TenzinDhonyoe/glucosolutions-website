@@ -36,11 +36,8 @@ export function Hero() {
 
   const badgeY = useTransform(scrollYProgress, [0, 1], [0, -10]);
 
-  const glowY = useTransform(scrollYProgress, [0, 1], [0, 120]);
-  const counterGlowX = useTransform(scrollYProgress, [0, 1], [0, 40]);
   const floorGlowOpacity = useTransform(scrollYProgress, [0, 0.6], [0.7, 0.2]);
   const pipOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
-  const pipY = useTransform(scrollYProgress, [0, 1], [0, 60]);
 
   const stagger = (i: number) =>
     reduce
@@ -62,26 +59,18 @@ export function Hero() {
       aria-labelledby="hero-headline"
       className="relative overflow-hidden bg-ink-0 text-white min-h-[100svh] flex flex-col"
     >
-      {/* Cinematic atmospheric background — golden-hour blurred-photo
-          aesthetic. Scroll-driven parallax via the wrapper below. */}
-      <motion.div
-        aria-hidden
-        className="absolute inset-0 pointer-events-none"
-        style={{ y: reduce ? 0 : glowY }}
-      >
-        <CinematicBackground variant="hero" />
-      </motion.div>
+      {/* Cinematic atmospheric background — golden-hour blurred-photo aesthetic */}
+      <CinematicBackground variant="hero" />
 
-      {/* Floor-glow under the device — soft "podium" reflection that
-          recedes as the user scrolls past */}
+      {/* Floor-glow under the device — soft "podium" reflection */}
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute right-[5%] bottom-[8%] h-[280px] w-[760px] rounded-[50%] blur-[80px]"
+        className="pointer-events-none absolute right-[5%] bottom-[8%] h-[280px] w-[760px] rounded-[50%]"
         style={{
           background:
             "radial-gradient(50% 50% at 50% 50%, rgba(61,219,126,0.28), transparent 70%)",
+          filter: "blur(60px)",
           opacity: reduce ? 0.5 : floorGlowOpacity,
-          x: reduce ? 0 : counterGlowX,
         }}
       />
 
@@ -200,38 +189,24 @@ export function Hero() {
               alt="GlucoSolutions wearable: a slim black band with embedded LED indicators"
               className="absolute inset-0 w-full h-full object-contain select-none"
               style={{
-                transformStyle: "preserve-3d",
                 filter:
                   "drop-shadow(0 60px 100px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 80px rgba(45, 190, 108, 0.14))",
+                willChange: "transform",
               }}
               draggable={false}
               animate={
                 reduce
                   ? undefined
                   : {
-                      y: [0, -8, 0, -4, 0],
-                      rotateY: [-6, 6, -6],
-                      rotateX: [-2, 2, -2],
+                      y: [0, -8, 0],
                     }
               }
               transition={{
                 y: {
-                  duration: 9,
+                  duration: 8,
                   ease: "easeInOut",
                   repeat: Infinity,
                   repeatType: "loop",
-                },
-                rotateY: {
-                  duration: 22,
-                  ease: "easeInOut",
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                },
-                rotateX: {
-                  duration: 17,
-                  ease: "easeInOut",
-                  repeat: Infinity,
-                  repeatType: "reverse",
                 },
               }}
             />
@@ -240,12 +215,10 @@ export function Hero() {
       </div>
 
       {/* PIP "Live trend" card — anchored to the section bottom-right inside
-          the safe-zone padding. Lives outside the inner container so it
-          doesn't get pushed around by content height. Hidden below md to
-          avoid crowding small viewports. Recedes with scroll. */}
+          the safe-zone padding. */}
       <motion.div
-        className="hidden md:block absolute right-5 sm:right-8 lg:right-10 bottom-12 lg:bottom-14 w-[230px] rounded-2xl border border-white/[0.08] bg-ink-1/85 backdrop-blur-md p-4 shadow-[0_20px_60px_rgba(0,0,0,0.45)] z-20"
-        style={reduce ? undefined : { opacity: pipOpacity, y: pipY }}
+        className="hidden md:block absolute right-5 sm:right-8 lg:right-10 bottom-12 lg:bottom-14 w-[230px] rounded-2xl border border-white/[0.08] bg-ink-1/95 p-4 shadow-[0_20px_60px_rgba(0,0,0,0.45)] z-20"
+        style={reduce ? undefined : { opacity: pipOpacity }}
         initial={reduce ? undefined : { opacity: 0, y: 16 }}
         animate={reduce ? undefined : { opacity: 1, y: 0 }}
         transition={{

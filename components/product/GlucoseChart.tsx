@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   motion,
+  useInView,
   useMotionValue,
   useTransform,
   useReducedMotion,
@@ -77,12 +78,16 @@ type Props = {
 
 export function GlucoseChart({ className, scrollProgress }: Props) {
   const reduce = useReducedMotion();
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(wrapperRef, { margin: "-10%" });
   const [drift, setDrift] = useState(0);
   const isScrollDriven = !!scrollProgress;
 
-  // Subtle perpetual undulation only when not scroll-driven.
+  // Subtle perpetual undulation only when not scroll-driven AND only while
+  // the chart is actually in the viewport — avoids a perpetual rAF loop
+  // running in the background.
   useEffect(() => {
-    if (reduce || isScrollDriven) return;
+    if (reduce || isScrollDriven || !inView) return;
     let raf = 0;
     let start = 0;
     function tick(now: number) {
@@ -93,7 +98,7 @@ export function GlucoseChart({ className, scrollProgress }: Props) {
     }
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [reduce, isScrollDriven]);
+  }, [reduce, isScrollDriven, inView]);
 
   const points = buildSeries(SAMPLES, drift);
   const path = pathFromPoints(points);
@@ -129,7 +134,7 @@ export function GlucoseChart({ className, scrollProgress }: Props) {
   const cursorOpacity = useTransform(driver, (v) => (v > 0.02 ? 1 : 0));
 
   return (
-    <div className={className}>
+    <div ref={wrapperRef} className={className}>
       <svg
         viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
         className="w-full h-auto"
