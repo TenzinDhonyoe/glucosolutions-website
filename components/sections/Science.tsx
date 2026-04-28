@@ -1,9 +1,9 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import {
   motion,
-  useScroll,
+  useMotionValue,
   useTransform,
   useReducedMotion,
 } from "framer-motion";
@@ -14,42 +14,53 @@ export function Science() {
   const reduce = useReducedMotion();
   const scrollerRef = useRef<HTMLDivElement>(null);
 
-  // Track scroll within the 220vh scroll-story container.
-  // Progress 0 when scroller's top hits viewport top.
-  // Progress 1 when scroller's bottom hits viewport bottom.
-  const { scrollYProgress } = useScroll({
-    target: scrollerRef,
-    offset: ["start start", "end end"],
-  });
+  // Progress from 0 (scroller top hits viewport top) to 1 (scroller bottom
+  // hits viewport bottom). Manual scroll listener — sidesteps any quirks
+  // with useScroll's measurement of sticky children.
+  const progress = useMotionValue(0);
+
+  useEffect(() => {
+    function update() {
+      const el = scrollerRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const range = rect.height - vh;
+      if (range <= 0) {
+        progress.set(0);
+        return;
+      }
+      // rect.top: 0 = scroller top at viewport top, negative once scrolled past
+      const p = Math.max(0, Math.min(1, -rect.top / range));
+      progress.set(p);
+    }
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [progress]);
 
   // Chart progress — finishes drawing by 70% scroll
-  const chartProgress = useTransform(scrollYProgress, [0.05, 0.7], [0, 1]);
+  const chartProgress = useTransform(progress, [0.05, 0.7], [0, 1]);
 
-  // Cards crossfade in the SAME on-screen position (no empty gap).
-  // Card 1 fully visible 0..0.4, fading 0.4..0.55, gone 0.55..1
-  // Card 2 invisible 0..0.4, fading in 0.4..0.55, fully visible 0.55..1
+  // Cards crossfade in the SAME on-screen position
   const card1Opacity = useTransform(
-    scrollYProgress,
+    progress,
     [0, 0.05, 0.4, 0.55],
-    [0, 1, 1, 0]
+    [1, 1, 1, 0]
   );
-  const card2Opacity = useTransform(
-    scrollYProgress,
-    [0.4, 0.55, 0.95, 1],
-    [0, 1, 1, 1]
-  );
-  const card1Y = useTransform(
-    scrollYProgress,
-    [0, 0.05, 0.4, 0.55],
-    [10, 0, 0, -10]
-  );
-  const card2Y = useTransform(scrollYProgress, [0.4, 0.55], [10, 0]);
+  const card2Opacity = useTransform(progress, [0.4, 0.55], [0, 1]);
+  const card1Y = useTransform(progress, [0.4, 0.55], [0, -10]);
+  const card2Y = useTransform(progress, [0.4, 0.55], [10, 0]);
 
   // Step dot indicators
-  const step1Opacity = useTransform(scrollYProgress, [0.4, 0.55], [1, 0.3]);
-  const step2Opacity = useTransform(scrollYProgress, [0.4, 0.55], [0.3, 1]);
-  const step1Width = useTransform(scrollYProgress, [0.4, 0.55], [40, 16]);
-  const step2Width = useTransform(scrollYProgress, [0.4, 0.55], [16, 40]);
+  const step1Opacity = useTransform(progress, [0.4, 0.55], [1, 0.3]);
+  const step2Opacity = useTransform(progress, [0.4, 0.55], [0.3, 1]);
+  const step1Width = useTransform(progress, [0.4, 0.55], [40, 16]);
+  const step2Width = useTransform(progress, [0.4, 0.55], [16, 40]);
 
   return (
     <section
@@ -57,10 +68,7 @@ export function Science() {
       aria-labelledby="science-title"
       className="relative bg-ink-0 text-white border-t border-white/[0.06]"
     >
-      {/* DESKTOP scroll story — pinned scroll with crossfading cards.
-          Lives in its own 220vh-tall container so the sticky element has
-          plenty of scroll room. Hidden below lg, replaced by a simple
-          stack version below. */}
+      {/* DESKTOP scroll story — pinned scroll with crossfading cards */}
       <div
         ref={scrollerRef}
         className="hidden lg:block relative"
@@ -69,7 +77,7 @@ export function Science() {
         <div className="sticky top-0 h-screen flex items-center overflow-hidden">
           <div className="mx-auto max-w-7xl w-full px-5 sm:px-8">
             <div className="grid grid-cols-[1.05fr_1fr] gap-12 xl:gap-16 items-center">
-              {/* Left: heading + chart (visible whole story) */}
+              {/* Left: heading + chart */}
               <div>
                 <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
                   How it works inside
@@ -106,7 +114,7 @@ export function Science() {
                 </div>
               </div>
 
-              {/* Right: cards in same position, crossfade */}
+              {/* Right: cards stacked, crossfade */}
               <div className="relative h-[400px] xl:h-[420px]">
                 <motion.article
                   className="absolute inset-0 rounded-2xl border border-white/[0.06] bg-ink-1 p-8 xl:p-9 flex flex-col justify-center"
@@ -161,7 +169,7 @@ export function Science() {
                   </div>
                 </motion.article>
 
-                {/* Step indicator dots — show position in the story */}
+                {/* Step indicator dots */}
                 <div className="absolute -bottom-9 left-0 flex items-center gap-2">
                   <motion.div
                     className="h-1.5 rounded-full bg-white"
@@ -186,7 +194,7 @@ export function Science() {
         </div>
       </div>
 
-      {/* MOBILE / TABLET — no scroll story, plain stack */}
+      {/* MOBILE / TABLET — plain stack, no scroll story */}
       <div className="lg:hidden mx-auto max-w-7xl px-5 sm:px-8 py-24 md:py-28">
         <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
           How it works inside
@@ -244,7 +252,7 @@ export function Science() {
         </div>
       </div>
 
-      {/* Stat strip — sits below either scroll story or mobile stack */}
+      {/* Stat strip */}
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8 pb-24 md:pb-32">
         <div className="border-t border-white/[0.08] pt-10 flex flex-wrap items-baseline gap-x-12 gap-y-6">
           <div className="flex items-baseline gap-3">
