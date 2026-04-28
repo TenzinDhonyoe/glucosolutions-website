@@ -7,7 +7,6 @@ import {
   useTransform,
   useReducedMotion,
 } from "framer-motion";
-import { CounterStat } from "@/components/interactive/CounterStat";
 import { GlucoseChart } from "@/components/product/GlucoseChart";
 
 export function Science() {
@@ -252,35 +251,6 @@ export function Science() {
         </div>
       </div>
 
-      {/* Stat strip */}
-      <div className="relative mx-auto max-w-7xl px-5 sm:px-8 pb-24 md:pb-32">
-        <div className="border-t border-white/[0.08] pt-10 flex flex-wrap items-baseline gap-x-12 gap-y-6">
-          <div className="flex items-baseline gap-3">
-            <span className="text-[28px] sm:text-[36px] font-extrabold tracking-[-0.03em] brand-text-gradient tabular-nums">
-              <CounterStat to={0} duration={1100} />
-            </span>
-            <span className="text-[14px] text-white/55">needles</span>
-          </div>
-          <div className="flex items-baseline gap-3">
-            <span className="text-[28px] sm:text-[36px] font-extrabold tracking-[-0.03em] brand-text-gradient tabular-nums">
-              <CounterStat to={24} suffix="/7" duration={1100} />
-            </span>
-            <span className="text-[14px] text-white/55">awareness</span>
-          </div>
-          <div className="flex items-baseline gap-3">
-            <span className="text-[28px] sm:text-[36px] font-extrabold tracking-[-0.03em] brand-text-gradient tabular-nums">
-              <CounterStat to={80} prefix="~" suffix="%" duration={1500} />
-            </span>
-            <span className="text-[14px] text-white/55">
-              trend accuracy in lab testing
-            </span>
-          </div>
-        </div>
-        <p className="mt-10 text-[12px] italic text-white/35 max-w-2xl">
-          Wellness device. Not a substitute for medical-grade glucose
-          measurement.
-        </p>
-      </div>
     </section>
   );
 }
