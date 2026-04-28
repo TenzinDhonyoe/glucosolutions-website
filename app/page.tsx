@@ -13,11 +13,11 @@ import { Footer } from "@/components/sections/Footer";
 import { Marquee } from "@/components/interactive/Marquee";
 
 const MARQUEE_ITEMS = [
-  "Glycemic trend awareness",
-  "Non-invasive",
-  "AI coach",
+  "Know your blood sugar",
+  "No needles",
+  "AI coach included",
   "No prescription",
-  "Daily wear, no consumables",
+  "Charge once a week",
   "Trends, not pricks",
   "iOS first",
 ];

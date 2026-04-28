@@ -12,11 +12,11 @@ const COLUMNS = [
 ];
 
 const ROWS: { label: string; cells: boolean[] }[] = [
-  { label: "Non-invasive", cells: [true, false, true] },
-  { label: "Glucose-specific signal", cells: [true, true, false] },
-  { label: "AI coaching built in", cells: [true, false, false] },
-  { label: "No prescription", cells: [true, false, true] },
-  { label: "Daily wear, no consumables", cells: [true, false, true] },
+  { label: "No needles", cells: [true, false, true] },
+  { label: "Tracks your blood sugar", cells: [true, true, false] },
+  { label: "AI coach included", cells: [true, false, false] },
+  { label: "No prescription needed", cells: [true, false, true] },
+  { label: "No throwaway sensors", cells: [true, false, true] },
 ];
 
 function Cell({ on, primary }: { on: boolean; primary: boolean }) {

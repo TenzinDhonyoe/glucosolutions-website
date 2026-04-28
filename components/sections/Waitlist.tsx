@@ -6,6 +6,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Check, ArrowRight } from "lucide-react";
 import { joinWaitlist, type WaitlistResult } from "@/app/waitlist/actions";
 import { track } from "@/lib/analytics";
+import { CinematicBackground } from "@/components/interactive/CinematicBackground";
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -84,53 +85,7 @@ export function Waitlist() {
       aria-labelledby="waitlist-title"
       className="relative overflow-hidden bg-ink-0 text-white border-t border-white/[0.06]"
     >
-      {/* Layered ambient glow — slow breathing for atmospheric energy */}
-      <motion.div
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[680px] w-[680px] rounded-full blur-[140px]"
-        style={{
-          background:
-            "radial-gradient(closest-side, rgba(45,190,108,0.45), rgba(19,139,146,0.2) 50%, transparent)",
-        }}
-        animate={
-          reduce
-            ? undefined
-            : {
-                opacity: [0.32, 0.5, 0.32],
-                scale: [1, 1.08, 1],
-              }
-        }
-        transition={{
-          duration: 10,
-          ease: "easeInOut",
-          repeat: Infinity,
-          repeatType: "loop",
-        }}
-      />
-      {/* Counter-glow drift */}
-      <motion.div
-        aria-hidden
-        className="pointer-events-none absolute left-[15%] top-[30%] h-[320px] w-[320px] rounded-full blur-[100px]"
-        style={{
-          background:
-            "radial-gradient(closest-side, rgba(14,92,126,0.35), transparent 70%)",
-        }}
-        animate={
-          reduce
-            ? undefined
-            : {
-                opacity: [0.25, 0.42, 0.25],
-                x: [0, 30, 0],
-                y: [0, -18, 0],
-              }
-        }
-        transition={{
-          duration: 14,
-          ease: "easeInOut",
-          repeat: Infinity,
-          repeatType: "loop",
-        }}
-      />
+      <CinematicBackground variant="waitlist" />
 
       <div className="relative mx-auto max-w-2xl px-5 sm:px-8 py-32 md:py-40 text-center">
         <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">

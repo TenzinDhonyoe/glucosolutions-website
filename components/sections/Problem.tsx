@@ -1,13 +1,15 @@
 import { MotionSection } from "@/components/MotionSection";
 import { CounterStat } from "@/components/interactive/CounterStat";
+import { CinematicBackground } from "@/components/interactive/CinematicBackground";
 
 export function Problem() {
   return (
     <MotionSection
       id="problem"
       ariaLabelledBy="problem-title"
-      className="relative bg-ink-0 text-white"
+      className="relative bg-ink-0 text-white overflow-hidden"
     >
+      <CinematicBackground variant="problem" />
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8 py-28 md:py-36">
         <div className="grid gap-16 lg:grid-cols-[1fr_1.1fr] lg:items-end">
           <div>

@@ -15,18 +15,18 @@ const STEPS: Step[] = [
   {
     n: "01",
     title: "Wear",
-    body: "A slim wearable with custom PCB, ESP32-S3, and multi-wavelength NIR optics. Charge once, wear daily.",
+    body: "Slip on the slim band in the morning. Forget it's there. Charge once a week.",
   },
   {
     n: "02",
     title: "Sense",
-    body: "Proprietary multi-wavelength NIR plus an ML classifier reads glycemic trend.",
+    body: "It reads how your blood sugar is moving in real time. No needles, no skin patches.",
     extra: <TrendPill />,
   },
   {
     n: "03",
     title: "Coach",
-    body: "The AI app turns trends into eat-this-not-that, walk-now, sleep-earlier guidance, in plain language.",
+    body: "The app tells you what to eat, when to walk, when to sleep. In plain English.",
   },
 ];
 

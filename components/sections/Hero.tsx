@@ -11,6 +11,7 @@ import { ArrowRight } from "lucide-react";
 import { useRef } from "react";
 import { track } from "@/lib/analytics";
 import { MagneticButton } from "@/components/interactive/MagneticButton";
+import { CinematicBackground } from "@/components/interactive/CinematicBackground";
 import { TrendPill } from "@/components/product/TrendPill";
 
 export function Hero() {
@@ -61,57 +62,26 @@ export function Hero() {
       aria-labelledby="hero-headline"
       className="relative overflow-hidden bg-ink-0 text-white min-h-[100svh] flex flex-col"
     >
-      {/* Layer 1: vertical gradient gives the canvas a horizon line */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(180deg, #07090A 0%, #07090A 38%, #0A1115 78%, #0C1518 100%)",
-        }}
-      />
-
-      {/* Layer 2: subtle film grain */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.04] mix-blend-overlay"
-        style={{
-          backgroundImage:
-            "radial-gradient(rgba(255,255,255,0.6) 1px, transparent 1px)",
-          backgroundSize: "3px 3px",
-        }}
-      />
-
-      {/* Layer 3: primary teal/green ambient glow behind the device */}
+      {/* Cinematic atmospheric background — golden-hour blurred-photo
+          aesthetic. Scroll-driven parallax via the wrapper below. */}
       <motion.div
         aria-hidden
-        className="ambient-breathe pointer-events-none absolute right-[-12%] top-[8%] h-[940px] w-[940px] rounded-full blur-[180px]"
-        style={{
-          background:
-            "radial-gradient(closest-side, rgba(45,190,108,0.42), rgba(19,139,146,0.22) 38%, transparent 72%)",
-          y: reduce ? 0 : glowY,
-        }}
-      />
+        className="absolute inset-0 pointer-events-none"
+        style={{ y: reduce ? 0 : glowY }}
+      >
+        <CinematicBackground variant="hero" />
+      </motion.div>
 
-      {/* Layer 4: deep blue counter-glow lower-left */}
-      <motion.div
-        aria-hidden
-        className="pointer-events-none absolute -bottom-44 -left-44 h-[640px] w-[640px] rounded-full opacity-50 blur-[160px]"
-        style={{
-          background:
-            "radial-gradient(closest-side, rgba(14,92,126,0.55), rgba(0,0,0,0) 70%)",
-          x: reduce ? 0 : counterGlowX,
-        }}
-      />
-
-      {/* Layer 5: floor-glow under the device — soft "podium" reflection */}
+      {/* Floor-glow under the device — soft "podium" reflection that
+          recedes as the user scrolls past */}
       <motion.div
         aria-hidden
         className="pointer-events-none absolute right-[5%] bottom-[8%] h-[280px] w-[760px] rounded-[50%] blur-[80px]"
         style={{
           background:
-            "radial-gradient(50% 50% at 50% 50%, rgba(61,219,126,0.22), transparent 70%)",
+            "radial-gradient(50% 50% at 50% 50%, rgba(61,219,126,0.28), transparent 70%)",
           opacity: reduce ? 0.5 : floorGlowOpacity,
+          x: reduce ? 0 : counterGlowX,
         }}
       />
 
@@ -156,8 +126,8 @@ export function Hero() {
                 {...stagger(2)}
                 className="mt-5 sm:mt-6 max-w-[440px] text-[15px] sm:text-[16px] md:text-[17px] leading-[1.55] text-white/55"
               >
-                A non-invasive wearable and AI coach for glycemic trend
-                awareness. Eat with confidence.
+                A wearable and AI coach that learn how food affects your
+                body, so you can eat with confidence.
               </motion.p>
 
               <motion.div
