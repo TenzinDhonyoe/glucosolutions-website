@@ -30,9 +30,9 @@ export default function Home() {
         <Hero />
         <Marquee items={MARQUEE_ITEMS} duration={42} />
         <Problem />
+        <Science />
         <Solution />
         <HowItWorks />
-        <Science />
         <Comparison />
         <Team />
         <Advisors />
