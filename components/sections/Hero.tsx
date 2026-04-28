@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { track } from "@/lib/analytics";
@@ -27,18 +26,27 @@ export function Hero() {
       aria-labelledby="hero-headline"
       className="relative overflow-hidden bg-ink-0 text-white"
     >
-      {/* Single restrained ambient glow — anchors the device, no decorative scatter. */}
+      {/* Primary ambient glow — bigger and more saturated since the device is the hero */}
       <div
         aria-hidden
-        className="pointer-events-none absolute right-[-15%] top-[18%] h-[680px] w-[680px] rounded-full opacity-50 blur-[140px]"
+        className="pointer-events-none absolute right-[-10%] top-[10%] h-[820px] w-[820px] rounded-full opacity-55 blur-[160px]"
         style={{
           background:
-            "radial-gradient(closest-side, rgba(45,190,108,0.32), rgba(19,139,146,0.18) 38%, transparent 70%)",
+            "radial-gradient(closest-side, rgba(45,190,108,0.36), rgba(19,139,146,0.18) 40%, transparent 72%)",
+        }}
+      />
+      {/* Counter-glow on the lower left for depth */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-40 -left-40 h-[560px] w-[560px] rounded-full opacity-40 blur-[140px]"
+        style={{
+          background:
+            "radial-gradient(closest-side, rgba(14,92,126,0.45), rgba(0,0,0,0) 70%)",
         }}
       />
 
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8 pt-32 sm:pt-36 md:pt-44 pb-20 md:pb-28">
-        <div className="grid gap-14 md:gap-16 lg:grid-cols-[1.05fr_1fr] lg:items-center">
+        <div className="grid gap-14 md:gap-16 lg:grid-cols-[1fr_1.15fr] lg:items-center">
           <div>
             <motion.div
               {...stagger(0)}
@@ -110,23 +118,47 @@ export function Hero() {
 
           <motion.div
             {...stagger(2)}
-            className="relative mx-auto w-full max-w-[640px] lg:max-w-none"
+            className="relative mx-auto w-full lg:max-w-none lg:-mr-8 xl:-mr-16"
           >
-            <div className="relative aspect-[4/3] w-full">
-              <Image
-                src="/product/wearable.png"
-                alt="GlucoSolutions wearable: a slim black band with embedded LED indicators"
-                fill
-                priority
-                sizes="(min-width: 1024px) 50vw, 90vw"
-                className="object-contain object-center drop-shadow-[0_40px_80px_rgba(0,0,0,0.65)]"
-              />
-            </div>
+            {/* LED-position bloom — positioned to back-light the LED display */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute left-[28%] top-[34%] h-[180px] w-[260px] rounded-full opacity-60 blur-[60px]"
+              style={{
+                background:
+                  "radial-gradient(closest-side, rgba(61,219,126,0.55), rgba(45,190,108,0.18) 50%, transparent 80%)",
+              }}
+            />
+
+            <motion.img
+              src="/product/wearable.svg"
+              alt="GlucoSolutions wearable: a slim black band with embedded LED indicators"
+              className="relative w-full h-auto select-none"
+              style={{
+                filter:
+                  "drop-shadow(0 50px 90px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 60px rgba(45, 190, 108, 0.12))",
+              }}
+              draggable={false}
+              animate={
+                reduce
+                  ? undefined
+                  : {
+                      y: [0, -10, 0],
+                      rotate: [0, 0.4, 0],
+                    }
+              }
+              transition={{
+                duration: 7,
+                ease: "easeInOut",
+                repeat: Infinity,
+                repeatType: "loop",
+              }}
+            />
           </motion.div>
         </div>
       </div>
 
-      {/* Marquee/divider — fades into the next section */}
+      {/* Hairline brand-gradient divider into the next section */}
       <div className="relative">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div className="brand-rule" />
