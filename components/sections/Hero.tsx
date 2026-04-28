@@ -10,7 +10,6 @@ import {
 import { ArrowRight } from "lucide-react";
 import { useRef } from "react";
 import { track } from "@/lib/analytics";
-import { MouseParallax } from "@/components/interactive/MouseParallax";
 import { MagneticButton } from "@/components/interactive/MagneticButton";
 
 export function Hero() {
@@ -176,6 +175,7 @@ export function Hero() {
               scale: deviceScale,
               rotate: deviceRotate,
               opacity: deviceOpacity,
+              perspective: 1400,
             }}
           >
             {/* LED-position bloom — back-lights the device's LED display */}
@@ -188,31 +188,50 @@ export function Hero() {
               }}
             />
 
-            <MouseParallax strength={18} tilt={4}>
-              <motion.img
-                src="/product/wearable.svg"
-                alt="GlucoSolutions wearable: a slim black band with embedded LED indicators"
-                className="relative w-full h-auto select-none"
-                style={{
-                  filter:
-                    "drop-shadow(0 50px 90px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 60px rgba(45, 190, 108, 0.12))",
-                }}
-                draggable={false}
-                animate={
-                  reduce
-                    ? undefined
-                    : {
-                        y: [0, -10, 0],
-                      }
-                }
-                transition={{
-                  duration: 7,
+            {/* Perpetual product-turntable motion: gentle 3D rotation around
+                the Y axis with a small X-axis bob and a counter-tilt on X for
+                a "lazy floating display" feel. No cursor tracking — pure
+                ambient motion. */}
+            <motion.img
+              src="/product/wearable.svg"
+              alt="GlucoSolutions wearable: a slim black band with embedded LED indicators"
+              className="relative w-full h-auto select-none"
+              style={{
+                transformStyle: "preserve-3d",
+                filter:
+                  "drop-shadow(0 50px 90px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 60px rgba(45, 190, 108, 0.12))",
+              }}
+              draggable={false}
+              animate={
+                reduce
+                  ? undefined
+                  : {
+                      y: [0, -10, 0, -6, 0],
+                      rotateY: [-9, 9, -9],
+                      rotateX: [-2.5, 2.5, -2.5],
+                    }
+              }
+              transition={{
+                y: {
+                  duration: 7.5,
                   ease: "easeInOut",
                   repeat: Infinity,
                   repeatType: "loop",
-                }}
-              />
-            </MouseParallax>
+                },
+                rotateY: {
+                  duration: 13,
+                  ease: "easeInOut",
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                },
+                rotateX: {
+                  duration: 11,
+                  ease: "easeInOut",
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                },
+              }}
+            />
           </motion.div>
         </div>
       </div>
