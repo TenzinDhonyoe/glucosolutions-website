@@ -3,7 +3,6 @@ import { Logo } from "@/components/brand/Logo";
 
 const NAV = [
   { href: "#science", label: "How it works" },
-  { href: "#team", label: "Team" },
   { href: "#faq", label: "FAQ" },
   { href: "#waitlist", label: "Waitlist" },
 ];
