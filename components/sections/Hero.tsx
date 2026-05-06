@@ -99,7 +99,7 @@ export function Hero() {
         <span aria-hidden />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-7xl w-full px-5 sm:px-8 pt-32 sm:pt-36 pb-24 sm:pb-28 flex-1 flex flex-col justify-center">
+      <div className="relative z-10 mx-auto max-w-7xl w-full px-5 sm:px-8 pt-28 sm:pt-36 pb-20 sm:pb-28 flex-1 flex flex-col justify-center">
         {/* All hero content stacks on the left — right side stays empty
             so the runner photo carries the visual weight */}
         <div className="max-w-3xl">
@@ -107,7 +107,7 @@ export function Hero() {
             {...stagger(1)}
             id="hero-headline"
             style={reduce ? undefined : { y: titleY, opacity: titleOpacity }}
-            className="display-serif text-balance text-[40px] sm:text-[56px] md:text-[64px] lg:text-[68px] xl:text-[76px] leading-[1] tracking-[-0.02em] text-paper"
+            className="display-serif text-balance text-[36px] sm:text-[52px] md:text-[64px] lg:text-[68px] xl:text-[76px] leading-[1.02] sm:leading-[1] tracking-[-0.02em] text-paper"
           >
             Catch{" "}
             <span className="display-serif-italic text-seafoam">
@@ -126,13 +126,13 @@ export function Hero() {
               dietitian. Built for adults with prediabetes.
             </p>
 
-            <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <div className="mt-7 flex flex-wrap items-center gap-x-5 sm:gap-x-6 gap-y-4">
               <Link
                 href="#waitlist"
                 onClick={() =>
                   track("cta_click", { location: "hero-primary" })
                 }
-                className="shine group inline-flex items-center gap-2.5 rounded-full bg-sage px-7 py-3.5 text-[15px] font-medium text-paper hover:bg-sage-2 transition-colors duration-220"
+                className="shine group inline-flex items-center justify-center gap-2.5 rounded-full bg-sage px-6 sm:px-7 py-3.5 text-[15px] font-medium text-paper hover:bg-sage-2 transition-colors duration-220"
               >
                 Join the waitlist
                 <ArrowRight
