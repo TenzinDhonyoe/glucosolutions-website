@@ -1,90 +1,152 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useState } from "react";
+import Image from "next/image";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { MotionSection } from "@/components/MotionSection";
+import { SectionLabel } from "@/components/interactive/SectionLabel";
 
-const FEATURES = [
+type Slide = {
+  image: string;
+  alt: string;
+  label: string;
+  title: string;
+  body: string;
+};
+
+const SLIDES: Slide[] = [
   {
-    label: "Wearable",
-    title: "Non-invasive sensing.",
-    body: "Multi-wavelength near-infrared optics on a slim band. No needles, no skin patches, no consumables.",
+    image: "/photos/solution/baseline.png",
+    alt: "Hand holding a phone showing the metabolic-health onboarding screen",
+    label: "Day one",
+    title: "See what shapes your metabolic health.",
+    body:
+      "Start with a quick intake — medications, family history, sleep, activity. Every recommendation begins from your real baseline, not an average.",
   },
   {
-    label: "AI Coach",
-    title: "Context-aware nudges.",
-    body: "A chat-native app that translates glycemic trends into eat-this-not-that, walk-now, sleep-earlier guidance.",
+    image: "/photos/solution/meal.png",
+    alt: "Plate of eggs and tomatoes next to a phone showing meal review with macros and a metabolic score",
+    label: "Meals",
+    title: "Snap a meal. See the score.",
+    body:
+      "A photo is enough. Get an instant metabolic score, macro breakdown, and a one-line note on how this plate tends to move your glucose.",
   },
   {
-    label: "Daily Wear",
-    title: "Designed to fade in.",
-    body: "Charge once. Wear daily. Metabolic awareness without the friction of a medical device.",
+    image: "/photos/solution/coach.png",
+    alt: "A runner tying their shoes with floating activity, sleep, weight, and tip cards",
+    label: "Coach",
+    title: "Activity, sleep, and the next small move.",
+    body:
+      "Your wearable folds steps, sleep, and weight into one metabolic score, then surfaces one plain-English nudge — like a ten-minute post-meal walk.",
   },
 ];
 
 export function Solution() {
   const reduce = useReducedMotion();
+  const [index, setIndex] = useState(0);
+  const slide = SLIDES[index];
+  const total = SLIDES.length;
+
+  const fade = reduce
+    ? {}
+    : {
+        initial: { opacity: 0, y: 12 },
+        animate: { opacity: 1, y: 0 },
+        exit: { opacity: 0, y: -12 },
+        transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
+      };
 
   return (
     <MotionSection
       id="solution"
       ariaLabelledBy="solution-title"
-      className="relative bg-ink-0 text-white border-t border-white/[0.06]"
+      className="relative bg-paper text-charcoal border-t border-stone"
     >
       <div className="mx-auto max-w-7xl px-5 sm:px-8 py-28 md:py-36">
-        <div className="grid gap-10 md:gap-16 md:grid-cols-[1.1fr_1fr] md:items-end">
-          <div>
-            <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
-              The solution
-            </div>
-            <h2
-              id="solution-title"
-              className="mt-5 text-[44px] sm:text-[56px] md:text-[68px] leading-[1.02] font-extrabold tracking-[-0.035em] text-white text-balance"
-            >
-              Trends, not pricks.
-            </h2>
-          </div>
-          <p className="md:pb-4 max-w-xl text-[17px] sm:text-[18px] leading-[1.6] text-white/60">
-            Glycemic trend awareness designed to fit a real life. At your desk,
-            at the dinner table, on the trail.
+        <SectionLabel index={3} label="The solution" />
+
+        <div className="mt-10 grid gap-10 md:gap-16 md:grid-cols-[1.1fr_1fr] md:items-end">
+          <h2
+            id="solution-title"
+            className="display-serif text-[44px] sm:text-[60px] md:text-[76px] leading-[1] tracking-[-0.02em] text-charcoal text-balance"
+          >
+            Trends, not{" "}
+            <span className="display-serif-italic text-sage">pricks</span>.
+          </h2>
+          <p className="md:pb-3 max-w-xl text-[17px] sm:text-[18px] leading-[1.6] text-charcoal/75">
+            Glycemic awareness designed to fit a real life. At your desk, at
+            the dinner table, on the trail.
           </p>
         </div>
 
-        <ul className="mt-20 grid gap-x-12 gap-y-14 md:grid-cols-3">
-          {FEATURES.map((f, i) => (
-            <motion.li
-              key={f.title}
-              className="relative group cursor-default"
-              initial={reduce ? false : { opacity: 0, y: 16 }}
-              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-12%" }}
-              transition={{
-                duration: 0.7,
-                delay: 0.15 + i * 0.12,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-            >
-              {/* Hairline that draws on hover beneath the label row */}
-              <div className="flex items-baseline gap-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">
-                <span className="text-brand-led/80 tabular-nums">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span>{f.label}</span>
-              </div>
-              <div className="mt-2 h-px w-full bg-white/[0.06] relative overflow-hidden">
-                <span
-                  aria-hidden
-                  className="absolute inset-y-0 left-0 w-0 brand-gradient transition-[width] duration-700 ease-out group-hover:w-full"
+        {/* Slideshow — open layout, no card frame */}
+        <div className="mt-14">
+          <div className="grid gap-10 md:gap-20 md:grid-cols-2 md:items-center">
+            {/* Left: feature photo */}
+            <div className="relative overflow-hidden rounded-2xl aspect-[4/5] md:aspect-auto md:h-[560px]">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`photo-${index}`}
+                  {...fade}
+                  className="absolute inset-0"
+                >
+                  <Image
+                    src={slide.image}
+                    alt={slide.alt}
+                    fill
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    className="object-cover"
+                  />
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Right: content */}
+            <div className="md:max-w-lg">
+              <AnimatePresence mode="wait">
+                <motion.div key={`text-${index}`} {...fade} aria-live="polite">
+                  <div className="flex items-baseline gap-3 text-[12px] font-medium uppercase tracking-[0.18em] text-charcoal/85">
+                    <span className="text-sage tabular-nums">
+                      0{index + 1}
+                    </span>
+                    <span className="h-px w-8 bg-stone-2" />
+                    <span>{slide.label}</span>
+                  </div>
+                  <h3 className="mt-5 display-serif text-[34px] sm:text-[44px] md:text-[52px] leading-[1.05] tracking-[-0.02em] text-charcoal">
+                    {slide.title}
+                  </h3>
+                  <p className="mt-6 text-[16px] sm:text-[17px] leading-[1.6] text-charcoal/75">
+                    {slide.body}
+                  </p>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+
+          {/* Pagination row */}
+          <div className="mt-14 flex items-center justify-between border-t border-stone pt-6">
+            <div className="flex items-center gap-2">
+              {SLIDES.map((s, i) => (
+                <button
+                  key={s.label}
+                  type="button"
+                  aria-label={`Go to slide ${i + 1}: ${s.label}`}
+                  aria-current={i === index ? "true" : undefined}
+                  onClick={() => setIndex(i)}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    i === index
+                      ? "w-10 bg-charcoal"
+                      : "w-1.5 bg-charcoal/25 hover:bg-charcoal/50"
+                  }`}
                 />
-              </div>
-              <h3 className="mt-5 text-[24px] sm:text-[26px] font-bold tracking-[-0.02em] text-white transition-colors duration-500 group-hover:brand-text-gradient">
-                {f.title}
-              </h3>
-              <p className="mt-3 text-[16px] leading-[1.6] text-white/60 transition-colors duration-500 group-hover:text-white/75">
-                {f.body}
-              </p>
-            </motion.li>
-          ))}
-        </ul>
+              ))}
+            </div>
+            <span className="font-mono text-[12px] tracking-[0.08em] text-charcoal/60 tabular-nums">
+              {String(index + 1).padStart(2, "0")} /{" "}
+              {String(total).padStart(2, "0")}
+            </span>
+          </div>
+        </div>
       </div>
     </MotionSection>
   );

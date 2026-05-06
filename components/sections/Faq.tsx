@@ -4,12 +4,13 @@ import { useState } from "react";
 import { Plus } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { MotionSection } from "@/components/MotionSection";
+import { SectionLabel } from "@/components/interactive/SectionLabel";
 import { cn } from "@/lib/utils";
 
 const FAQS = [
   {
     q: "Is this a medical device?",
-    a: "No. GlucoSolutions is a wellness product. It is not intended to diagnose, treat, cure, or prevent any disease, and it is not a substitute for medical-grade glucose monitoring.",
+    a: "No. Gluco Solutions is a wellness product. It is not intended to diagnose, treat, cure, or prevent any disease, and it is not a substitute for medical-grade glucose monitoring.",
   },
   {
     q: "Do I need a prescription?",
@@ -17,7 +18,7 @@ const FAQS = [
   },
   {
     q: "How accurate is it?",
-    a: "Roughly 80% trend classification accuracy in benchtop testing. We classify glycemic trends, rising, stable, falling, rather than reporting absolute mg/dL values.",
+    a: "Roughly 80% trend classification accuracy in benchtop testing. We classify glycemic trends — rising, stable, falling — rather than reporting absolute mg/dL values.",
   },
   {
     q: "iOS or Android?",
@@ -41,26 +42,24 @@ export function Faq() {
     <MotionSection
       id="faq"
       ariaLabelledBy="faq-title"
-      className="bg-ink-1 text-white border-t border-white/[0.06]"
+      className="bg-oat text-charcoal border-t border-stone"
     >
       <div className="mx-auto max-w-3xl px-5 sm:px-8 py-28 md:py-36">
-        <div>
-          <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
-            FAQ
-          </div>
-          <h2
-            id="faq-title"
-            className="mt-5 text-[40px] sm:text-[52px] md:text-[60px] leading-[1.02] font-extrabold tracking-[-0.035em] text-white text-balance"
-          >
-            Questions, answered.
-          </h2>
-        </div>
+        <SectionLabel index={6} label="FAQ" />
 
-        <ul className="mt-14 border-t border-white/[0.08]">
+        <h2
+          id="faq-title"
+          className="mt-8 display-serif text-[44px] sm:text-[60px] md:text-[72px] leading-[1] tracking-[-0.02em] text-charcoal text-balance"
+        >
+          Questions,{" "}
+          <span className="display-serif-italic text-sage">answered</span>.
+        </h2>
+
+        <ul className="mt-14 border-t border-stone">
           {FAQS.map((item, i) => {
             const isOpen = open === i;
             return (
-              <li key={item.q} className="border-b border-white/[0.08]">
+              <li key={item.q} className="border-b border-stone">
                 <button
                   type="button"
                   aria-expanded={isOpen}
@@ -71,10 +70,10 @@ export function Faq() {
                 >
                   <span
                     className={cn(
-                      "text-[17px] sm:text-[18px] font-medium tracking-tight transition-colors duration-300",
+                      "text-[18px] sm:text-[20px] font-medium tracking-[-0.005em] transition-colors duration-220",
                       isOpen
-                        ? "text-white"
-                        : "text-white/85 group-hover:text-white"
+                        ? "text-charcoal"
+                        : "text-charcoal/85 group-hover:text-charcoal"
                     )}
                   >
                     {item.q}
@@ -82,19 +81,15 @@ export function Faq() {
                   <motion.span
                     aria-hidden
                     animate={{ rotate: isOpen ? 45 : 0 }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 280,
-                      damping: 18,
-                    }}
+                    transition={{ type: "spring", stiffness: 280, damping: 18 }}
                     className={cn(
-                      "shrink-0 h-8 w-8 rounded-full grid place-items-center transition-colors duration-300",
+                      "shrink-0 h-9 w-9 grid place-items-center rounded-full transition-colors duration-220",
                       isOpen
-                        ? "bg-white text-ink-0"
-                        : "bg-white/[0.06] text-white/70 group-hover:bg-white/10 group-hover:text-white"
+                        ? "bg-sage text-paper"
+                        : "border border-stone text-charcoal/70 group-hover:border-sage group-hover:text-sage"
                     )}
                   >
-                    <Plus size={16} strokeWidth={2.5} />
+                    <Plus size={16} strokeWidth={2} />
                   </motion.span>
                 </button>
                 <AnimatePresence initial={false}>
@@ -104,22 +99,16 @@ export function Faq() {
                       id={`faq-panel-${i}`}
                       role="region"
                       aria-labelledby={`faq-trigger-${i}`}
-                      initial={
-                        reduce ? false : { height: 0, opacity: 0, y: -4 }
-                      }
-                      animate={{ height: "auto", opacity: 1, y: 0 }}
-                      exit={reduce ? undefined : { height: 0, opacity: 0, y: -4 }}
+                      initial={reduce ? false : { height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={reduce ? undefined : { height: 0, opacity: 0 }}
                       transition={{
-                        height: {
-                          duration: 0.45,
-                          ease: [0.22, 1, 0.36, 1],
-                        },
-                        opacity: { duration: 0.35 },
-                        y: { duration: 0.4 },
+                        height: { duration: 0.42, ease: [0.2, 0.6, 0.2, 1] },
+                        opacity: { duration: 0.32 },
                       }}
                       className="overflow-hidden"
                     >
-                      <div className="pb-7 pr-12 text-[15px] sm:text-[16px] leading-[1.7] text-white/65">
+                      <div className="pb-7 pr-12 text-[16px] sm:text-[17px] leading-[1.7] text-charcoal/75">
                         {item.a}
                       </div>
                     </motion.div>

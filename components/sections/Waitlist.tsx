@@ -2,11 +2,11 @@
 
 import { useActionState, useEffect, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
+import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { Check, ArrowRight } from "lucide-react";
 import { joinWaitlist, type WaitlistResult } from "@/app/waitlist/actions";
 import { track } from "@/lib/analytics";
-import { CinematicBackground } from "@/components/interactive/CinematicBackground";
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -14,13 +14,13 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="shine group inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-[14px] font-semibold text-ink-0 hover:bg-white disabled:opacity-60 disabled:cursor-not-allowed transition-all whitespace-nowrap"
+      className="shine group inline-flex items-center justify-center gap-2 rounded-full bg-sage px-6 py-3 text-[14px] font-medium text-paper hover:bg-sage-2 disabled:opacity-60 disabled:cursor-not-allowed transition-colors duration-220 whitespace-nowrap"
     >
-      {pending ? "Joining…" : "Join waitlist"}
+      {pending ? "Joining…" : "Join the waitlist"}
       {!pending && (
         <ArrowRight
           size={15}
-          className="transition-transform duration-500 ease-out group-hover:translate-x-1"
+          className="transition-transform duration-220 ease-out group-hover:translate-x-0.5"
         />
       )}
     </button>
@@ -32,10 +32,7 @@ function SuccessBurst() {
   if (reduce) return null;
   const dots = Array.from({ length: 18 });
   return (
-    <div
-      aria-hidden
-      className="pointer-events-none absolute inset-0 overflow-hidden"
-    >
+    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
       {dots.map((_, i) => {
         const angle = (i / dots.length) * Math.PI * 2;
         const dist = 130 + (i % 3) * 28;
@@ -46,9 +43,8 @@ function SuccessBurst() {
             key={i}
             initial={{ x: 0, y: 0, opacity: 1, scale: 0.6 }}
             animate={{ x, y, opacity: 0, scale: 1 }}
-            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute left-1/2 top-1/2 h-1 w-1 rounded-full bg-brand-led"
-            style={{ boxShadow: "0 0 6px rgba(61, 219, 126, 0.7)" }}
+            transition={{ duration: 1.2, ease: [0.2, 0.6, 0.2, 1] }}
+            className="absolute left-1/2 top-1/2 h-1 w-1 rounded-full bg-sunlit"
           />
         );
       })}
@@ -64,7 +60,6 @@ export function Waitlist() {
   const [isFocused, setIsFocused] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const referrerRef = useRef<HTMLInputElement>(null);
-  const reduce = useReducedMotion();
 
   useEffect(() => {
     if (referrerRef.current && typeof document !== "undefined") {
@@ -83,26 +78,45 @@ export function Waitlist() {
     <section
       id="waitlist"
       aria-labelledby="waitlist-title"
-      className="relative overflow-hidden bg-ink-0 text-white border-t border-white/[0.06]"
+      className="relative overflow-hidden text-paper border-t border-stone"
     >
-      <CinematicBackground variant="waitlist" />
+      {/* Full-bleed sunflowers backdrop */}
+      <div aria-hidden className="absolute inset-0 overflow-hidden">
+        <Image
+          src="/photos/sunflowers.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover cine-grade"
+          style={{ objectPosition: "50% 60%" }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{ background: "rgba(28,28,28,0.55)" }}
+        />
+        <div className="vignette" />
+      </div>
 
-      <div className="relative mx-auto max-w-2xl px-5 sm:px-8 py-32 md:py-40 text-center">
-        <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
-          Early access
+      <div className="relative z-10 mx-auto max-w-3xl px-5 sm:px-8 py-32 md:py-44 text-center">
+        <div className="flex items-center justify-center gap-3 text-[12px] font-medium uppercase tracking-[0.18em]">
+          <span className="text-sunlit tabular-nums">05</span>
+          <span className="h-px w-10 bg-paper/60" />
+          <span className="text-paper/90">Early access</span>
         </div>
+
         <h2
           id="waitlist-title"
-          className="mt-5 text-[44px] sm:text-[56px] md:text-[68px] leading-[1.02] font-extrabold tracking-[-0.035em] text-balance"
+          className="mt-8 mx-auto max-w-2xl display-serif text-[42px] sm:text-[56px] md:text-[68px] leading-[1.04] tracking-[-0.02em] text-paper text-balance"
         >
-          Your first reading is
-          <br />
-          <span className="display-serif font-normal text-white/75">
-            closer than you think.
-          </span>
+          The next{" "}
+          <span className="display-serif-italic text-seafoam">10 years</span>{" "}
+          of your metabolic health start now.
         </h2>
-        <p className="mt-6 mx-auto text-[15px] sm:text-[16px] md:text-[17px] leading-relaxed text-white/60 sm:whitespace-nowrap">
-          Be among the first to experience painless glucose trend monitoring.
+
+        <p className="mt-6 mx-auto max-w-md text-[15px] sm:text-[17px] leading-[1.65] text-paper/80">
+          Small choices compound into decades.
+          <br className="hidden sm:block" />
+          {" "}Join the waitlist for early access.
         </p>
 
         <div className="relative mt-12">
@@ -114,26 +128,22 @@ export function Waitlist() {
               transition={{ type: "spring", stiffness: 220, damping: 18 }}
             >
               <SuccessBurst />
-              <div className="relative inline-flex items-center gap-3 rounded-2xl border border-brand-led/30 bg-white/[0.03] px-6 py-5">
-                <span className="grid place-items-center h-9 w-9 rounded-full brand-gradient text-white">
+              <div className="relative inline-flex items-center gap-3 rounded-md border border-stone bg-oat px-6 py-5">
+                <span className="grid place-items-center h-9 w-9 rounded-full bg-sage text-paper">
                   <Check size={18} strokeWidth={3} />
                 </span>
                 <div className="text-left">
-                  <div className="text-[15px] font-bold text-white">
+                  <div className="display-serif text-[20px] text-charcoal">
                     You&rsquo;re on the list.
                   </div>
-                  <div className="text-[13px] text-white/55">
-                    We&rsquo;ll be in touch when invites open.
+                  <div className="caption mt-1">
+                    we&rsquo;ll be in touch when invites open.
                   </div>
                 </div>
               </div>
             </motion.div>
           ) : (
-            <form
-              ref={formRef}
-              action={formAction}
-              className="mx-auto max-w-lg relative"
-            >
+            <form ref={formRef} action={formAction} className="mx-auto max-w-lg">
               <input type="hidden" name="source" value="website" />
               <input
                 ref={referrerRef}
@@ -150,18 +160,9 @@ export function Waitlist() {
                 className="hidden"
               />
 
-              {/* Brand-gradient halo behind the input — appears only on focus */}
               <div
-                aria-hidden
-                className="pointer-events-none absolute -inset-2 rounded-full opacity-0 blur-[36px] transition-opacity duration-700 ease-out brand-gradient"
-                style={{ opacity: isFocused ? 0.22 : 0 }}
-              />
-
-              <div
-                className={`relative flex flex-col sm:flex-row gap-2 rounded-full bg-white/[0.04] p-1.5 border transition-all duration-500 ease-out ${
-                  isFocused
-                    ? "border-brand-led/35 bg-white/[0.06] shadow-[0_0_0_3px_rgba(61,219,126,0.08)]"
-                    : "border-white/[0.08]"
+                className={`flex flex-col sm:flex-row gap-2 rounded-full bg-oat p-1.5 border transition-colors duration-220 ${
+                  isFocused ? "border-seafoam" : "border-stone"
                 }`}
               >
                 <label htmlFor="email" className="sr-only">
@@ -177,7 +178,7 @@ export function Waitlist() {
                   placeholder="you@example.com"
                   onFocus={() => setIsFocused(true)}
                   onBlur={() => setIsFocused(false)}
-                  className="flex-1 bg-transparent px-5 py-3 text-[15px] text-white placeholder:text-white/35 focus:outline-none focus:shadow-none"
+                  className="flex-1 bg-transparent px-5 py-3 text-[15px] text-charcoal placeholder:text-charcoal/40 focus:outline-none focus:shadow-none"
                   style={{ boxShadow: "none" }}
                 />
                 <SubmitButton />
@@ -186,14 +187,14 @@ export function Waitlist() {
               {state && !state.ok && (
                 <p
                   role="alert"
-                  className="mt-3 text-[13px] text-brand-led"
+                  className="mt-3 text-[13px] text-sunlit"
                 >
                   {state.error}
                 </p>
               )}
 
-              <p className="mt-5 text-[12px] text-white/40">
-                We&rsquo;ll only email you about early access. No spam, ever.
+              <p className="mt-5 font-mono text-[11px] tracking-[0.04em] text-paper/70">
+                we&rsquo;ll only email about early access. no spam, ever.
               </p>
             </form>
           )}

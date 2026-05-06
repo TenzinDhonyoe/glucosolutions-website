@@ -1,22 +1,33 @@
 import type { Metadata, Viewport } from "next";
-import { Nunito_Sans, Instrument_Serif } from "next/font/google";
+import { Inter, Fraunces, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ScrollProgress } from "@/components/interactive/ScrollProgress";
 import "./globals.css";
 
-const nunitoSans = Nunito_Sans({
-  variable: "--font-nunito-sans",
+// Inter is the working substitute for Suisse Int'l (per DESIGN.md).
+// Fraunces is the working substitute for Canela Deck — closest free
+// editorial serif with a strong italic. Replace with licensed Suisse + Canela
+// at launch; flag as substitutions in deliverables.
+const inter = Inter({
+  variable: "--font-sans",
   subsets: ["latin"],
-  weight: ["300", "400", "600", "700", "800"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-instrument-serif",
+const fraunces = Fraunces({
+  variable: "--font-display",
   subsets: ["latin"],
-  weight: ["400"],
-  style: ["italic"],
+  weight: ["400", "500"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
+const jetbrains = JetBrains_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+  weight: ["400", "500"],
   display: "swap",
 });
 
@@ -25,42 +36,42 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://glucosolutions.ca"
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "GlucoSolutions — Eat with confidence",
-    template: "%s · GlucoSolutions",
+    default: "Gluco Solutions — Catch prediabetes before it catches you.",
+    template: "%s · Gluco Solutions",
   },
   description:
-    "A non-invasive wearable and AI coach for glycemic trend awareness. Built for people with prediabetes who want to eat with confidence.",
-  applicationName: "GlucoSolutions",
-  authors: [{ name: "GlucoSolutions Inc." }],
+    "A wellness wearable, AI coaching, and a registered dietitian — built for adults with prediabetes.",
+  applicationName: "Gluco Solutions",
+  authors: [{ name: "Gluco Solutions" }],
   keywords: [
-    "glycemic trends",
-    "non-invasive wearable",
     "prediabetes",
-    "metabolic awareness",
+    "metabolic health",
+    "glycemic awareness",
+    "food-first nutrition",
+    "non-invasive wearable",
     "AI coaching",
-    "wellness",
   ],
   openGraph: {
     type: "website",
     url: SITE_URL,
-    siteName: "GlucoSolutions",
-    title: "Prediabetes is silent. Until it isn't.",
+    siteName: "Gluco Solutions",
+    title: "Catch prediabetes before it catches you.",
     description:
-      "A non-invasive wearable and AI coach for glycemic trend awareness. Join the waitlist.",
+      "A wellness wearable, AI coaching, and a registered dietitian — built for adults with prediabetes.",
     images: [
       {
         url: "/api/og",
         width: 1200,
         height: 630,
-        alt: "GlucoSolutions — Prediabetes is silent. Until it isn't.",
+        alt: "Gluco Solutions — catch prediabetes before it catches you.",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "GlucoSolutions — Eat with confidence",
+    title: "Gluco Solutions — Catch prediabetes before it catches you.",
     description:
-      "A non-invasive wearable and AI coach for glycemic trend awareness.",
+      "A wellness wearable, AI coaching, and a registered dietitian — built for adults with prediabetes.",
     images: ["/api/og"],
     creator: "@_tenZdhon_",
   },
@@ -69,7 +80,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#07090A",
+  themeColor: "#F6F1E6",
   width: "device-width",
   initialScale: 1,
 };
@@ -80,20 +91,20 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${nunitoSans.variable} ${instrumentSerif.variable} h-full antialiased`}
+      className={`${inter.variable} ${fraunces.variable} ${jetbrains.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-ink-0 text-white">
+      <body className="min-h-full flex flex-col bg-paper text-charcoal">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              name: "GlucoSolutions",
+              name: "Gluco Solutions",
               url: SITE_URL,
               logo: `${SITE_URL}/logo.png`,
               description:
-                "Non-invasive wearable and AI coach for glycemic trend awareness.",
+                "Food-first guidance and metabolic awareness for prediabetes.",
               sameAs: [
                 "https://twitter.com/_tenZdhon_",
                 "https://www.linkedin.com/company/glucosolutions",

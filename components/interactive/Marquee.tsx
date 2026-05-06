@@ -3,26 +3,19 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 type Props = {
-  /** Items to render in the loop. They get duplicated so the strip is seamless. */
   items: string[];
-  /** Seconds per full loop. Slower = calmer. */
   duration?: number;
-  /** Optional className applied to each item. */
   itemClassName?: string;
   className?: string;
 };
 
 /**
- * Edge-to-edge horizontal marquee strip. Items render twice so the loop is
- * seamless. Brand-LED dots act as separators.
- *
- * Used between Hero and Problem to fill the transition with a hint of motion
- * and to reinforce the brand attributes (non-invasive, AI coach, etc.) without
- * adding another wordy section.
+ * Edge-to-edge horizontal marquee. ALL CAPS Suisse Medium with 0.12em
+ * tracking, charcoal/fg-mute on Oat, Sunlit dot as separator.
  */
 export function Marquee({
   items,
-  duration = 38,
+  duration = 60,
   className,
   itemClassName,
 }: Props) {
@@ -31,7 +24,7 @@ export function Marquee({
 
   return (
     <div
-      className={`relative w-full overflow-hidden border-y border-white/[0.06] bg-ink-0 py-5 ${
+      className={`relative w-full overflow-hidden border-y border-stone bg-oat py-4 ${
         className ?? ""
       }`}
     >
@@ -48,28 +41,26 @@ export function Marquee({
         {all.map((item, i) => (
           <span
             key={`${item}-${i}`}
-            className={`flex items-center gap-12 text-[12px] sm:text-[13px] font-semibold uppercase tracking-[0.22em] text-white/55 ${
+            className={`flex items-center gap-12 text-[11px] font-medium uppercase tracking-[0.16em] text-charcoal/70 ${
               itemClassName ?? ""
             }`}
           >
             <span>{item}</span>
             <span
               aria-hidden
-              className="inline-block h-1.5 w-1.5 rounded-full bg-brand-led/60 shrink-0"
-              style={{ boxShadow: "0 0 8px rgba(61,219,126,0.4)" }}
+              className="inline-block h-[6px] w-[6px] rounded-full bg-sunlit shrink-0"
             />
           </span>
         ))}
       </motion.div>
 
-      {/* Edge fade so items disappear into the canvas rather than chopping */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-ink-0 to-transparent"
+        className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-oat to-transparent"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-ink-0 to-transparent"
+        className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-oat to-transparent"
       />
     </div>
   );

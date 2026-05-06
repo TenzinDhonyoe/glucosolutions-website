@@ -143,13 +143,12 @@ export function GlucoseChart({ className, scrollProgress }: Props) {
       >
         <defs>
           <linearGradient id="gc-stroke" x1="0%" x2="100%" y1="0%" y2="0%">
-            <stop offset="0%" stopColor="#2BA3D6" />
-            <stop offset="50%" stopColor="#138B92" />
-            <stop offset="100%" stopColor="#3DDB7E" />
+            <stop offset="0%" stopColor="#5FA7A0" />
+            <stop offset="100%" stopColor="#5FA7A0" />
           </linearGradient>
           <linearGradient id="gc-area" x1="0%" x2="0%" y1="0%" y2="100%">
-            <stop offset="0%" stopColor="#3DDB7E" stopOpacity="0.22" />
-            <stop offset="100%" stopColor="#3DDB7E" stopOpacity="0" />
+            <stop offset="0%" stopColor="#5FA7A0" stopOpacity="0.18" />
+            <stop offset="100%" stopColor="#5FA7A0" stopOpacity="0" />
           </linearGradient>
         </defs>
 
@@ -159,14 +158,14 @@ export function GlucoseChart({ className, scrollProgress }: Props) {
           y={yToPx(TARGET_HI)}
           width={PADDED_W}
           height={yToPx(TARGET_LO) - yToPx(TARGET_HI)}
-          fill="rgba(61, 219, 126, 0.06)"
+          fill="rgba(46, 90, 70, 0.06)"
         />
         <line
           x1={PADDING.left}
           x2={PADDING.left + PADDED_W}
           y1={yToPx(TARGET_HI)}
           y2={yToPx(TARGET_HI)}
-          stroke="rgba(255,255,255,0.08)"
+          stroke="rgba(27, 23, 20, 0.18)"
           strokeDasharray="3 4"
         />
         <line
@@ -174,7 +173,7 @@ export function GlucoseChart({ className, scrollProgress }: Props) {
           x2={PADDING.left + PADDED_W}
           y1={yToPx(TARGET_LO)}
           y2={yToPx(TARGET_LO)}
-          stroke="rgba(255,255,255,0.08)"
+          stroke="rgba(27, 23, 20, 0.18)"
           strokeDasharray="3 4"
         />
 
@@ -184,7 +183,7 @@ export function GlucoseChart({ className, scrollProgress }: Props) {
             x={PADDING.left - 8}
             y={yToPx(v) + 4}
             textAnchor="end"
-            className="fill-white/30"
+            className="fill-charcoal/55"
             fontSize="10"
             fontFamily="var(--font-sans)"
           >
@@ -204,7 +203,7 @@ export function GlucoseChart({ className, scrollProgress }: Props) {
             x={PADDING.left + t * PADDED_W}
             y={HEIGHT - 8}
             textAnchor="middle"
-            className="fill-white/30"
+            className="fill-charcoal/55"
             fontSize="10"
             fontFamily="var(--font-sans)"
           >
@@ -260,12 +259,14 @@ export function GlucoseChart({ className, scrollProgress }: Props) {
         {!reduce && isScrollDriven && (
           <motion.circle
             r={5}
-            fill="#3DDB7E"
+            fill="#E1B66E"
+            stroke="#1C1C1C"
+            strokeWidth="1"
             style={{
               cx: cursorX,
               cy: cursorY,
               opacity: cursorOpacity,
-              filter: "drop-shadow(0 0 8px rgba(61, 219, 126, 0.6))",
+              filter: "drop-shadow(0 0 6px rgba(225, 182, 110, 0.5))",
             }}
           />
         )}
@@ -274,7 +275,9 @@ export function GlucoseChart({ className, scrollProgress }: Props) {
             cx={points[points.length - 1].x}
             cy={points[points.length - 1].y}
             r={4}
-            fill="#3DDB7E"
+            fill="#E1B66E"
+            stroke="#1C1C1C"
+            strokeWidth="1"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "-15%" }}

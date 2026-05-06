@@ -6,9 +6,9 @@ import { motion, useReducedMotion } from "framer-motion";
 type Trend = "rising" | "stable" | "falling";
 
 const TRENDS: { kind: Trend; label: string; arrow: string; color: string; cycleMs: number }[] = [
-  { kind: "stable", label: "stable", arrow: "→", color: "#3DDB7E", cycleMs: 5000 },
-  { kind: "rising", label: "rising", arrow: "↗", color: "#F5A623", cycleMs: 4500 },
-  { kind: "falling", label: "falling", arrow: "↘", color: "#2BA3D6", cycleMs: 4500 },
+  { kind: "stable", label: "stable", arrow: "→", color: "#5FA7A0", cycleMs: 5000 },
+  { kind: "rising", label: "rising", arrow: "↗", color: "#E1B66E", cycleMs: 4500 },
+  { kind: "falling", label: "falling", arrow: "↘", color: "#9B3B2E", cycleMs: 4500 },
 ];
 
 /**
@@ -52,7 +52,7 @@ export function TrendPill() {
       >
         {current.label}
       </motion.span>
-      <span className="text-white/55">{current.arrow}</span>
+      <span className="text-charcoal/60">{current.arrow}</span>
     </span>
   );
 }

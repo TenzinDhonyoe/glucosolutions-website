@@ -8,14 +8,12 @@ import {
   useReducedMotion,
 } from "framer-motion";
 import { GlucoseChart } from "@/components/product/GlucoseChart";
+import { SectionLabel } from "@/components/interactive/SectionLabel";
 
 export function Science() {
   const reduce = useReducedMotion();
   const scrollerRef = useRef<HTMLDivElement>(null);
 
-  // Progress from 0 (scroller top hits viewport top) to 1 (scroller bottom
-  // hits viewport bottom). Manual scroll listener — sidesteps any quirks
-  // with useScroll's measurement of sticky children.
   const progress = useMotionValue(0);
 
   useEffect(() => {
@@ -29,7 +27,6 @@ export function Science() {
         progress.set(0);
         return;
       }
-      // rect.top: 0 = scroller top at viewport top, negative once scrolled past
       const p = Math.max(0, Math.min(1, -rect.top / range));
       progress.set(p);
     }
@@ -42,20 +39,13 @@ export function Science() {
     };
   }, [progress]);
 
-  // Chart progress — finishes drawing by 70% scroll
   const chartProgress = useTransform(progress, [0.05, 0.7], [0, 1]);
 
-  // Cards crossfade in the SAME on-screen position
-  const card1Opacity = useTransform(
-    progress,
-    [0, 0.05, 0.4, 0.55],
-    [1, 1, 1, 0]
-  );
+  const card1Opacity = useTransform(progress, [0, 0.05, 0.4, 0.55], [1, 1, 1, 0]);
   const card2Opacity = useTransform(progress, [0.4, 0.55], [0, 1]);
   const card1Y = useTransform(progress, [0.4, 0.55], [0, -10]);
   const card2Y = useTransform(progress, [0.4, 0.55], [10, 0]);
 
-  // Step dot indicators
   const step1Opacity = useTransform(progress, [0.4, 0.55], [1, 0.3]);
   const step2Opacity = useTransform(progress, [0.4, 0.55], [0.3, 1]);
   const step1Width = useTransform(progress, [0.4, 0.55], [40, 16]);
@@ -65,76 +55,57 @@ export function Science() {
     <section
       id="science"
       aria-labelledby="science-title"
-      className="relative bg-ink-0 text-white border-t border-white/[0.06]"
+      className="relative bg-oat text-charcoal border-t border-stone"
     >
-      {/* DESKTOP scroll story — pinned scroll with crossfading cards */}
-      <div
-        ref={scrollerRef}
-        className="hidden lg:block relative"
-        style={{ height: "220vh" }}
-      >
+      {/* DESKTOP scroll story */}
+      <div ref={scrollerRef} className="hidden lg:block relative" style={{ height: "220vh" }}>
         <div className="sticky top-0 h-screen flex items-center overflow-hidden">
           <div className="mx-auto max-w-7xl w-full px-5 sm:px-8">
-            <div className="grid grid-cols-[1.05fr_1fr] gap-12 xl:gap-16 items-center">
-              {/* Left: heading + chart */}
+            <SectionLabel index={2} label="How it works" />
+
+            <div className="mt-8 grid grid-cols-[1.05fr_1fr] gap-12 xl:gap-16 items-center">
               <div>
-                <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
-                  How it works
-                </div>
                 <h2
                   id="science-title"
-                  className="mt-4 text-[44px] xl:text-[56px] leading-[1.02] font-extrabold tracking-[-0.035em] text-white text-balance"
+                  className="display-serif text-[48px] xl:text-[64px] leading-[1.02] tracking-[-0.02em] text-charcoal text-balance"
                 >
-                  See your day, before it happens.
+                  See your day, before it{" "}
+                  <span className="display-serif-italic text-sage">happens</span>.
                 </h2>
-                <p className="mt-4 max-w-md text-[16px] leading-[1.6] text-white/60">
-                  The wearable reads how your body is responding in real
-                  time. You learn what spikes you, what calms you.
+                <p className="mt-5 max-w-md text-[16px] leading-[1.6] text-charcoal/75">
+                  The wearable reads how your body is responding in real time.
+                  You learn what spikes you, what calms you.
                 </p>
 
-                <div className="mt-6 rounded-2xl border border-white/[0.06] bg-ink-1 p-5">
-                  <div className="flex items-baseline justify-between gap-4 mb-2">
+                <figure className="mt-8 rounded-md border border-stone bg-paper p-6">
+                  <div className="flex items-baseline justify-between gap-4 mb-3">
                     <div>
-                      <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-led/80">
-                        A typical day
-                      </div>
-                      <div className="mt-1 text-[12px] text-white/55">
-                        Three meals, three trends
-                      </div>
+                      <div className="eyebrow text-charcoal">a typical day</div>
+                      <div className="caption mt-1">three meals — three trends</div>
                     </div>
-                    <span className="hidden xl:flex items-center gap-1.5 text-[11px] text-white/45">
-                      <span className="block h-1.5 w-1.5 rounded-full bg-brand-led/40" />
-                      healthy range
-                    </span>
                   </div>
-                  <GlucoseChart
-                    scrollProgress={reduce ? undefined : chartProgress}
-                  />
-                </div>
+                  <GlucoseChart scrollProgress={reduce ? undefined : chartProgress} />
+                  <figcaption className="caption mt-4 italic">
+                    fig. 02 — illustrative 24-hour glycemic trace.
+                  </figcaption>
+                </figure>
               </div>
 
-              {/* Right: cards stacked, crossfade */}
-              <div className="relative h-[290px] xl:h-[310px]">
+              <div className="relative h-[300px] xl:h-[320px]">
                 <motion.article
-                  className="absolute inset-0 rounded-2xl border border-white/[0.06] bg-ink-1 p-7 xl:p-8 flex flex-col justify-center"
-                  style={
-                    reduce
-                      ? undefined
-                      : { opacity: card1Opacity, y: card1Y }
-                  }
+                  className="absolute inset-0 rounded-md border border-stone bg-paper p-7 xl:p-8 flex flex-col justify-center"
+                  style={reduce ? undefined : { opacity: card1Opacity, y: card1Y }}
                 >
-                  <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-led/80">
-                    The wearable
-                  </div>
-                  <h3 className="mt-3 text-[28px] xl:text-[32px] font-bold tracking-tight text-white">
+                  <div className="eyebrow text-sage">The wearable</div>
+                  <h3 className="mt-3 display-serif text-[34px] xl:text-[40px] leading-[1.05] tracking-[-0.015em] text-charcoal">
                     Reads through your skin.
                   </h3>
-                  <p className="mt-3 text-[16px] leading-[1.65] text-white/65">
-                    A safe, low-power light shines into your skin and
-                    reads how glucose is moving in your body. No needles.
-                    No patches. No consumables.
+                  <p className="mt-4 text-[16px] leading-[1.65] text-charcoal/75">
+                    A safe, low-power light shines into your skin and reads
+                    how glucose is moving in your body. No needles. No patches.
+                    No consumables.
                   </p>
-                  <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-[12px] text-white/40">
+                  <div className="caption mt-5 flex flex-wrap gap-x-6 gap-y-1">
                     <span>· Non-invasive</span>
                     <span>· Charge once a week</span>
                     <span>· Wear daily</span>
@@ -142,36 +113,30 @@ export function Science() {
                 </motion.article>
 
                 <motion.article
-                  className="absolute inset-0 rounded-2xl border border-white/[0.06] bg-ink-1 p-7 xl:p-8 flex flex-col justify-center"
-                  style={
-                    reduce
-                      ? undefined
-                      : { opacity: card2Opacity, y: card2Y }
-                  }
+                  className="absolute inset-0 rounded-md border border-stone bg-paper p-7 xl:p-8 flex flex-col justify-center"
+                  style={reduce ? undefined : { opacity: card2Opacity, y: card2Y }}
                 >
-                  <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-led/80">
-                    The AI coach
-                  </div>
-                  <h3 className="mt-3 text-[28px] xl:text-[32px] font-bold tracking-tight text-white">
-                    Learns YOUR body.
+                  <div className="eyebrow text-sage">The AI coach</div>
+                  <h3 className="mt-3 display-serif text-[34px] xl:text-[40px] leading-[1.05] tracking-[-0.015em] text-charcoal">
+                    Learns{" "}
+                    <span className="display-serif-italic text-sage">your</span>{" "}
+                    body.
                   </h3>
-                  <p className="mt-3 text-[16px] leading-[1.65] text-white/65">
-                    Instead of one-size-fits-all rules, the app learns
-                    how food, sleep, and stress affect <em>you</em>. It
-                    nudges you in plain language: eat this, walk now,
-                    sleep earlier.
+                  <p className="mt-4 text-[16px] leading-[1.65] text-charcoal/75">
+                    Instead of one-size-fits-all rules, the app learns how
+                    food, sleep, and stress affect <em>you</em>. It nudges you
+                    in plain language: eat this, walk now, sleep earlier.
                   </p>
-                  <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-[12px] text-white/40">
+                  <div className="caption mt-5 flex flex-wrap gap-x-6 gap-y-1">
                     <span>· Personalized</span>
                     <span>· In plain English</span>
                     <span>· No charts to read</span>
                   </div>
                 </motion.article>
 
-                {/* Step indicator dots */}
                 <div className="absolute -bottom-9 left-0 flex items-center gap-2">
                   <motion.div
-                    className="h-1.5 rounded-full bg-white"
+                    className="h-1.5 rounded-full bg-sage"
                     style={
                       reduce
                         ? { opacity: 1, width: 40 }
@@ -179,7 +144,7 @@ export function Science() {
                     }
                   />
                   <motion.div
-                    className="h-1.5 rounded-full bg-white"
+                    className="h-1.5 rounded-full bg-sage"
                     style={
                       reduce
                         ? { opacity: 0.3, width: 16 }
@@ -193,64 +158,59 @@ export function Science() {
         </div>
       </div>
 
-      {/* MOBILE / TABLET — plain stack, no scroll story */}
+      {/* MOBILE / TABLET stack */}
       <div className="lg:hidden mx-auto max-w-7xl px-5 sm:px-8 py-24 md:py-28">
-        <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/45">
-          How it works
-        </div>
-        <h2 className="mt-4 text-[36px] sm:text-[44px] leading-[1.02] font-extrabold tracking-[-0.035em] text-white text-balance">
-          See your day, before it happens.
+        <SectionLabel index={2} label="How it works" />
+        <h2 className="mt-6 display-serif text-[40px] sm:text-[52px] leading-[1.02] tracking-[-0.02em] text-charcoal text-balance">
+          See your day, before it{" "}
+          <span className="display-serif-italic text-sage">happens</span>.
         </h2>
-        <p className="mt-4 max-w-md text-[15px] sm:text-[16px] leading-[1.6] text-white/60">
-          The wearable reads how your body is responding in real time.
-          You learn what spikes you, what calms you.
+        <p className="mt-4 max-w-md text-[15px] sm:text-[16px] leading-[1.6] text-charcoal/75">
+          The wearable reads how your body is responding in real time. You
+          learn what spikes you, what calms you.
         </p>
 
-        <div className="mt-8 rounded-2xl border border-white/[0.06] bg-ink-1 p-5 sm:p-6">
-          <div className="flex items-baseline justify-between gap-4 mb-2">
+        <figure className="mt-8 rounded-md border border-stone bg-paper p-5 sm:p-6">
+          <div className="flex items-baseline justify-between gap-4 mb-3">
             <div>
-              <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-led/80">
-                A typical day
-              </div>
-              <div className="mt-1 text-[12px] text-white/55">
-                Three meals, three trends
-              </div>
+              <div className="eyebrow text-charcoal">a typical day</div>
+              <div className="caption mt-1">three trends</div>
             </div>
           </div>
           <GlucoseChart />
-        </div>
+          <figcaption className="caption mt-4 italic">
+            fig. 02 — illustrative 24-hour glycemic trace.
+          </figcaption>
+        </figure>
 
         <div className="mt-8 grid gap-6">
-          <article className="rounded-2xl border border-white/[0.06] bg-ink-1 p-7">
-            <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-led/80">
-              The wearable
-            </div>
-            <h3 className="mt-3 text-[24px] font-bold tracking-tight text-white">
+          <article className="rounded-md border border-stone bg-paper p-7">
+            <div className="eyebrow text-sage">The wearable</div>
+            <h3 className="mt-3 display-serif text-[28px] leading-[1.1] tracking-[-0.015em] text-charcoal">
               Reads through your skin.
             </h3>
-            <p className="mt-3 text-[15px] leading-[1.65] text-white/65">
+            <p className="mt-3 text-[15px] leading-[1.65] text-charcoal/75">
               A safe, low-power light shines into your skin and reads how
               glucose is moving in your body. No needles. No patches. No
               consumables.
             </p>
           </article>
 
-          <article className="rounded-2xl border border-white/[0.06] bg-ink-1 p-7">
-            <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-led/80">
-              The AI coach
-            </div>
-            <h3 className="mt-3 text-[24px] font-bold tracking-tight text-white">
-              Learns YOUR body.
+          <article className="rounded-md border border-stone bg-paper p-7">
+            <div className="eyebrow text-sage">The AI coach</div>
+            <h3 className="mt-3 display-serif text-[28px] leading-[1.1] tracking-[-0.015em] text-charcoal">
+              Learns{" "}
+              <span className="display-serif-italic text-sage">your</span>{" "}
+              body.
             </h3>
-            <p className="mt-3 text-[15px] leading-[1.65] text-white/65">
+            <p className="mt-3 text-[15px] leading-[1.65] text-charcoal/75">
               Instead of one-size-fits-all rules, the app learns how food,
-              sleep, and stress affect <em>you</em>. It nudges you in
-              plain language: eat this, walk now, sleep earlier.
+              sleep, and stress affect <em>you</em>. It nudges you in plain
+              language: eat this, walk now, sleep earlier.
             </p>
           </article>
         </div>
       </div>
-
     </section>
   );
 }

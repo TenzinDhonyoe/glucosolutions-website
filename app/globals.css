@@ -1,124 +1,148 @@
 @import "tailwindcss";
 
 @theme {
-  /* Brand gradient: deep blue → teal → vivid green (matches logo geometry). */
-  --color-brand-blue: #0E5C7E;
-  --color-brand-teal: #138B92;
-  --color-brand-mid: #1FA77E;
-  --color-brand-green: #2DBE6C;
-  --color-brand-led: #3DDB7E;
+  /* Brand kit v1 — editorial calm.
+     Tokens are derived from DESIGN.md / brand-kit-v1.png.
+     Substitutions in use: Inter for Suisse Int'l, Fraunces for Canela Deck. */
 
-  /* Ink scale — neutral darks for the monochrome canvas. */
-  --color-ink-0: #07090A;
-  --color-ink-1: #0B0E10;
-  --color-ink-2: #14181B;
-  --color-ink-3: #1B2024;
+  --color-sage: #2E5A46;
+  --color-sage-2: #244838;          /* hover-deepen */
+  --color-seafoam: #5FA7A0;
+  --color-sunlit: #E1B66E;
+  --color-oat: #F3EDE2;
+  --color-paper: #F6F1E6;           /* page canvas */
+  --color-stone: #D8D4C7;           /* hairlines / borders */
+  --color-stone-2: #C8C2B0;         /* slightly stronger border */
+  --color-charcoal: #1C1C1C;
+  --color-charcoal-2: #2A2A28;
+  --color-fg-mute: #5B5A52;         /* secondary type */
+  --color-terracotta: #9B3B2E;      /* danger, harmonized */
 
-  /* Aliases retained for legacy components. */
-  --color-gluco-teal: #138B92;
-  --color-gluco-teal-dark: #0E5C7E;
-  --color-gluco-black: #07090A;
-  --color-gluco-white: #FFFFFF;
+  /* Surface tints used in dark sections — phones, photo overlays. */
+  --color-warm-black: #1C1C1C;
 
-  --font-sans: var(--font-nunito-sans), ui-sans-serif, system-ui, -apple-system,
-    BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-display: var(--font-instrument-serif), Georgia, "Times New Roman", serif;
+  /* Legacy aliases retained so older class names don't fall out. */
+  --color-cream: #F3EDE2;           /* same as oat — used on dark photo overlays */
+  --color-ink: #1C1C1C;
+  --color-ink-mute: #5B5A52;
+  --color-rule: #D8D4C7;
+  --color-amber: #E1B66E;           /* maps to sunlit */
 
-  --tracking-display: -0.03em;
+  --font-sans: var(--font-sans), Inter, system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-display), "Fraunces", Georgia, serif;
+  --font-mono: var(--font-mono), "JetBrains Mono", ui-monospace, monospace;
+
+  --tracking-display: -0.02em;
 }
 
 html {
   scroll-behavior: smooth;
-  background: var(--color-ink-0);
-  /* Anchor offset so #section jumps clear the fixed nav. */
+  background: var(--color-paper);
   scroll-padding-top: 88px;
 }
 
 body {
-  background: var(--color-ink-0);
-  color: #FFFFFF;
+  background: var(--color-paper);
+  color: var(--color-charcoal);
   font-family: var(--font-sans);
-  font-feature-settings: "ss01", "cv11";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  /* Subtle ambient grain — adds depth without decoration */
-  background-image:
-    radial-gradient(circle at 20% 20%, rgba(19, 139, 146, 0.04), transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(45, 190, 108, 0.03), transparent 50%);
-  background-attachment: fixed;
 }
 
-/* Brand gradient — used sparingly: text accent, single CTA, hairline rule. */
-.brand-gradient {
-  background: linear-gradient(
-    135deg,
-    var(--color-brand-blue) 0%,
-    var(--color-brand-teal) 48%,
-    var(--color-brand-green) 100%
-  );
-}
+/* === EDITORIAL DISPLAY === */
 
-.brand-text-gradient {
-  background: linear-gradient(
-    135deg,
-    #2BA3D6 0%,
-    var(--color-brand-teal) 48%,
-    var(--color-brand-led) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-}
-
-/* Animated gradient sweep — perpetual subtle motion across an element. */
-.brand-text-gradient-sweep {
-  background: linear-gradient(
-    100deg,
-    #2BA3D6 0%,
-    var(--color-brand-teal) 30%,
-    var(--color-brand-led) 50%,
-    var(--color-brand-teal) 70%,
-    #2BA3D6 100%
-  );
-  background-size: 220% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  animation: gradient-sweep 8s ease-in-out infinite;
-}
-
-@keyframes gradient-sweep {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-/* Editorial italic display accent — used twice per page max (hero + waitlist). */
+/* Canela substitute. Used at 32px+ only, per DESIGN.md. */
 .display-serif {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  font-variation-settings: "opsz" 144, "SOFT" 30;
+}
+
+.display-serif-italic {
   font-family: var(--font-display);
   font-style: italic;
   font-weight: 400;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.015em;
+  font-variation-settings: "opsz" 144, "SOFT" 30;
 }
 
-/* Hairline divider that fades with the brand gradient. */
-.brand-rule {
+/* ALL CAPS eyebrow — 11–12px, 0.12em tracking, charcoal or fg-mute. */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-fg-mute);
+}
+
+/* Mono caption — figure tags and micro labels. */
+.caption {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--color-fg-mute);
+}
+
+/* === HEXAGON MOTIF === */
+/* Reserved for brand marks and photo crops, not functional UI surfaces. */
+.hex-clip {
+  clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
+}
+
+/* === TEXTURE === */
+/* Faint paper grain — very low opacity, allowed on hero surfaces (per DESIGN.md). */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("/textures/grain.svg");
+  background-size: 240px 240px;
+  background-repeat: repeat;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  z-index: 40;
+}
+
+/* Vignette inside PhotoBackdrop — kept warm-dark for cinematic edges. */
+.vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, transparent 30%, rgba(28,28,28,0.42) 100%);
+}
+
+.cine-grade {
+  filter: saturate(1.04) contrast(1.03);
+}
+
+@keyframes ambient-zoom {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+.ambient-zoom {
+  animation: ambient-zoom 18s ease-in-out infinite;
+}
+
+/* Hairlines. */
+.rule {
+  height: 1px;
+  background: var(--color-stone);
+}
+.rule-soft {
   height: 1px;
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(45, 190, 108, 0.4) 50%,
+    var(--color-stone) 50%,
     transparent 100%
   );
 }
 
-/* Shine sweep — single pass on hover, used for high-emphasis CTAs. */
+/* Subtle hover sweep on filled buttons. */
 .shine {
   position: relative;
   overflow: hidden;
@@ -141,16 +165,7 @@ body {
   transform: translateX(100%);
 }
 
-/* Card lift — applied on group hover for product/feature cards. */
-.lift {
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.5s ease, box-shadow 0.5s ease;
-}
-.lift:hover {
-  transform: translateY(-3px);
-}
-
-/* Pulsing dot — used for status pills and live indicators. */
+/* Pulsing dot — for the live-trend chip. */
 .pulse-dot {
   position: relative;
 }
@@ -159,42 +174,22 @@ body {
   position: absolute;
   inset: 0;
   border-radius: 9999px;
-  background: var(--color-brand-led);
+  background: var(--color-sage);
   animation: pulse-ring 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
 @keyframes pulse-ring {
-  0% {
-    transform: scale(1);
-    opacity: 0.7;
-  }
-  80%, 100% {
-    transform: scale(2.4);
-    opacity: 0;
-  }
+  0%   { transform: scale(1); opacity: 0.7; }
+  80%, 100% { transform: scale(2.4); opacity: 0; }
 }
 
-/* Subtle ambient breathing on hero glow elements */
-@keyframes ambient-breathe {
-  0%, 100% {
-    opacity: 0.5;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.7;
-    transform: scale(1.05);
-  }
+/* Card lift — used sparingly per DESIGN.md (most cards rely on borders). */
+.lift {
+  transition: transform 0.42s cubic-bezier(0.2, 0.6, 0.2, 1),
+    border-color 0.42s ease, box-shadow 0.42s ease;
 }
-.ambient-breathe {
-  animation: ambient-breathe 9s ease-in-out infinite;
-}
-
-/* Slow orbit — used on avatar gradient rings */
-@keyframes ring-orbit {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-.ring-orbit {
-  animation: ring-orbit 30s linear infinite;
+.lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgba(28,28,28,.06), 0 18px 40px rgba(28,28,28,.08);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -206,22 +201,19 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .brand-text-gradient-sweep {
-    animation: none;
-  }
+  .ambient-zoom { animation: none; }
 }
 
-/* Custom focus ring — brand-LED glow, not a clinical browser outline. */
+/* Focus ring — Seafoam, per DESIGN.md tokens.focusRing. */
 *:focus-visible {
   outline: none;
   box-shadow:
-    0 0 0 2px var(--color-ink-0),
-    0 0 0 4px var(--color-brand-led),
-    0 0 18px rgba(61, 219, 126, 0.4);
+    0 0 0 2px var(--color-paper),
+    0 0 0 4px var(--color-seafoam);
   border-radius: 6px;
 }
 
 ::selection {
-  background: var(--color-brand-led);
-  color: var(--color-ink-0);
+  background: var(--color-sage);
+  color: var(--color-paper);
 }

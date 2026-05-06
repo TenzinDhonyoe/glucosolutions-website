@@ -7,17 +7,6 @@ import { Comparison } from "@/components/sections/Comparison";
 import { Waitlist } from "@/components/sections/Waitlist";
 import { Faq } from "@/components/sections/Faq";
 import { Footer } from "@/components/sections/Footer";
-import { Marquee } from "@/components/interactive/Marquee";
-
-const MARQUEE_ITEMS = [
-  "Know your blood sugar",
-  "No needles",
-  "AI coach included",
-  "No prescription",
-  "Charge once a week",
-  "Trends, not pricks",
-  "iOS first",
-];
 
 export default function Home() {
   return (
@@ -25,7 +14,6 @@ export default function Home() {
       <Nav />
       <main className="flex-1">
         <Hero />
-        <Marquee items={MARQUEE_ITEMS} duration={42} />
         <Problem />
         <Science />
         <Solution />
