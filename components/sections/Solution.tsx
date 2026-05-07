@@ -41,7 +41,7 @@ const SLIDES: Slide[] = [
   },
 ];
 
-const AUTOPLAY_MS = 3500;
+const AUTOPLAY_MS = 1500;
 
 export function Solution() {
   const reduce = useReducedMotion();
