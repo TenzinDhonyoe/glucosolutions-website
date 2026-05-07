@@ -184,7 +184,7 @@ export function Waitlist() {
         <div className="vignette" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-3xl px-5 sm:px-8 py-24 md:py-44 text-center">
+      <div className="relative z-10 mx-auto max-w-5xl px-5 sm:px-8 py-24 md:py-44 text-center">
         <div className="flex items-center justify-center gap-3 text-[12px] font-medium uppercase tracking-[0.18em]">
           <span className="text-sunlit tabular-nums">05</span>
           <span className="h-px w-10 bg-paper/60" />
@@ -193,13 +193,13 @@ export function Waitlist() {
 
         <h2
           id="waitlist-title"
-          className="mt-8 mx-auto max-w-3xl display-serif text-[36px] sm:text-[52px] md:text-[68px] leading-[1.06] sm:leading-[1.04] tracking-[-0.02em] text-paper text-balance sm:text-pretty"
+          className="mt-8 mx-auto max-w-5xl display-serif text-[36px] sm:text-[52px] md:text-[68px] leading-[1.06] sm:leading-[1.04] tracking-[-0.02em] text-paper text-balance sm:text-pretty"
         >
           The next{" "}
-          <span className="display-serif-italic text-seafoam">10 years</span>
-          <br className="hidden sm:block" />{" "}
-          of your metabolic health
-          <br className="hidden sm:block" />{" "}
+          <span className="display-serif-italic text-seafoam">10 years</span>{" "}
+          <br className="hidden sm:block" />
+          of your metabolic health{" "}
+          <br className="hidden sm:block" />
           starts now.
         </h2>
 
