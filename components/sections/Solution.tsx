@@ -14,6 +14,8 @@ type Slide = {
   body: string;
   /** "cover" (default) crops to fill the frame; "contain" shows the full source with matting. */
   fit?: "cover" | "contain";
+  /** Tailwind object-position utility (e.g. "object-right") — shifts the image inside its letterbox. */
+  position?: string;
 };
 
 const SLIDES: Slide[] = [
@@ -25,6 +27,7 @@ const SLIDES: Slide[] = [
     body:
       "Start with a quick intake — medications, family history, sleep, activity. Every recommendation begins from your real baseline, not an average.",
     fit: "contain",
+    position: "object-right",
   },
   {
     image: "/photos/solution/meal.png",
@@ -142,7 +145,9 @@ export function Solution() {
                     alt={slide.alt}
                     fill
                     sizes="(min-width: 768px) 50vw, 100vw"
-                    className={slide.fit === "contain" ? "object-contain" : "object-cover"}
+                    className={`${
+                      slide.fit === "contain" ? "object-contain" : "object-cover"
+                    }${slide.position ? ` ${slide.position}` : ""}`}
                   />
                 </motion.div>
               </AnimatePresence>
