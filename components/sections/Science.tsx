@@ -63,70 +63,8 @@ export function Science() {
           <div className="mx-auto max-w-7xl w-full px-5 sm:px-8">
             <SectionLabel index={2} label="How it works" />
 
-            <div className="mt-8 grid grid-cols-[1fr_1.05fr] gap-12 xl:gap-16 items-center">
-              <div className="relative h-[300px] xl:h-[320px]">
-                <motion.article
-                  className="absolute inset-0 rounded-md border border-stone bg-paper p-7 xl:p-8 flex flex-col justify-center"
-                  style={reduce ? undefined : { opacity: card1Opacity, y: card1Y }}
-                >
-                  <div className="eyebrow text-sage">The wearable</div>
-                  <h3 className="mt-3 display-serif text-[34px] xl:text-[40px] leading-[1.05] tracking-[-0.015em] text-charcoal">
-                    Reads through your skin.
-                  </h3>
-                  <p className="mt-4 text-[16px] leading-[1.65] text-charcoal/75">
-                    A safe, low-power light shines into your skin and reads
-                    how glucose is moving in your body. No needles. No patches.
-                    No consumables.
-                  </p>
-                  <div className="caption mt-5 flex flex-wrap gap-x-6 gap-y-1">
-                    <span>· Non-invasive</span>
-                    <span>· Charge once a week</span>
-                    <span>· Wear daily</span>
-                  </div>
-                </motion.article>
-
-                <motion.article
-                  className="absolute inset-0 rounded-md border border-stone bg-paper p-7 xl:p-8 flex flex-col justify-center"
-                  style={reduce ? undefined : { opacity: card2Opacity, y: card2Y }}
-                >
-                  <div className="eyebrow text-sage">The AI coach</div>
-                  <h3 className="mt-3 display-serif text-[34px] xl:text-[40px] leading-[1.05] tracking-[-0.015em] text-charcoal">
-                    Learns{" "}
-                    <span className="display-serif-italic text-sage">your</span>{" "}
-                    body.
-                  </h3>
-                  <p className="mt-4 text-[16px] leading-[1.65] text-charcoal/75">
-                    Instead of one-size-fits-all rules, the app learns how
-                    food, sleep, and stress affect <em>you</em>. It nudges you
-                    in plain language: eat this, walk now, sleep earlier.
-                  </p>
-                  <div className="caption mt-5 flex flex-wrap gap-x-6 gap-y-1">
-                    <span>· Personalized</span>
-                    <span>· In plain English</span>
-                    <span>· No charts to read</span>
-                  </div>
-                </motion.article>
-
-                <div className="absolute -bottom-9 left-0 flex items-center gap-2">
-                  <motion.div
-                    className="h-1.5 rounded-full bg-sage"
-                    style={
-                      reduce
-                        ? { opacity: 1, width: 40 }
-                        : { opacity: step1Opacity, width: step1Width }
-                    }
-                  />
-                  <motion.div
-                    className="h-1.5 rounded-full bg-sage"
-                    style={
-                      reduce
-                        ? { opacity: 0.3, width: 16 }
-                        : { opacity: step2Opacity, width: step2Width }
-                    }
-                  />
-                </div>
-              </div>
-
+            <div className="mt-8 grid grid-cols-[1fr_1.15fr] gap-12 xl:gap-16 items-center">
+              {/* LEFT: heading + intro + cross-fading wearable / coach cards */}
               <div>
                 <h2
                   id="science-title"
@@ -140,19 +78,113 @@ export function Science() {
                   You learn what spikes you, what calms you.
                 </p>
 
-                <figure className="mt-8 rounded-md border border-stone bg-paper p-6">
-                  <div className="flex items-baseline justify-between gap-4 mb-3">
-                    <div>
-                      <div className="eyebrow text-charcoal">a typical day</div>
-                      <div className="caption mt-1">three meals — three trends</div>
+                <div className="relative mt-10 h-[280px] xl:h-[300px]">
+                  <motion.article
+                    className="absolute inset-0 rounded-md border border-stone bg-paper p-7 xl:p-8 flex flex-col justify-center"
+                    style={reduce ? undefined : { opacity: card1Opacity, y: card1Y }}
+                  >
+                    <div className="eyebrow text-sage">The wearable</div>
+                    <h3 className="mt-3 display-serif text-[30px] xl:text-[36px] leading-[1.05] tracking-[-0.015em] text-charcoal">
+                      Reads through your skin.
+                    </h3>
+                    <p className="mt-4 text-[15px] xl:text-[16px] leading-[1.65] text-charcoal/75">
+                      A safe, low-power light shines into your skin and reads
+                      how glucose is moving in your body. No needles. No patches.
+                      No consumables.
+                    </p>
+                    <div className="caption mt-5 flex flex-wrap gap-x-6 gap-y-1">
+                      <span>· Non-invasive</span>
+                      <span>· Charge once a week</span>
+                      <span>· Wear daily</span>
                     </div>
+                  </motion.article>
+
+                  <motion.article
+                    className="absolute inset-0 rounded-md border border-stone bg-paper p-7 xl:p-8 flex flex-col justify-center"
+                    style={reduce ? undefined : { opacity: card2Opacity, y: card2Y }}
+                  >
+                    <div className="eyebrow text-sage">The AI coach</div>
+                    <h3 className="mt-3 display-serif text-[30px] xl:text-[36px] leading-[1.05] tracking-[-0.015em] text-charcoal">
+                      Learns{" "}
+                      <span className="display-serif-italic text-sage">your</span>{" "}
+                      body.
+                    </h3>
+                    <p className="mt-4 text-[15px] xl:text-[16px] leading-[1.65] text-charcoal/75">
+                      Instead of one-size-fits-all rules, the app learns how
+                      food, sleep, and stress affect <em>you</em>. It nudges you
+                      in plain language: eat this, walk now, sleep earlier.
+                    </p>
+                    <div className="caption mt-5 flex flex-wrap gap-x-6 gap-y-1">
+                      <span>· Personalized</span>
+                      <span>· In plain English</span>
+                      <span>· No charts to read</span>
+                    </div>
+                  </motion.article>
+
+                  <div className="absolute -bottom-9 left-0 flex items-center gap-2">
+                    <motion.div
+                      className="h-1.5 rounded-full bg-sage"
+                      style={
+                        reduce
+                          ? { opacity: 1, width: 40 }
+                          : { opacity: step1Opacity, width: step1Width }
+                      }
+                    />
+                    <motion.div
+                      className="h-1.5 rounded-full bg-sage"
+                      style={
+                        reduce
+                          ? { opacity: 0.3, width: 16 }
+                          : { opacity: step2Opacity, width: step2Width }
+                      }
+                    />
                   </div>
-                  <GlucoseChart scrollProgress={reduce ? undefined : chartProgress} />
-                  <figcaption className="caption mt-4 italic">
-                    fig. 02 — illustrative 24-hour glycemic trace.
-                  </figcaption>
-                </figure>
+                </div>
               </div>
+
+              {/* RIGHT: full-bleed annotated chart with stats row */}
+              <figure className="rounded-md border border-stone bg-paper p-6 xl:p-8 shadow-[0_10px_40px_-24px_rgba(28,28,28,0.20)]">
+                <header className="flex items-baseline justify-between gap-4 mb-5">
+                  <div>
+                    <div className="eyebrow text-charcoal">a typical day</div>
+                    <div className="caption mt-1">three meals — three trends</div>
+                  </div>
+                  <div className="caption text-charcoal/55">target&nbsp; 95–140 mg/dL</div>
+                </header>
+
+                <GlucoseChart
+                  annotations
+                  scrollProgress={reduce ? undefined : chartProgress}
+                />
+
+                <dl className="mt-6 grid grid-cols-3 gap-4 border-t border-stone pt-5">
+                  <div>
+                    <dt className="caption text-charcoal/65">Time in range</dt>
+                    <dd className="mt-1 display-serif text-[26px] xl:text-[30px] leading-none tracking-[-0.015em] text-sage tabular-nums">
+                      62%
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="caption text-charcoal/65">Average</dt>
+                    <dd className="mt-1 display-serif text-[26px] xl:text-[30px] leading-none tracking-[-0.015em] text-charcoal tabular-nums">
+                      118
+                      <span className="ml-1 font-mono text-[12px] tracking-[0.04em] text-charcoal/45">
+                        mg/dL
+                      </span>
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="caption text-charcoal/65">Spikes flagged</dt>
+                    <dd className="mt-1 display-serif text-[26px] xl:text-[30px] leading-none tracking-[-0.015em] text-charcoal tabular-nums">
+                      3
+                    </dd>
+                  </div>
+                </dl>
+
+                <figcaption className="caption mt-5 italic">
+                  fig. 02 — illustrative 24-hour glycemic trace.
+                </figcaption>
+              </figure>
             </div>
           </div>
         </div>

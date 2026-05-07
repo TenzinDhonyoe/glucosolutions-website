@@ -74,9 +74,21 @@ type Props = {
    * drift makes the curve feel "live".
    */
   scrollProgress?: MotionValue<number>;
+  /**
+   * When true, overlays meal markers on the three peaks (breakfast / lunch /
+   * dinner) with small dots and labels. Used for the desktop science-section
+   * scroll story; the mobile fallback keeps the cleaner unannotated chart.
+   */
+  annotations?: boolean;
 };
 
-export function GlucoseChart({ className, scrollProgress }: Props) {
+const MEAL_ANNOTATIONS = [
+  { t: 0.18, label: "Breakfast" },
+  { t: 0.5, label: "Lunch" },
+  { t: 0.78, label: "Dinner" },
+] as const;
+
+export function GlucoseChart({ className, scrollProgress, annotations }: Props) {
   const reduce = useReducedMotion();
   const wrapperRef = useRef<HTMLDivElement>(null);
   const inView = useInView(wrapperRef, { margin: "-10%" });
@@ -255,6 +267,49 @@ export function GlucoseChart({ className, scrollProgress }: Props) {
             }}
           />
         )}
+
+        {annotations &&
+          MEAL_ANNOTATIONS.map(({ t, label }) => {
+            const idx = Math.max(
+              0,
+              Math.min(SAMPLES - 1, Math.round(t * (SAMPLES - 1)))
+            );
+            const peak = points[idx];
+            if (!peak) return null;
+            const labelY = peak.y - 18;
+            return (
+              <g key={label}>
+                <line
+                  x1={peak.x}
+                  x2={peak.x}
+                  y1={peak.y - 7}
+                  y2={labelY + 4}
+                  stroke="rgba(27, 23, 20, 0.28)"
+                  strokeDasharray="2 2"
+                  strokeWidth="1"
+                />
+                <circle
+                  cx={peak.x}
+                  cy={peak.y}
+                  r={3}
+                  fill="#2D8059"
+                  stroke="#F6F1E6"
+                  strokeWidth="1.5"
+                />
+                <text
+                  x={peak.x}
+                  y={labelY}
+                  textAnchor="middle"
+                  fontSize="9"
+                  fontFamily="var(--font-mono)"
+                  letterSpacing="0.06em"
+                  className="fill-charcoal/70"
+                >
+                  {label}
+                </text>
+              </g>
+            );
+          })}
 
         {!reduce && isScrollDriven && (
           <motion.circle
