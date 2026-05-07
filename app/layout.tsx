@@ -36,8 +36,8 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://glucosolutions.ca"
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Gluco Solutions — Catch prediabetes before it catches you.",
-    template: "%s · Gluco Solutions",
+    default: "GlucoSolutions",
+    template: "GlucoSolutions",
   },
   description:
     "A wellness wearable, AI coaching, and a registered dietitian — built for adults with prediabetes.",
