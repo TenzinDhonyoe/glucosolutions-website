@@ -12,6 +12,8 @@ type Slide = {
   label: string;
   title: string;
   body: string;
+  /** "cover" (default) crops to fill the frame; "contain" shows the full source with matting. */
+  fit?: "cover" | "contain";
 };
 
 const SLIDES: Slide[] = [
@@ -22,6 +24,7 @@ const SLIDES: Slide[] = [
     title: "See what shapes your metabolic health.",
     body:
       "Start with a quick intake — medications, family history, sleep, activity. Every recommendation begins from your real baseline, not an average.",
+    fit: "contain",
   },
   {
     image: "/photos/solution/meal.png",
@@ -127,7 +130,7 @@ export function Solution() {
         >
           <div className="grid gap-6 md:gap-14 md:grid-cols-2 md:items-center">
             {/* Left: feature photo */}
-            <div className="relative overflow-hidden rounded-2xl aspect-square sm:aspect-[5/4] md:aspect-auto md:h-[420px]">
+            <div className="relative overflow-hidden rounded-2xl aspect-square sm:aspect-[5/4] md:aspect-auto md:h-[420px] bg-oat">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={`photo-${index}`}
@@ -139,7 +142,7 @@ export function Solution() {
                     alt={slide.alt}
                     fill
                     sizes="(min-width: 768px) 50vw, 100vw"
-                    className="object-cover"
+                    className={slide.fit === "contain" ? "object-contain" : "object-cover"}
                   />
                 </motion.div>
               </AnimatePresence>
