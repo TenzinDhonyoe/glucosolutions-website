@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import {
   motion,
   useInView,
@@ -94,6 +94,12 @@ export function GlucoseChart({ className, scrollProgress, annotations }: Props) 
   const inView = useInView(wrapperRef, { margin: "-10%" });
   const [drift, setDrift] = useState(0);
   const isScrollDriven = !!scrollProgress;
+  // Unique gradient IDs per instance — the chart is rendered twice on the
+  // homepage (desktop scroll story + mobile fallback), and shared <defs> IDs
+  // collide, leaving the second instance with invisible stroke and area.
+  const uid = useId().replace(/[^a-z0-9]/gi, "");
+  const strokeId = `gc-stroke-${uid}`;
+  const areaId = `gc-area-${uid}`;
 
   // Subtle perpetual undulation only when not scroll-driven AND only while
   // the chart is actually in the viewport — avoids a perpetual rAF loop
@@ -154,11 +160,11 @@ export function GlucoseChart({ className, scrollProgress, annotations }: Props) 
         role="img"
       >
         <defs>
-          <linearGradient id="gc-stroke" x1="0%" x2="100%" y1="0%" y2="0%">
+          <linearGradient id={strokeId} x1="0%" x2="100%" y1="0%" y2="0%">
             <stop offset="0%" stopColor="#5FA7A0" />
             <stop offset="100%" stopColor="#5FA7A0" />
           </linearGradient>
-          <linearGradient id="gc-area" x1="0%" x2="0%" y1="0%" y2="100%">
+          <linearGradient id={areaId} x1="0%" x2="0%" y1="0%" y2="100%">
             <stop offset="0%" stopColor="#5FA7A0" stopOpacity="0.18" />
             <stop offset="100%" stopColor="#5FA7A0" stopOpacity="0" />
           </linearGradient>
@@ -226,13 +232,13 @@ export function GlucoseChart({ className, scrollProgress, annotations }: Props) 
         {isScrollDriven ? (
           <motion.path
             d={areaPath}
-            fill="url(#gc-area)"
+            fill={`url(#${areaId})`}
             style={{ opacity: areaOpacity }}
           />
         ) : (
           <motion.path
             d={areaPath}
-            fill="url(#gc-area)"
+            fill={`url(#${areaId})`}
             initial={reduce ? false : { opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "-15%" }}
@@ -244,7 +250,7 @@ export function GlucoseChart({ className, scrollProgress, annotations }: Props) 
           <motion.path
             d={path}
             fill="none"
-            stroke="url(#gc-stroke)"
+            stroke={`url(#${strokeId})`}
             strokeWidth={2}
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -254,7 +260,7 @@ export function GlucoseChart({ className, scrollProgress, annotations }: Props) 
           <motion.path
             d={path}
             fill="none"
-            stroke="url(#gc-stroke)"
+            stroke={`url(#${strokeId})`}
             strokeWidth={2}
             strokeLinecap="round"
             strokeLinejoin="round"
