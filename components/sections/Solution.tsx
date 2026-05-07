@@ -130,7 +130,7 @@ export function Solution() {
         >
           <div className="grid gap-6 md:gap-14 md:grid-cols-2 md:items-center">
             {/* Left: feature photo */}
-            <div className="relative overflow-hidden rounded-2xl aspect-square sm:aspect-[5/4] md:aspect-auto md:h-[420px] bg-oat">
+            <div className="relative overflow-hidden rounded-2xl aspect-square sm:aspect-[5/4] md:aspect-auto md:h-[420px] bg-white">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={`photo-${index}`}
