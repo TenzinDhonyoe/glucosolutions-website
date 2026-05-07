@@ -110,7 +110,7 @@ export function Hero() {
             className="display-serif text-balance text-[36px] sm:text-[52px] md:text-[64px] lg:text-[68px] xl:text-[76px] leading-[1.02] sm:leading-[1] tracking-[-0.02em] text-paper"
           >
             Catch{" "}
-            <span className="display-serif-italic text-sage">
+            <span className="display-serif-italic text-sage-light">
               prediabetes
             </span>
             <br className="hidden lg:block" /> before it catches you.

@@ -196,7 +196,7 @@ export function Waitlist() {
           className="mt-8 mx-auto max-w-5xl display-serif text-[36px] sm:text-[52px] md:text-[68px] leading-[1.06] sm:leading-[1.04] tracking-[-0.02em] text-paper text-balance sm:text-pretty"
         >
           The next{" "}
-          <span className="display-serif-italic text-sage">10 years</span>{" "}
+          <span className="display-serif-italic text-sage-light">10 years</span>{" "}
           <br className="hidden sm:block" />
           of your metabolic health{" "}
           <br className="hidden sm:block" />
