@@ -10,6 +10,8 @@ type Props = {
   priority?: boolean;
   /** When true, applies the brand hexagon clip — reserved for hero photo crops. */
   hex?: boolean;
+  /** Set to false to skip the corner-darkening radial vignette overlay. */
+  vignette?: boolean;
 };
 
 /**
@@ -24,6 +26,7 @@ export function PhotoCard({
   className,
   priority,
   hex = false,
+  vignette = true,
 }: Props) {
   return (
     <figure className={cn("relative", className)}>
@@ -42,7 +45,7 @@ export function PhotoCard({
           sizes="(min-width: 1024px) 50vw, 100vw"
           className="object-cover cine-grade"
         />
-        {!hex && <div className="vignette opacity-60" />}
+        {!hex && vignette && <div className="vignette opacity-60" />}
       </div>
       {caption && (
         <figcaption className="caption mt-3 italic">{caption}</figcaption>
