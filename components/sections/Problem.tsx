@@ -31,9 +31,9 @@ export function Problem() {
           </div>
 
           <PhotoCard
-            src="/photos/food.jpg"
-            alt="A bowl of grain salad in late-afternoon sun"
-            caption="fig. 01 — a meal, an answer."
+            src="/photos/problem.png"
+            alt="Woman pausing at her kitchen table with a coffee mug, beside a Gluco Solutions risk-factors card showing blood sugar, weight, activity, and sleep"
+            caption="fig. 01 — the body keeps score."
             ratio="3 / 4"
           />
         </div>
