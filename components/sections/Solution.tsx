@@ -179,8 +179,8 @@ export function Solution() {
                   onClick={() => setIndex(i)}
                   className={`h-1.5 rounded-full transition-all duration-300 ${
                     i === index
-                      ? "w-10 bg-charcoal"
-                      : "w-1.5 bg-charcoal/25 hover:bg-charcoal/50"
+                      ? "w-10 bg-sage"
+                      : "w-4 bg-sage/30 hover:bg-sage/50"
                   }`}
                 />
               ))}
