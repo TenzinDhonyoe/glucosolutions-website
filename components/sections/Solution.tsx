@@ -99,18 +99,18 @@ export function Solution() {
       ariaLabelledBy="solution-title"
       className="relative bg-paper text-charcoal border-t border-stone"
     >
-      <div className="mx-auto max-w-7xl px-5 sm:px-8 py-20 md:py-36">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 py-16 md:py-20">
         <SectionLabel index={3} label="The solution" />
 
-        <div className="mt-8 md:mt-10 grid gap-6 md:gap-16 md:grid-cols-[1.1fr_1fr] md:items-end">
+        <div className="mt-6 md:mt-8 grid gap-4 md:gap-12 md:grid-cols-[1.1fr_1fr] md:items-end">
           <h2
             id="solution-title"
-            className="display-serif text-[38px] sm:text-[52px] md:text-[76px] leading-[1.02] md:leading-[1] tracking-[-0.02em] text-charcoal text-balance"
+            className="display-serif text-[36px] sm:text-[48px] md:text-[60px] leading-[1.02] md:leading-[1] tracking-[-0.02em] text-charcoal text-balance"
           >
             Trends, not{" "}
             <span className="display-serif-italic text-sage">pricks</span>.
           </h2>
-          <p className="md:pb-3 max-w-xl text-[16px] sm:text-[18px] leading-[1.6] text-charcoal/75">
+          <p className="md:pb-2 max-w-xl text-[16px] sm:text-[17px] leading-[1.55] text-charcoal/75">
             Glycemic awareness designed to fit a real life. At your desk, at
             the dinner table, on the trail.
           </p>
@@ -119,15 +119,15 @@ export function Solution() {
         {/* Slideshow — open layout, no card frame */}
         <div
           ref={containerRef}
-          className="mt-10 md:mt-14"
+          className="mt-8 md:mt-10"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
           onFocus={() => setPaused(true)}
           onBlur={() => setPaused(false)}
         >
-          <div className="grid gap-8 md:gap-20 md:grid-cols-2 md:items-center">
+          <div className="grid gap-6 md:gap-14 md:grid-cols-2 md:items-center">
             {/* Left: feature photo */}
-            <div className="relative overflow-hidden rounded-2xl aspect-square sm:aspect-[5/4] md:aspect-auto md:h-[560px]">
+            <div className="relative overflow-hidden rounded-2xl aspect-square sm:aspect-[5/4] md:aspect-auto md:h-[420px]">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={`photo-${index}`}
@@ -156,10 +156,10 @@ export function Solution() {
                     <span className="h-px w-8 bg-stone-2" />
                     <span>{slide.label}</span>
                   </div>
-                  <h3 className="mt-4 sm:mt-5 display-serif text-[28px] sm:text-[40px] md:text-[52px] leading-[1.1] sm:leading-[1.05] tracking-[-0.02em] text-charcoal">
+                  <h3 className="mt-4 display-serif text-[26px] sm:text-[34px] md:text-[40px] leading-[1.1] sm:leading-[1.05] tracking-[-0.02em] text-charcoal">
                     {slide.title}
                   </h3>
-                  <p className="mt-4 sm:mt-6 text-[15px] sm:text-[17px] leading-[1.6] text-charcoal/75">
+                  <p className="mt-4 text-[15px] sm:text-[16px] leading-[1.55] text-charcoal/75">
                     {slide.body}
                   </p>
                 </motion.div>
@@ -168,7 +168,7 @@ export function Solution() {
           </div>
 
           {/* Pagination row */}
-          <div className="mt-10 md:mt-14 flex items-center justify-between border-t border-stone pt-5 md:pt-6">
+          <div className="mt-6 md:mt-8 flex items-center justify-between border-t border-stone pt-4 md:pt-5">
             <div className="flex items-center gap-2">
               {SLIDES.map((s, i) => (
                 <button
