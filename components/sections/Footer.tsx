@@ -2,10 +2,10 @@ import Link from "next/link";
 import { Wordmark } from "@/components/brand/Wordmark";
 
 const NAV = [
-  { href: "#science", label: "How it works" },
-  { href: "#problem", label: "Why it matters" },
-  { href: "#faq", label: "FAQ" },
-  { href: "#waitlist", label: "Waitlist" },
+  { href: "/#science", label: "How it works" },
+  { href: "/#problem", label: "Why it matters" },
+  { href: "/#faq", label: "FAQ" },
+  { href: "/#waitlist", label: "Waitlist" },
 ];
 
 const CONNECT = [

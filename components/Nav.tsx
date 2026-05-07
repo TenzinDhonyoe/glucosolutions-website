@@ -2,20 +2,23 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { track } from "@/lib/analytics";
 import { Wordmark } from "@/components/brand/Wordmark";
 
 const LINKS = [
-  { href: "#science", label: "How it works" },
-  { href: "#problem", label: "Why it matters" },
-  { href: "#faq", label: "FAQ" },
+  { href: "/#science", label: "How it works" },
+  { href: "/#problem", label: "Why it matters" },
+  { href: "/#faq", label: "FAQ" },
 ];
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const hasHeroPhoto = pathname === "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -31,9 +34,10 @@ export function Nav() {
     };
   }, [open]);
 
-  // Top of page: nav rests over the dark hero photo (paper-tinted type, knockout wordmark).
+  // On homepage: nav rests over the dark hero photo (paper-tinted type, knockout wordmark).
   // Once scrolled past 24px, it collapses into a centered pill on paper bg.
-  const onPhoto = !scrolled && !open;
+  // On non-home pages there's no photo behind it, so always render the pill.
+  const onPhoto = hasHeroPhoto && !scrolled && !open;
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 pointer-events-none">
@@ -41,9 +45,9 @@ export function Nav() {
         aria-label="Primary"
         className={cn(
           "pointer-events-auto relative mx-auto grid grid-cols-[1fr_auto_1fr] items-center transition-[max-width,height,margin,padding,background-color,border-color,border-radius,box-shadow,color] duration-300 ease-out",
-          scrolled || open
-            ? "mt-3 max-w-4xl rounded-full border border-stone bg-paper/90 backdrop-blur-md px-4 sm:px-5 h-14 shadow-[0_10px_36px_-14px_rgba(28,28,28,0.20)] text-charcoal"
-            : "mt-0 max-w-7xl rounded-none border border-transparent bg-transparent px-5 sm:px-8 h-20 md:h-24 text-paper"
+          onPhoto
+            ? "mt-0 max-w-7xl rounded-none border border-transparent bg-transparent px-5 sm:px-8 h-20 md:h-24 text-paper"
+            : "mt-3 max-w-4xl rounded-full border border-stone bg-paper/90 backdrop-blur-md px-4 sm:px-5 h-14 shadow-[0_10px_36px_-14px_rgba(28,28,28,0.20)] text-charcoal"
         )}
       >
         {/* Left: links — slot is grid-balanced so the wordmark stays centered */}
@@ -91,7 +95,7 @@ export function Nav() {
         {/* Right: CTA + mobile burger */}
         <div className="flex items-center gap-3 justify-self-end">
           <Link
-            href="#waitlist"
+            href="/#waitlist"
             onClick={() => track("cta_click", { location: "nav" })}
             className={cn(
               "shine group hidden sm:inline-flex items-center gap-1.5 rounded-full px-5 py-2 text-[13px] font-medium transition-colors duration-220",
@@ -142,7 +146,7 @@ export function Nav() {
             ))}
             <li className="pt-3">
               <Link
-                href="#waitlist"
+                href="/#waitlist"
                 onClick={() => {
                   track("cta_click", { location: "nav-mobile" });
                   setOpen(false);

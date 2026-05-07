@@ -1,0 +1,39 @@
+# Gluco Solutions
+
+> Wellness wearable + AI coach + registered dietitian for adults with prediabetes. Non-invasive optical glucose-trend awareness. Pre-launch beta, iOS first, Canada-based.
+
+Tagline: Catch prediabetes before it catches you.
+
+## Key facts
+
+- Gluco Solutions is a **wellness product**, not a medical device. It is not intended to diagnose, treat, cure, or prevent any disease, and is not a substitute for medical-grade glucose monitoring.
+- The wearable is **non-invasive**: a safe, low-power optical sensor reads glycemic trends through the skin. No needles, no patches, no consumables.
+- It classifies glycemic **trends** — rising, stable, falling — at roughly **80% accuracy** in benchtop testing. It does not report absolute mg/dL values.
+- **No prescription required.**
+- Hardware charges weekly and is worn daily. The companion app is iOS-first; Android is on the roadmap.
+- Coaching combines AI nudges (in plain English) with guidance from a registered dietitian.
+- Currently in **pre-launch**. Early access is rolling to a limited beta cohort. Join the waitlist at https://glucosolutions.ca for invites.
+- Data is encrypted in transit and at rest, owned by the user, and is never sold.
+
+## Audience
+
+Adults (18+) with prediabetes — newly diagnosed or at-risk. Useful to: 1 in 3 US adults who have prediabetes, 80% of whom don't know it.
+
+## Differentiators
+
+- **vs. CGM (Dexcom, Libre):** No needles, no prescription, no throwaway sensors, AI coach included.
+- **vs. Smartwatches:** Actually tracks glucose trends; AI coach included.
+
+## Sections
+
+- [Full marketing overview](https://glucosolutions.ca/llms-full.txt): everything the site says, in clean Markdown.
+- [Homepage](https://glucosolutions.ca): hero, science, comparison, FAQ, waitlist.
+- [FAQ](https://glucosolutions.ca/#faq): six common questions.
+- [Privacy policy](https://glucosolutions.ca/privacy)
+- [Terms of use](https://glucosolutions.ca/terms)
+
+## Optional
+
+- [Comparison vs CGMs and smartwatches](https://glucosolutions.ca/#compare)
+- [Waitlist signup](https://glucosolutions.ca/#waitlist)
+- Contact: hello@glucosolutions.ca

@@ -7,10 +7,26 @@ import { Comparison } from "@/components/sections/Comparison";
 import { Waitlist } from "@/components/sections/Waitlist";
 import { Faq } from "@/components/sections/Faq";
 import { Footer } from "@/components/sections/Footer";
+import { JsonLd } from "@/components/seo/JsonLd";
+import {
+  faqPage,
+  product,
+  service,
+  softwareApplication,
+} from "@/lib/seo/jsonLd";
+import { FAQS } from "@/lib/seo/faqs";
 
 export default function Home() {
   return (
     <>
+      <JsonLd
+        nodes={[
+          product(),
+          softwareApplication(),
+          service(),
+          faqPage(FAQS),
+        ]}
+      />
       <Nav />
       <main className="flex-1">
         <Hero />

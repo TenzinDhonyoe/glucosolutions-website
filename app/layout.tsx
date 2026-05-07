@@ -3,6 +3,8 @@ import { Inter, Fraunces, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ScrollProgress } from "@/components/interactive/ScrollProgress";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { organization, website } from "@/lib/seo/jsonLd";
 import "./globals.css";
 
 // Inter is the working substitute for Suisse Int'l (per DESIGN.md).
@@ -33,31 +35,40 @@ const jetbrains = JetBrains_Mono({
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://glucosolutions.ca";
 
+const SITE_DESCRIPTION =
+  "A non-invasive wellness wearable, AI coaching, and a registered dietitian — built for adults with prediabetes. Catch prediabetes before it catches you.";
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: "GlucoSolutions",
-    template: "GlucoSolutions",
+    template: "%s | Gluco Solutions",
   },
-  description:
-    "A wellness wearable, AI coaching, and a registered dietitian — built for adults with prediabetes.",
+  description: SITE_DESCRIPTION,
   applicationName: "Gluco Solutions",
-  authors: [{ name: "Gluco Solutions" }],
+  authors: [{ name: "Gluco Solutions", url: SITE_URL }],
+  creator: "Gluco Solutions",
+  publisher: "Gluco Solutions",
+  category: "Health & Wellness",
   keywords: [
     "prediabetes",
+    "prediabetes wearable",
+    "non-invasive glucose monitor",
     "metabolic health",
     "glycemic awareness",
+    "glucose trends",
     "food-first nutrition",
-    "non-invasive wearable",
-    "AI coaching",
+    "AI health coach",
+    "registered dietitian",
+    "wellness wearable",
   ],
   openGraph: {
     type: "website",
     url: SITE_URL,
     siteName: "Gluco Solutions",
     title: "Catch prediabetes before it catches you.",
-    description:
-      "A wellness wearable, AI coaching, and a registered dietitian — built for adults with prediabetes.",
+    description: SITE_DESCRIPTION,
+    locale: "en_CA",
     images: [
       {
         url: "/api/og",
@@ -70,13 +81,39 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Gluco Solutions — Catch prediabetes before it catches you.",
-    description:
-      "A wellness wearable, AI coaching, and a registered dietitian — built for adults with prediabetes.",
+    description: SITE_DESCRIPTION,
     images: ["/api/og"],
-    creator: "@_tenZdhon_",
+    site: "@gluco_solutions",
+    creator: "@gluco_solutions",
   },
-  alternates: { canonical: SITE_URL },
-  robots: { index: true, follow: true },
+  alternates: {
+    canonical: SITE_URL,
+    languages: {
+      "en-CA": SITE_URL,
+      "x-default": SITE_URL,
+    },
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION,
+    other: process.env.BING_SITE_VERIFICATION
+      ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION }
+      : undefined,
+  },
+  other: {
+    "geo.region": "CA",
+    "geo.placename": "Canada",
+  },
 };
 
 export const viewport: Viewport = {
@@ -94,24 +131,7 @@ export default function RootLayout({
       className={`${inter.variable} ${fraunces.variable} ${jetbrains.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-paper text-charcoal">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              name: "Gluco Solutions",
-              url: SITE_URL,
-              logo: `${SITE_URL}/logo.png`,
-              description:
-                "Food-first guidance and metabolic awareness for prediabetes.",
-              sameAs: [
-                "https://twitter.com/_tenZdhon_",
-                "https://www.linkedin.com/company/glucosolutions",
-              ],
-            }),
-          }}
-        />
+        <JsonLd nodes={[organization(), website()]} />
         <ScrollProgress />
         {children}
         <Analytics />

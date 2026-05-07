@@ -1,0 +1,133 @@
+# Gluco Solutions
+
+> Wellness wearable + AI coach + registered dietitian for adults with prediabetes. Non-invasive optical glucose-trend awareness. Pre-launch beta, iOS first, Canada-based.
+
+Site: https://glucosolutions.ca
+Contact: hello@glucosolutions.ca
+
+---
+
+## Hero
+
+**Catch prediabetes before it catches you.**
+
+Whether you were just diagnosed or want to stay ahead of it, we pair a wellness wearable and AI coaching with a registered dietitian. Built for adults with prediabetes.
+
+Primary call to action: Join the waitlist.
+Secondary: See the science.
+
+---
+
+## The problem
+
+**The biggest health crisis nobody is watching.**
+
+Prediabetes hides inside ordinary days. A smoothie at breakfast, a sandwich at lunch, dessert with friends. The body keeps score long before anyone notices.
+
+### Stats
+
+- **1 in 3** US adults has prediabetes. (Source: CDC, National Diabetes Statistics Report, 2024.)
+- **80%** of people with prediabetes don't know they have it. (Source: CDC Prediabetes Surveillance.)
+- **70%** progress to type 2 diabetes within a decade. (Source: American Diabetes Association.)
+
+> Prediabetes is silent. Until it isn't.
+
+By the time symptoms surface, type 2 has often already begun. The window to course-correct is the one most people miss.
+
+---
+
+## How it works
+
+**See your day, before it happens.**
+
+The wearable reads how your body is responding in real time. You learn what spikes you, what calms you.
+
+### The wearable — reads through your skin
+
+A safe, low-power light shines into your skin and reads how glucose is moving in your body. No needles. No patches. No consumables.
+
+- Non-invasive
+- Charge once a week
+- Wear daily
+
+### The AI coach — learns your body
+
+Instead of one-size-fits-all rules, the app learns how food, sleep, and stress affect *you*. It nudges you in plain language: eat this, walk now, sleep earlier.
+
+- Personalized
+- In plain English
+- No charts to read
+
+---
+
+## The solution — trends, not pricks
+
+Glycemic awareness designed to fit a real life. At your desk, at the dinner table, on the trail.
+
+### Day one — see what shapes your metabolic health
+
+Start with a quick intake — medications, family history, sleep, activity. Every recommendation begins from your real baseline, not an average.
+
+### Meals — snap a meal. See the score.
+
+A photo is enough. Get an instant metabolic score, macro breakdown, and a one-line note on how this plate tends to move your glucose.
+
+### Coach — activity, sleep, and the next small move
+
+Your wearable folds steps, sleep, and weight into one metabolic score, then surfaces one plain-English nudge — like a ten-minute post-meal walk.
+
+---
+
+## How we're different — not a CGM, not a smartwatch
+
+| Capability                  | Gluco Solutions | CGM (Dexcom, Libre) | Smartwatches |
+| --------------------------- | --------------- | ------------------- | ------------ |
+| No needles                  | Yes             | No                  | Yes          |
+| Tracks your blood sugar     | Yes             | Yes                 | No           |
+| AI coach included           | Yes             | No                  | No           |
+| No prescription needed      | Yes             | No                  | Yes          |
+| No throwaway sensors        | Yes             | No                  | Yes          |
+
+---
+
+## Early access
+
+**The next 10 years of your metabolic health start now.**
+
+Small choices compound into decades. Join the waitlist for early access at https://glucosolutions.ca/#waitlist. We'll only email about early access. No spam, ever.
+
+---
+
+## FAQ
+
+### Is this a medical device?
+
+No. Gluco Solutions is a wellness product. It is not intended to diagnose, treat, cure, or prevent any disease, and it is not a substitute for medical-grade glucose monitoring.
+
+### Do I need a prescription?
+
+No. The wearable and app are available without a prescription as wellness tools for glycemic trend awareness.
+
+### How accurate is it?
+
+Roughly 80% trend classification accuracy in benchtop testing. We classify glycemic trends — rising, stable, falling — rather than reporting absolute mg/dL values.
+
+### iOS or Android?
+
+iOS first. Android is on the roadmap and will follow once the iOS beta cohort matures.
+
+### When can I get one?
+
+Early access is rolling out to a limited beta cohort now. Broader rollout dates will be announced as we expand. Join the waitlist for invites.
+
+### Is my data private?
+
+Yes. Your data is encrypted at rest and in transit, and we never sell it. You own your data and can delete it at any time.
+
+---
+
+## Disclaimers
+
+Gluco Solutions is a wellness product. Not a medical device, not intended to diagnose, treat, cure, or prevent any disease, and not a substitute for medical-grade glucose monitoring or professional medical advice.
+
+© 2026 Gluco Solutions

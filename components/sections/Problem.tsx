@@ -50,9 +50,16 @@ export function Problem() {
                 <div className="text-[17px] sm:text-[18px] leading-[1.45] text-charcoal font-medium">
                   US adults has prediabetes.
                 </div>
-                <div className="caption mt-2">
-                  CDC, National Diabetes Statistics Report (2024)
-                </div>
+                <cite className="caption not-italic mt-2 block">
+                  <a
+                    href="https://www.cdc.gov/diabetes/php/data-research/index.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline decoration-stone-2 underline-offset-2 hover:decoration-sage hover:text-charcoal/90 transition-colors duration-220"
+                  >
+                    CDC, National Diabetes Statistics Report (2024)
+                  </a>
+                </cite>
               </div>
             </li>
 
@@ -65,7 +72,16 @@ export function Problem() {
                 <div className="text-[16px] sm:text-[17px] leading-[1.5] text-charcoal/85">
                   don&rsquo;t know they have it.
                 </div>
-                <div className="caption mt-2">CDC Prediabetes Surveillance</div>
+                <cite className="caption not-italic mt-2 block">
+                  <a
+                    href="https://www.cdc.gov/diabetes/prevention-type-2/prediabetes-prevalence.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline decoration-stone-2 underline-offset-2 hover:decoration-sage hover:text-charcoal/90 transition-colors duration-220"
+                  >
+                    CDC Prediabetes Surveillance (2024)
+                  </a>
+                </cite>
               </div>
             </li>
 
@@ -77,7 +93,16 @@ export function Problem() {
                 <div className="text-[16px] sm:text-[17px] leading-[1.5] text-charcoal/85">
                   progress to type 2 within a decade.
                 </div>
-                <div className="caption mt-2">American Diabetes Association</div>
+                <cite className="caption not-italic mt-2 block">
+                  <a
+                    href="https://diabetes.org/about-diabetes/prediabetes"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline decoration-stone-2 underline-offset-2 hover:decoration-sage hover:text-charcoal/90 transition-colors duration-220"
+                  >
+                    American Diabetes Association
+                  </a>
+                </cite>
               </div>
             </li>
           </ul>

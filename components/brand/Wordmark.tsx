@@ -37,7 +37,7 @@ export function Wordmark({
     >
       <Image
         src={src}
-        alt="GlucoSolutions"
+        alt="Gluco Solutions"
         width={width}
         height={size}
         priority
@@ -50,7 +50,7 @@ export function Wordmark({
   return (
     <Link
       href={href}
-      aria-label="GlucoSolutions home"
+      aria-label="Gluco Solutions home"
       className="inline-flex items-center"
     >
       {inner}
