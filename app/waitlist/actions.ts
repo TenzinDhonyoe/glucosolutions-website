@@ -86,10 +86,26 @@ export async function joinWaitlist(
       return { ok: true };
     }
     console.error("[waitlist] insert error", error);
-    return {
-      ok: false,
-      error: "Something went wrong. Please try again.",
-    };
+
+    // Surface a setup-specific hint when the table or columns are missing
+    // (otherwise a generic message). Real error stays in server logs.
+    let friendly = "Something went wrong. Please try again.";
+    if (
+      error.code === "42P01" ||
+      /relation .* does not exist/i.test(error.message)
+    ) {
+      friendly =
+        "Waitlist table is missing. Run supabase/migrations/0001_waitlist.sql.";
+    } else if (error.code === "42703") {
+      friendly = "Waitlist schema mismatch. Re-run the migration.";
+    } else if (
+      error.code === "PGRST301" ||
+      /jwt|invalid api key/i.test(error.message)
+    ) {
+      friendly = "Supabase auth failed. Check SUPABASE_SERVICE_ROLE_KEY.";
+    }
+
+    return { ok: false, error: friendly };
   }
 
   return { ok: true };
