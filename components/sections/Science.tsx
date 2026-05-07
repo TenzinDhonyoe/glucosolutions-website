@@ -63,34 +63,7 @@ export function Science() {
           <div className="mx-auto max-w-7xl w-full px-5 sm:px-8">
             <SectionLabel index={2} label="How it works" />
 
-            <div className="mt-8 grid grid-cols-[1.05fr_1fr] gap-12 xl:gap-16 items-center">
-              <div>
-                <h2
-                  id="science-title"
-                  className="display-serif text-[48px] xl:text-[64px] leading-[1.02] tracking-[-0.02em] text-charcoal text-balance"
-                >
-                  See your day, before it{" "}
-                  <span className="display-serif-italic text-sage">happens</span>.
-                </h2>
-                <p className="mt-5 max-w-md text-[16px] leading-[1.6] text-charcoal/75">
-                  The wearable reads how your body is responding in real time.
-                  You learn what spikes you, what calms you.
-                </p>
-
-                <figure className="mt-8 rounded-md border border-stone bg-paper p-6">
-                  <div className="flex items-baseline justify-between gap-4 mb-3">
-                    <div>
-                      <div className="eyebrow text-charcoal">a typical day</div>
-                      <div className="caption mt-1">three meals — three trends</div>
-                    </div>
-                  </div>
-                  <GlucoseChart scrollProgress={reduce ? undefined : chartProgress} />
-                  <figcaption className="caption mt-4 italic">
-                    fig. 02 — illustrative 24-hour glycemic trace.
-                  </figcaption>
-                </figure>
-              </div>
-
+            <div className="mt-8 grid grid-cols-[1fr_1.05fr] gap-12 xl:gap-16 items-center">
               <div className="relative h-[300px] xl:h-[320px]">
                 <motion.article
                   className="absolute inset-0 rounded-md border border-stone bg-paper p-7 xl:p-8 flex flex-col justify-center"
@@ -152,6 +125,33 @@ export function Science() {
                     }
                   />
                 </div>
+              </div>
+
+              <div>
+                <h2
+                  id="science-title"
+                  className="display-serif text-[48px] xl:text-[64px] leading-[1.02] tracking-[-0.02em] text-charcoal text-balance"
+                >
+                  See your day, before it{" "}
+                  <span className="display-serif-italic text-sage">happens</span>.
+                </h2>
+                <p className="mt-5 max-w-md text-[16px] leading-[1.6] text-charcoal/75">
+                  The wearable reads how your body is responding in real time.
+                  You learn what spikes you, what calms you.
+                </p>
+
+                <figure className="mt-8 rounded-md border border-stone bg-paper p-6">
+                  <div className="flex items-baseline justify-between gap-4 mb-3">
+                    <div>
+                      <div className="eyebrow text-charcoal">a typical day</div>
+                      <div className="caption mt-1">three meals — three trends</div>
+                    </div>
+                  </div>
+                  <GlucoseChart scrollProgress={reduce ? undefined : chartProgress} />
+                  <figcaption className="caption mt-4 italic">
+                    fig. 02 — illustrative 24-hour glycemic trace.
+                  </figcaption>
+                </figure>
               </div>
             </div>
           </div>
