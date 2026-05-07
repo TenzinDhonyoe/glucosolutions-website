@@ -44,7 +44,7 @@ export function Problem() {
             {/* Anchor stat */}
             <li className="grid sm:grid-cols-[auto_1fr] gap-x-8 sm:gap-x-10 gap-y-4 items-baseline">
               <div className="display-serif text-[96px] sm:text-[136px] md:text-[160px] leading-[0.85] tracking-[-0.04em] text-sage tabular-nums">
-                1<span className="text-charcoal/80">/</span>3
+                1<span className="text-charcoal">/</span>3
               </div>
               <div className="sm:pt-3 max-w-[28ch]">
                 <div className="text-[17px] sm:text-[18px] leading-[1.45] text-charcoal font-medium">
