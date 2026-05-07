@@ -10,7 +10,7 @@ const APP_ID = `${SITE_URL}/#softwareapplication`;
 const SERVICE_ID = `${SITE_URL}/#service`;
 
 const ORG_DESCRIPTION =
-  "Gluco Solutions pairs a non-invasive wellness wearable, AI coaching, and a registered dietitian to help adults with prediabetes build glycemic trend awareness. Not a medical device.";
+  "Gluco Solutions helps adults reverse prediabetes before it becomes type 2 diabetes. A non-invasive wearable, AI coaching, and a registered dietitian show you what spikes you, what calms you, and the small daily moves that compound. Wellness product, not a medical device.";
 
 export type JsonLdNode = Record<string, unknown>;
 
@@ -28,7 +28,7 @@ export function organization(): JsonLdNode {
     },
     image: `${SITE_URL}/logo.png`,
     description: ORG_DESCRIPTION,
-    slogan: "Catch prediabetes before it catches you.",
+    slogan: "Reverse prediabetes before it becomes type 2.",
     email: "hello@glucosolutions.ca",
     address: {
       "@type": "PostalAddress",
@@ -78,7 +78,7 @@ export function product(): JsonLdNode {
     name: "Gluco Solutions Wearable",
     category: "Wellness",
     description:
-      "A non-invasive optical wearable that reads glycemic trends through the skin. No needles, no consumables, weekly charging. Wellness device, not a medical device.",
+      "A non-invasive optical wearable that reads glycemic trends through the skin to help adults reverse prediabetes. No needles, no consumables, weekly charging. Wellness device, not a medical device.",
     brand: { "@id": ORG_ID },
     manufacturer: { "@id": ORG_ID },
     image: `${SITE_URL}/logo.png`,
@@ -135,7 +135,7 @@ export function service(): JsonLdNode {
     name: "Gluco Solutions coaching",
     serviceType: "Wellness coaching",
     description:
-      "AI coaching combined with registered dietitian guidance. Personalized, plain-English nudges on meals, activity, and sleep — built around prediabetes habit change.",
+      "AI coaching combined with registered dietitian guidance for reversing prediabetes. Personalized, plain-English nudges on meals, activity, and sleep — built around the habit changes that compound into a healthier metabolic decade.",
     provider: { "@id": ORG_ID },
     areaServed: { "@type": "Country", name: "Canada" },
     audience: {

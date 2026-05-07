@@ -36,12 +36,12 @@ const jetbrains = JetBrains_Mono({
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://glucosolutions.ca";
 
 const SITE_DESCRIPTION =
-  "A non-invasive wellness wearable, AI coaching, and a registered dietitian — built for adults with prediabetes. Catch prediabetes before it catches you.";
+  "Reverse prediabetes before it becomes type 2. A non-invasive wearable, AI coaching, and a registered dietitian help you see what spikes you, what calms you, and the small daily moves that compound.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "GlucoSolutions",
+    default: "GlucoSolutions — Reverse prediabetes.",
     template: "%s | Gluco Solutions",
   },
   description: SITE_DESCRIPTION,
@@ -51,9 +51,11 @@ export const metadata: Metadata = {
   publisher: "Gluco Solutions",
   category: "Health & Wellness",
   keywords: [
+    "reverse prediabetes",
     "prediabetes",
     "prediabetes wearable",
     "non-invasive glucose monitor",
+    "prediabetes reversal",
     "metabolic health",
     "glycemic awareness",
     "glucose trends",
@@ -66,7 +68,7 @@ export const metadata: Metadata = {
     type: "website",
     url: SITE_URL,
     siteName: "Gluco Solutions",
-    title: "Catch prediabetes before it catches you.",
+    title: "Reverse prediabetes — before it becomes type 2.",
     description: SITE_DESCRIPTION,
     locale: "en_CA",
     images: [
@@ -80,7 +82,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Gluco Solutions — Catch prediabetes before it catches you.",
+    title: "Gluco Solutions — Reverse prediabetes before it becomes type 2.",
     description: SITE_DESCRIPTION,
     images: ["/api/og"],
     site: "@gluco_solutions",

@@ -1,8 +1,8 @@
 # Gluco Solutions
 
-> Wellness wearable + AI coach + registered dietitian for adults with prediabetes. Non-invasive optical glucose-trend awareness. Pre-launch beta, iOS first, Canada-based.
+> Helps adults reverse prediabetes before it becomes type 2 diabetes. Non-invasive wearable + AI coach + registered dietitian. Pre-launch beta, iOS first, Canada-based.
 
-Tagline: Catch prediabetes before it catches you.
+Tagline: Reverse prediabetes before it becomes type 2.
 
 ## Key facts
 
@@ -17,7 +17,7 @@ Tagline: Catch prediabetes before it catches you.
 
 ## Audience
 
-Adults (18+) with prediabetes — newly diagnosed or at-risk. Useful to: 1 in 3 US adults who have prediabetes, 80% of whom don't know it.
+Adults (18+) with prediabetes who want to reverse it before it progresses to type 2 — newly diagnosed or at-risk. Without intervention, ~70% of people with prediabetes progress to type 2 within a decade. The window to reverse it is now.
 
 ## Differentiators
 

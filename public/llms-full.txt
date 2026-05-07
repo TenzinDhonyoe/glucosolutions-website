@@ -1,6 +1,6 @@
 # Gluco Solutions
 
-> Wellness wearable + AI coach + registered dietitian for adults with prediabetes. Non-invasive optical glucose-trend awareness. Pre-launch beta, iOS first, Canada-based.
+> Helps adults reverse prediabetes before it becomes type 2 diabetes. Non-invasive wearable + AI coach + registered dietitian. Pre-launch beta, iOS first, Canada-based.
 
 Site: https://glucosolutions.ca
 Contact: hello@glucosolutions.ca
