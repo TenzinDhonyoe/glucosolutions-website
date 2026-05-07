@@ -27,27 +27,114 @@ function SubmitButton() {
   );
 }
 
-function SuccessBurst() {
+// Confirmation moment: a calm breathing animation. Three concentric rings
+// expand and fade in a slow 5.4s cycle, anchored by a sage check disc with a
+// soft seafoam halo. Pairs with crossfading "inhale / exhale" microcopy so
+// the metaphor reads even at a glance.
+const BREATH_CYCLE_S = 5.4;
+const RING_DELAYS = [0, 1.8, 3.6] as const;
+
+function BreathingSuccess() {
   const reduce = useReducedMotion();
-  if (reduce) return null;
-  const dots = Array.from({ length: 18 });
+
   return (
-    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-      {dots.map((_, i) => {
-        const angle = (i / dots.length) * Math.PI * 2;
-        const dist = 130 + (i % 3) * 28;
-        const x = Math.cos(angle) * dist;
-        const y = Math.sin(angle) * dist;
-        return (
+    <div className="relative mx-auto flex flex-col items-center">
+      <div className="relative h-44 w-44 sm:h-52 sm:w-52 grid place-items-center">
+        {!reduce &&
+          RING_DELAYS.map((delay) => (
+            <motion.span
+              key={delay}
+              aria-hidden
+              className="pointer-events-none absolute inset-0 rounded-full border border-seafoam/55"
+              initial={{ scale: 0.4, opacity: 0 }}
+              animate={{ scale: 1.5, opacity: [0, 0.7, 0] }}
+              transition={{
+                duration: BREATH_CYCLE_S,
+                delay,
+                repeat: Infinity,
+                ease: [0.4, 0, 0.2, 1],
+                times: [0, 0.35, 1],
+              }}
+            />
+          ))}
+
+        <motion.span
+          aria-hidden
+          className="absolute h-24 w-24 rounded-full bg-seafoam/45 blur-2xl"
+          animate={
+            reduce
+              ? { opacity: 0.4 }
+              : { opacity: [0.25, 0.6, 0.25] }
+          }
+          transition={
+            reduce
+              ? undefined
+              : { duration: BREATH_CYCLE_S, repeat: Infinity, ease: "easeInOut" }
+          }
+        />
+
+        <motion.span
+          className="relative z-10 grid place-items-center h-16 w-16 rounded-full bg-sage text-paper shadow-[0_8px_28px_-8px_rgba(28,28,28,0.5)]"
+          initial={
+            reduce ? { scale: 1, opacity: 1 } : { scale: 0.55, opacity: 0 }
+          }
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{
+            type: "spring",
+            stiffness: 240,
+            damping: 22,
+            delay: 0.05,
+          }}
+        >
+          <Check size={26} strokeWidth={3} />
+        </motion.span>
+      </div>
+
+      {!reduce && (
+        <div
+          aria-hidden
+          className="relative mt-8 h-4 w-40 text-center"
+        >
           <motion.span
-            key={i}
-            initial={{ x: 0, y: 0, opacity: 1, scale: 0.6 }}
-            animate={{ x, y, opacity: 0, scale: 1 }}
-            transition={{ duration: 1.2, ease: [0.2, 0.6, 0.2, 1] }}
-            className="absolute left-1/2 top-1/2 h-1 w-1 rounded-full bg-sunlit"
-          />
-        );
-      })}
+            className="absolute inset-0 font-mono text-[11px] uppercase tracking-[0.24em] text-paper/65"
+            animate={{ opacity: [0, 1, 1, 0, 0] }}
+            transition={{
+              duration: BREATH_CYCLE_S,
+              repeat: Infinity,
+              ease: "easeInOut",
+              times: [0, 0.15, 0.4, 0.5, 1],
+            }}
+          >
+            inhale
+          </motion.span>
+          <motion.span
+            className="absolute inset-0 font-mono text-[11px] uppercase tracking-[0.24em] text-paper/65"
+            animate={{ opacity: [0, 0, 1, 1, 0] }}
+            transition={{
+              duration: BREATH_CYCLE_S,
+              repeat: Infinity,
+              ease: "easeInOut",
+              times: [0, 0.5, 0.65, 0.9, 1],
+            }}
+          >
+            exhale
+          </motion.span>
+        </div>
+      )}
+
+      <motion.div
+        className="mt-8 sm:mt-10 text-center"
+        initial={reduce ? false : { opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <h3 className="display-serif text-[28px] sm:text-[36px] md:text-[42px] leading-[1.05] tracking-[-0.015em] text-paper">
+          You&rsquo;re on the list.
+        </h3>
+        <p className="mt-3 text-[15px] sm:text-[16px] text-paper/80">
+          We&rsquo;ll be in touch when invites open.
+        </p>
+      </motion.div>
     </div>
   );
 }
@@ -106,11 +193,14 @@ export function Waitlist() {
 
         <h2
           id="waitlist-title"
-          className="mt-8 mx-auto max-w-2xl display-serif text-[36px] sm:text-[52px] md:text-[68px] leading-[1.06] sm:leading-[1.04] tracking-[-0.02em] text-paper text-balance"
+          className="mt-8 mx-auto max-w-3xl display-serif text-[36px] sm:text-[52px] md:text-[68px] leading-[1.06] sm:leading-[1.04] tracking-[-0.02em] text-paper text-balance sm:text-pretty"
         >
           The next{" "}
-          <span className="display-serif-italic text-seafoam">10 years</span>{" "}
-          of your metabolic health start now.
+          <span className="display-serif-italic text-seafoam">10 years</span>
+          <br className="hidden sm:block" />{" "}
+          of your metabolic health
+          <br className="hidden sm:block" />{" "}
+          starts now.
         </h2>
 
         <p className="mt-6 mx-auto max-w-md text-[15px] sm:text-[17px] leading-[1.65] text-paper/80">
@@ -121,27 +211,7 @@ export function Waitlist() {
 
         <div className="relative mt-12">
           {state?.ok ? (
-            <motion.div
-              className="relative mx-auto inline-flex"
-              initial={{ scale: 0.85, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ type: "spring", stiffness: 220, damping: 18 }}
-            >
-              <SuccessBurst />
-              <div className="relative inline-flex items-center gap-3 rounded-md border border-stone bg-oat px-6 py-5">
-                <span className="grid place-items-center h-9 w-9 rounded-full bg-sage text-paper">
-                  <Check size={18} strokeWidth={3} />
-                </span>
-                <div className="text-left">
-                  <div className="display-serif text-[20px] text-charcoal">
-                    You&rsquo;re on the list.
-                  </div>
-                  <div className="caption mt-1">
-                    we&rsquo;ll be in touch when invites open.
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+            <BreathingSuccess />
           ) : (
             <form ref={formRef} action={formAction} className="mx-auto max-w-lg">
               <input type="hidden" name="source" value="website" />
