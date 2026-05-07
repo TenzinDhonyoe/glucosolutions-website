@@ -63,7 +63,7 @@ export function Science() {
           <div className="mx-auto max-w-7xl w-full px-5 sm:px-8">
             <SectionLabel index={2} label="How it works" />
 
-            <div className="mt-8 grid grid-cols-[1fr_1.15fr] gap-12 xl:gap-16 items-center">
+            <div className="mt-8 grid grid-cols-[1fr_1.15fr] gap-12 xl:gap-16 items-stretch">
               {/* LEFT: heading + intro + cross-fading wearable / coach cards */}
               <div>
                 <h2
@@ -142,9 +142,13 @@ export function Science() {
                 </div>
               </div>
 
-              {/* RIGHT: full-bleed annotated chart with stats row */}
-              <figure className="rounded-md border border-stone bg-paper p-6 xl:p-8 shadow-[0_10px_40px_-24px_rgba(28,28,28,0.20)]">
-                <header className="flex items-baseline justify-between gap-4 mb-5">
+              {/* RIGHT: full-bleed annotated chart with stats row.
+                  h-full + flex makes the figure match the LEFT column's
+                  total height (heading top to card bottom). justify-between
+                  distributes header / chart / stats so the bottom edge lines
+                  up with the card's bottom rule. */}
+              <figure className="h-full flex flex-col rounded-md border border-stone bg-paper p-6 xl:p-8 shadow-[0_10px_40px_-24px_rgba(28,28,28,0.20)]">
+                <header className="flex items-baseline justify-between gap-4">
                   <div>
                     <div className="eyebrow text-charcoal">a typical day</div>
                     <div className="caption mt-1">three meals — three trends</div>
@@ -152,12 +156,15 @@ export function Science() {
                   <div className="caption text-charcoal/55">target&nbsp; 95–140 mg/dL</div>
                 </header>
 
-                <GlucoseChart
-                  annotations
-                  scrollProgress={reduce ? undefined : chartProgress}
-                />
+                <div className="flex-1 flex items-center">
+                  <GlucoseChart
+                    className="w-full"
+                    annotations
+                    scrollProgress={reduce ? undefined : chartProgress}
+                  />
+                </div>
 
-                <dl className="mt-6 grid grid-cols-3 gap-4 border-t border-stone pt-5">
+                <dl className="grid grid-cols-3 gap-4 border-t border-stone pt-5">
                   <div>
                     <dt className="caption text-charcoal/65">Time in range</dt>
                     <dd className="mt-1 display-serif text-[26px] xl:text-[30px] leading-none tracking-[-0.015em] text-sage tabular-nums">
