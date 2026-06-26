@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Nav } from "@/components/Nav";
-import { Footer } from "@/components/sections/Footer";
+import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { webPage, SITE_URL } from "@/lib/seo/jsonLd";
 import { LEGAL_LAST_MODIFIED } from "@/lib/seo/buildInfo";
@@ -37,28 +37,28 @@ export default function TermsPage() {
           }),
         ]}
       />
-      <main className="flex-1 bg-paper text-charcoal">
+      <main className="flex-1 bg-page text-ink-900">
         <article className="mx-auto max-w-3xl px-5 sm:px-8 pt-32 md:pt-40 pb-24 md:pb-32">
-          <p className="caption text-charcoal/55">
+          <p className="mono-label text-ink-500">
             Last updated{" "}
             <time dateTime={LEGAL_LAST_MODIFIED}>May 7, 2026</time>
           </p>
 
-          <h1 className="mt-3 display-serif text-[44px] sm:text-[60px] md:text-[72px] leading-[1] tracking-[-0.02em] text-charcoal text-balance">
+          <h1 className="mt-3 display-serif text-[44px] sm:text-[60px] md:text-[72px] leading-[1] tracking-[-0.02em] text-ink-900 text-balance">
             Terms of{" "}
-            <span className="display-serif-italic text-sage">use</span>.
+            <span className="display-serif-italic text-sky-700">use</span>.
           </h1>
 
-          <div className="mt-12 space-y-10 text-[16px] sm:text-[17px] leading-[1.7] text-charcoal/85">
+          <div className="mt-12 space-y-10 text-[16px] sm:text-[17px] leading-[1.7] text-ink-700">
             <section>
-              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-charcoal">
+              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-ink-900">
                 Acceptance
               </h2>
               <p className="mt-4">
                 By visiting{" "}
                 <a
                   href={SITE_URL}
-                  className="underline decoration-sage/40 underline-offset-4 hover:text-charcoal"
+                  className="underline decoration-sky-700/30 underline-offset-4 hover:text-ink-900"
                 >
                   glucosolutions.ca
                 </a>{" "}
@@ -68,7 +68,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-charcoal">
+              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-ink-900">
                 Pre-launch nature
               </h2>
               <p className="mt-4">
@@ -82,7 +82,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-charcoal">
+              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-ink-900">
                 Not medical advice
               </h2>
               <p className="mt-4">
@@ -97,7 +97,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-charcoal">
+              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-ink-900">
                 Acceptable use
               </h2>
               <p className="mt-4">
@@ -115,7 +115,7 @@ export default function TermsPage() {
                 <li>
                   Scrape, crawl, or otherwise extract content in ways that
                   burden the service or violate the{" "}
-                  <code className="font-mono text-[14px] text-charcoal/75">
+                  <code className="font-mono text-[14px] text-ink-500">
                     robots.txt
                   </code>{" "}
                   policy. AI training and answer-engine crawlers operating in
@@ -125,7 +125,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-charcoal">
+              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-ink-900">
                 Intellectual property
               </h2>
               <p className="mt-4">
@@ -138,7 +138,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-charcoal">
+              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-ink-900">
                 Third-party links
               </h2>
               <p className="mt-4">
@@ -149,7 +149,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-charcoal">
+              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-ink-900">
                 Disclaimers and liability
               </h2>
               <p className="mt-4">
@@ -162,7 +162,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-charcoal">
+              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-ink-900">
                 Changes
               </h2>
               <p className="mt-4">
@@ -174,7 +174,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-charcoal">
+              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-ink-900">
                 Governing law
               </h2>
               <p className="mt-4">
@@ -187,14 +187,14 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-charcoal">
+              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-ink-900">
                 Contact
               </h2>
               <p className="mt-4">
                 Questions about these terms can be sent to{" "}
                 <a
                   href="mailto:hello@glucosolutions.ca"
-                  className="underline decoration-sage/40 underline-offset-4 hover:text-charcoal"
+                  className="underline decoration-sky-700/30 underline-offset-4 hover:text-ink-900"
                 >
                   hello@glucosolutions.ca
                 </a>
