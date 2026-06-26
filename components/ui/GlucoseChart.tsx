@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils";
 
 const W = 680;
-const H = 220;
 const PAD_TOP = 10;
 const PAD_BOTTOM = 30;
 
@@ -22,6 +21,8 @@ export function GlucoseChart({
   yMin = 50,
   yMax = 170,
   title = "Today · continuous glucose",
+  mealIdx,
+  height = 220,
   className,
 }: {
   values?: number[];
@@ -31,8 +32,13 @@ export function GlucoseChart({
   yMin?: number;
   yMax?: number;
   title?: string;
+  /** Indices into `values` to mark as meals (white dot ringed in amber, like the real dashboard). */
+  mealIdx?: number[];
+  /** SVG viewBox height — lower it for a flatter, more compact chart. */
+  height?: number;
   className?: string;
 }) {
+  const H = height;
   const plotH = H - PAD_TOP - PAD_BOTTOM;
   const y = (v: number) => {
     const clamped = Math.max(yMin, Math.min(yMax, v));
@@ -61,6 +67,12 @@ export function GlucoseChart({
             <span className="h-3 w-3 rounded-sm border border-good bg-good-bg" />
             Target {low}–{high}
           </span>
+          {mealIdx?.length ? (
+            <span className="inline-flex items-center gap-1.5">
+              <span className="h-2.5 w-2.5 rounded-full border-2 border-[#E0A53A] bg-card" />
+              Meals
+            </span>
+          ) : null}
         </div>
       </div>
 
@@ -86,7 +98,21 @@ export function GlucoseChart({
         <path d={areaPath} fill="url(#gluc-fill)" />
         <path d={linePath} fill="none" stroke="#1690C2" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
 
-        {peakIdx >= 0 ? (
+        {mealIdx?.length ? (
+          mealIdx.map((i) =>
+            i >= 0 && i < values.length ? (
+              <circle
+                key={i}
+                cx={x(i)}
+                cy={y(values[i])}
+                r="5.5"
+                fill="#fff"
+                stroke="#E0A53A"
+                strokeWidth="2.5"
+              />
+            ) : null,
+          )
+        ) : peakIdx >= 0 ? (
           <circle cx={x(peakIdx)} cy={y(values[peakIdx])} r="5" fill="#fff" stroke="#C98A2E" strokeWidth="2.5" />
         ) : null}
       </svg>

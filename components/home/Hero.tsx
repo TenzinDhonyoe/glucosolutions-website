@@ -1,51 +1,72 @@
+import Image from "next/image";
 import { ArrowRight, ArrowDown } from "lucide-react";
-import { Container, Button, Eyebrow } from "@/components/ui";
-import { HeroDashboard } from "./HeroDashboard";
+import { Button, PlusTag } from "@/components/ui";
+
+const BENEFITS = ["See the weeks between", "Cut the admin", "Prove outcomes"];
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden pt-32 pb-20 md:pt-40 md:pb-28">
-      {/* soft tonal lift behind the hero, palette-matched (no AI glow) */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-[420px]"
-        style={{
-          background:
-            "linear-gradient(180deg, #FBF7F0 0%, var(--color-page) 100%)",
-        }}
-      />
-      <Container className="relative">
-        <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
-          <div>
-            <Eyebrow>For solo private-practice dietitians</Eyebrow>
-            <h1 className="display-serif mt-5 text-[clamp(2.5rem,5.5vw,4rem)] text-ink-900 text-balance">
-              Know what your patients do between sessions.
-            </h1>
-            <p className="mt-6 max-w-xl text-[18px] leading-relaxed text-ink-500">
-              You see a patient once a month. Their behavior happens the other 29
-              days. GlucoSolutions turns that daily behavior into sourced clinical
-              insight — and cuts the admin around every appointment. Patients log
-              in Redu; you see what matters in one dashboard.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Button href="/contact" size="lg" pill iconRight={ArrowRight}>
-                Book a demo
-              </Button>
-              <Button href="/#how" size="lg" variant="ghost" iconRight={ArrowDown}>
-                See how it works
-              </Button>
-            </div>
-            {/* [CONFIRM] credibility line — safe singular phrasing per content.md */}
-            <p className="mt-7 text-[14px] text-ink-500">
-              Built with a practicing RD on real, de-identified client cases.
-            </p>
-          </div>
+    // Framed hero — fills one screen with an even cream bezel on all four
+    // sides. The fixed nav floats in front of this image (transparentOverHero).
+    <section className="flex h-[100svh] min-h-[640px] flex-col p-4">
+        <div className="relative mx-auto flex w-full max-w-[1600px] grow overflow-hidden rounded-[1.75rem] ring-1 ring-ink-900/10">
+          <Image
+            src="/hero-runner.jpg"
+            alt=""
+            fill
+            priority
+            sizes="(max-width: 1600px) 100vw, 1600px"
+            className="object-cover object-[60%_center]"
+          />
+          {/* legibility gradient — warm ink-900, heavy left, clears to the sunset */}
+          <div
+            aria-hidden
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(95deg, rgba(43,38,32,0.92) 0%, rgba(43,38,32,0.74) 38%, rgba(43,38,32,0.30) 72%, rgba(43,38,32,0.10) 100%)",
+            }}
+          />
 
-          <div className="lg:pl-4">
-            <HeroDashboard />
+          {/* content — main block vertically centered, chips pinned to the base */}
+          <div className="relative z-10 flex h-full w-full flex-col px-8 py-10 sm:px-12 sm:py-12 md:px-16 md:py-14">
+            <div className="flex flex-1 flex-col justify-center">
+              <div className="max-w-2xl">
+                <h1 className="display-serif text-[clamp(2.4rem,4.8vw,3.9rem)] text-page text-balance">
+                  Know what your patients do between sessions.
+                </h1>
+                <p className="mt-5 max-w-xl text-[17px] leading-relaxed text-page/80">
+                  A session lasts an hour. The behavior that decides the outcome
+                  happens in the weeks between. We turn what your clients actually
+                  log into a read on those weeks, and show the source of every
+                  number.
+                </p>
+                <div className="mt-8 flex flex-wrap items-center gap-3">
+                  <Button href="/contact" size="lg" pill iconRight={ArrowRight}>
+                    Book a demo
+                  </Button>
+                  <Button
+                    href="/#how"
+                    size="lg"
+                    variant="ghost"
+                    iconRight={ArrowDown}
+                    className="text-page hover:bg-page/10"
+                  >
+                    See how it works
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-x-8 gap-y-3">
+              {BENEFITS.map((b) => (
+                <PlusTag key={b} tone="light">
+                  {b}
+                </PlusTag>
+              ))}
+            </div>
           </div>
         </div>
-      </Container>
-    </section>
+      </section>
   );
 }

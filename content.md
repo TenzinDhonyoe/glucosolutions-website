@@ -2,7 +2,7 @@
 
 This is content + section-by-section layout only. No design system (you have that).
 
-**Audience priority:** (1) a solo private-practice RD deciding whether to book a demo, (2) investors/YC/partners doing diligence, (3) patients arriving for Redu. The site is built for #1; #2 and #3 are served without diluting #1.
+**Audience priority:** (1) a dietitian deciding whether to book a demo, (2) investors/YC/partners doing diligence, (3) patients arriving for Redu. The site is built for #1; #2 and #3 are served without diluting #1.
 
 **Copy register:** professional, concrete, no generic AI phrasing ("revolutionize," "powered by AI," "leverage," "seamless"). Front-load the stake. Quantify only what's true. Lowercase founder voice stays on X — the site needs clinician-grade credibility.
 
@@ -22,7 +22,6 @@ This is content + section-by-section layout only. No design system (you have tha
 /product             How it works, in depth
 /pricing             One plan, FAQ
 /security            PHIPA/PIPEDA, data handling
-/about               Founders + story
 /redu                Patient app landing (App Store referral / Product Hunt)
 /contact             Book a demo (or modal/Calendly from any CTA)
 /privacy /terms      Legal (lawyer-drafted)
@@ -38,14 +37,14 @@ A single scroll. Each block below is one section, top to bottom.
 
 ### 1. Nav (sticky)
 - Left: logo
-- Center/right: `Product` · `Pricing` · `Security` · `About`
+- Center/right: `Product` · `Security` · `Redu`
 - Far right: **Book a demo** (primary button)
 - Mobile: collapse to hamburger; keep Book a demo visible.
 
 ### 2. Hero
 **Layout:** left column = text, right column = dashboard screenshot (real, even if early). Single primary CTA, one secondary.
 
-- Eyebrow: `For solo private-practice dietitians`
+- Eyebrow: `For dietitians`
 - **H1: Know what your patients do between sessions.**
 - Subhead: You see a patient once a month. Their behavior happens the other 29 days. GlucoSolutions turns that daily behavior into sourced clinical insight — and cuts the admin around every appointment. Patients log in Redu; you see what matters in one dashboard.
 - Primary CTA: **Book a demo**
@@ -73,7 +72,7 @@ A single scroll. Each block below is one section, top to bottom.
 ### 5. Capabilities
 **Layout:** 3 stacked feature blocks, alternating image side. Each gets a status tag.
 
-- **H2: Built around how solo practice actually works.**
+- **H2: Built around how your practice actually works.**
 
 **Block A — Workflow automation `[Available]`**
 Pre-session summaries, auto-organized logs, and less time charting. Walk in already knowing what changed.
@@ -114,24 +113,17 @@ One-click reports for referring physicians — A1C trends, adherence, behavior c
 - Line: **$199/month per practice.** Redu included for your patients. Cancel anytime.  **[CONFIRM: is Redu unlimited patients or per-seat? Is there a pilot price?]**
 - Link: `See pricing →`
 
-### 10. Founder / why-us teaser
-**Layout:** one short paragraph, link to `/about`. No advisor logos.
-
-- **H2: Why we built this.**
-- Body: We started building hardware to track glucose and learned the real bottleneck wasn't the sensor — it was the dietitian's workflow. So we built for the clinician. **[Tenz: confirm you want the hardware origin on the public site; it's a strong, honest story but optional.]**
-- Link: `Meet the team →`
-
-### 11. Final CTA
+### 10. Final CTA
 **Layout:** full-width band, one headline, one button.
 
 - **H2: See it on your own caseload.**
 - Subhead: A 20-minute walkthrough on a real (de-identified) case. No slides.
 - Button: **Book a demo**
 
-### 12. Footer
-- Col 1: logo + one-line descriptor (`Clinical software for solo dietitians.`)
+### 11. Footer
+- Col 1: logo + one-line descriptor (`Clinical software for dietitians.`)
 - Col 2 Product: Product · Pricing · Security · Redu
-- Col 3 Company: About · Contact · Careers *(only if real)*
+- Col 3 Company: Contact · Careers *(only if real)*
 - Col 4 Legal: Privacy Policy · Terms
 - Bottom bar: `© 2026 GlucoSolutions Inc.` · X (@_tenZdhon_ or a company handle) · `Toronto, Canada`
 
@@ -158,7 +150,7 @@ For the RD who clicked through and wants depth. Order:
 
 **Layout:** one card, centered. Resist tiers until you have them.
 
-- **H1: Simple pricing for solo practice.**
+- **H1: Simple pricing for your practice.**
 - Card:
   - **$199 / month** — per practice
   - Includes: the clinical dashboard, Redu for your patients, between-session messaging, session-prep summaries, all interpretation features.
@@ -188,18 +180,6 @@ The page that closes a cautious clinician. Be specific; mark anything unverified
 7. **Subprocessors:** a short, honest list (hosting, model provider, etc.). Diligence-minded RDs and investors look for this.
 8. **What we don't do yet:** a short honesty block (e.g., formal certifications in progress) earns more trust than silence. Optional but recommended.
 9. **CTA:** `Questions about compliance? Talk to a founder.`
-
----
-
-# PAGE: About (`/about`)
-
-1. **Mission:** `H1: We build for the dietitian, so the dietitian can build the patient.` One paragraph on the between-session gap and why solo RDs are underserved by enterprise tools.
-2. **Origin story (optional, honest):** started on glucose hardware → discovered the clinician workflow was the real constraint → pivoted to software. Ties the "Gluco" name together. Keep it to 4–5 sentences.
-3. **Founders (2 only — no advisors):**
-   - **Tenzin Dhonyoe — Co-founder & CTO.** Biomedical engineer (Toronto Metropolitan University). Built the product end to end — interpretation engine, dashboard, Redu. Owns product and engineering. **[Tenz: pick 1 credibility line you're happy showing publicly — e.g., declined a return offer at Alphawave Semi to go full-time. Keep the CV off the site.]**
-   - **Justin Allen — Co-founder & CEO.** Owns sales, partnerships, and fundraising. **[Add one line — background/why he's credible to RDs and investors.]**
-4. **Recognition (only the true, ownable ones):** DMZ Basecamp · Norman Esch Award · Hult Prize Canada Nationals (Top 8). **Do NOT list YC as backing — at most "Applied, YC S26."** Probably cleaner to omit YC entirely until there's an outcome. **[CONFIRM which of these you want public.]**
-5. **CTA:** Book a demo / `We're hiring` (only if true).
 
 ---
 
@@ -234,8 +214,8 @@ Warmer, patient-facing. This is your App Store / Product Hunt / SEO surface.
 **Status tags are load-bearing.** `[Available]` vs `[In development]` on every feature. This is what separates you from the vaporware AI-health crowd in an investor's eyes.
 
 **SEO/meta (low priority, but set it):**
-- Title: `GlucoSolutions — Clinical software for solo dietitians`
-- Description: `See what your patients do between sessions. Sourced AI interpretation, a patient app, and outcomes reporting — built for solo private-practice RDs.`
+- Title: `GlucoSolutions — Clinical software for dietitians`
+- Description: `See what your patients do between sessions. Sourced AI interpretation, a patient app, and outcomes reporting — built for dietitians.`
 - `/redu` gets its own patient-oriented title/description for App Store referral.
 
 ---

@@ -3,6 +3,7 @@ import { Newsreader, Hanken_Grotesk, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ScrollProgress } from "@/components/interactive/ScrollProgress";
+import { SmoothScroll } from "@/components/motion";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { organization, website } from "@/lib/seo/jsonLd";
 import "./globals.css";
@@ -33,13 +34,13 @@ const geistMono = Geist_Mono({
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://glucosolutions.ca";
 
 const SITE_DESCRIPTION =
-  "See what your patients do between sessions. Sourced AI interpretation, a patient app, and outcomes reporting — clinical software built for solo private-practice dietitians.";
+  "See what your patients do between sessions. Sourced AI interpretation, a patient app, and outcomes reporting. Clinical software built for dietitians.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "GlucoSolutions — Clinical software for solo dietitians",
-    template: "%s — GlucoSolutions",
+    default: "GlucoSolutions: Clinical software for dietitians",
+    template: "%s · GlucoSolutions",
   },
   description: SITE_DESCRIPTION,
   applicationName: "GlucoSolutions",
@@ -50,7 +51,7 @@ export const metadata: Metadata = {
   keywords: [
     "dietitian software",
     "registered dietitian dashboard",
-    "private practice dietitian",
+    "dietitian software platform",
     "between-session patient monitoring",
     "glucose monitoring software",
     "CGM dashboard for dietitians",
@@ -73,13 +74,13 @@ export const metadata: Metadata = {
         url: "/api/og",
         width: 1200,
         height: 630,
-        alt: "GlucoSolutions — clinical software for solo private-practice dietitians.",
+        alt: "GlucoSolutions: clinical software for dietitians.",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "GlucoSolutions — Clinical software for solo dietitians",
+    title: "GlucoSolutions: Clinical software for dietitians",
     description: SITE_DESCRIPTION,
     images: ["/api/og"],
   },
@@ -129,6 +130,7 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col bg-page text-ink-700">
         <JsonLd nodes={[organization(), website()]} />
+        <SmoothScroll />
         <ScrollProgress />
         {children}
         <Analytics />

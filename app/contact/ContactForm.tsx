@@ -21,7 +21,7 @@ export function ContactForm() {
         <span className="mx-auto inline-flex h-12 w-12 items-center justify-center rounded-full bg-good-bg text-good">
           <Check size={24} aria-hidden />
         </span>
-        <h2 className="display-serif mt-4 text-2xl text-ink-900">Thanks — you&apos;re on the list.</h2>
+        <h2 className="display-serif mt-4 text-2xl text-ink-900">Thanks, you&apos;re on the list.</h2>
         <p className="mt-3 text-[16px] text-ink-500">
           We&apos;ll be in touch within one business day to find a time.
         </p>
@@ -46,12 +46,12 @@ export function ContactForm() {
           <Input id="email" name="email" type="email" required autoComplete="email" placeholder="you@practice.ca" />
         </Field>
         <Field label="Practice name" htmlFor="practice">
-          <Input id="practice" name="practice" placeholder="Your private practice" />
+          <Input id="practice" name="practice" placeholder="Your practice" />
         </Field>
         <Field
           label="What's your biggest between-session headache?"
           htmlFor="headache"
-          hint="Optional — but it helps us tailor the walkthrough to your caseload."
+          hint="Optional, but it helps us tailor the walkthrough to your caseload."
         >
           <Textarea id="headache" name="headache" rows={3} placeholder="e.g. I lose the thread on patients between monthly visits." />
         </Field>

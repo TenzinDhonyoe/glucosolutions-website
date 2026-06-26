@@ -10,7 +10,7 @@ const APP_ID = `${SITE_URL}/#softwareapplication`;
 const SERVICE_ID = `${SITE_URL}/#service`;
 
 const ORG_DESCRIPTION =
-  "GlucoSolutions is clinical software for solo private-practice dietitians. Patients log in the Redu app; the dashboard turns that daily behavior into sourced, traceable clinical insight and cuts the admin around every appointment.";
+  "GlucoSolutions is clinical software for dietitians. Patients log in the Redu app; the dashboard turns that daily behavior into sourced, traceable clinical insight and cuts the admin around every appointment.";
 
 export type JsonLdNode = Record<string, unknown>;
 
@@ -27,7 +27,7 @@ export function organization(): JsonLdNode {
     },
     image: `${SITE_URL}/logo.svg`,
     description: ORG_DESCRIPTION,
-    slogan: "Clinical software for solo dietitians.",
+    slogan: "Clinical software for dietitians.",
     email: "hello@glucosolutions.ca",
     address: {
       "@type": "PostalAddress",

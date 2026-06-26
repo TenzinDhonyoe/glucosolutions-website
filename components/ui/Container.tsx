@@ -1,23 +1,26 @@
 import { cn } from "@/lib/utils";
 
 /**
- * Page container — the design system's 1120px editorial measure with
- * comfortable gutters. `wide` opens it up for full-bleed hero rows.
+ * Page container — the design system's single content measure with consistent
+ * side gutters, so every page (home and subpages) lines up on the same side
+ * margins. The width + gutter standard is defined once in globals.css
+ * (`--container-measure` / `--container-narrow`, paired with the px-6 · md:px-10
+ * gutters here). Pass `narrow` for a tighter editorial / reading column.
  */
 export function Container({
   children,
   className,
-  wide = false,
+  narrow = false,
 }: {
   children: React.ReactNode;
   className?: string;
-  wide?: boolean;
+  narrow?: boolean;
 }) {
   return (
     <div
       className={cn(
         "mx-auto w-full px-6 md:px-10",
-        wide ? "max-w-[1320px]" : "max-w-[1120px]",
+        narrow ? "max-w-narrow" : "max-w-measure",
         className,
       )}
     >
