@@ -12,8 +12,8 @@ type Wash = "left" | "bottom" | "center";
 type Size = "tall" | "compact";
 
 const SIZES: Record<Size, string> = {
-  tall: "min-h-[clamp(560px,86svh,920px)]",
-  compact: "min-h-[clamp(440px,62svh,640px)]",
+  tall: "h-[100svh] min-h-[640px]",
+  compact: "min-h-[clamp(520px,72svh,700px)]",
 };
 
 /* Warm ink-900 legibility washes — heavier where the text sits. */
@@ -68,7 +68,7 @@ export function MediaHero({
   });
 
   return (
-    <section className={cn("flex flex-col px-4 pt-4", SIZES[size])}>
+    <section className={cn("flex flex-col p-4", SIZES[size])}>
       <div className="relative mx-auto flex w-full max-w-[1600px] grow overflow-hidden rounded-[1.75rem] ring-1 ring-ink-900/10">
         <Image
           src={image}
@@ -83,7 +83,7 @@ export function MediaHero({
 
         <div
           className={cn(
-            "relative z-10 flex h-full w-full flex-col justify-center px-8 py-16 sm:px-12 md:px-16",
+            "relative z-10 flex h-full w-full flex-col justify-center px-8 py-10 sm:px-12 sm:py-12 md:px-16 md:py-14",
             centered && "items-center text-center",
           )}
         >
