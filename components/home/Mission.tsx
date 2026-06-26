@@ -42,55 +42,63 @@ export function Mission() {
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 0.85", "end 0.5"],
+    // Finish the word reveal just before the panel locks to the top, so it's
+    // fully readable for the beat it stays pinned.
+    offset: ["start 0.9", "end 0.6"],
   });
 
   const words = STATEMENT.split(" ");
 
+  // The statement pins inside a tall track. The extra height past the pinned
+  // panel is the "dwell" the next section rises across to cover it.
   return (
-    <section className="bg-page py-32 md:py-48">
-      <Container>
-        <div className="mx-auto max-w-4xl text-center">
-          <p
-            ref={ref}
-            id="mission-statement"
-            className="display-serif text-[clamp(1.9rem,4.6vw,3.5rem)] leading-[1.16] text-balance"
-          >
-            {reduce ? (
-              <span className="text-ink-900">{STATEMENT}</span>
-            ) : (
-              words.map((word, i) => {
-                const start = i / words.length;
-                const end = (i + 1.5) / words.length;
-                return (
-                  <Word
-                    key={`${word}-${i}`}
-                    progress={scrollYProgress}
-                    range={[start, Math.min(end, 1)]}
-                  >
-                    {word}
-                  </Word>
-                );
-              })
-            )}
-          </p>
+    <section className="relative bg-page">
+      <div className="h-[200vh]">
+        <div className="sticky top-0 z-0 flex h-screen items-center">
+          <Container>
+            <div className="mx-auto max-w-4xl text-center">
+              <p
+                ref={ref}
+                id="mission-statement"
+                className="display-serif text-[clamp(1.9rem,4.6vw,3.5rem)] leading-[1.16] text-balance"
+              >
+                {reduce ? (
+                  <span className="text-ink-900">{STATEMENT}</span>
+                ) : (
+                  words.map((word, i) => {
+                    const start = i / words.length;
+                    const end = (i + 1.5) / words.length;
+                    return (
+                      <Word
+                        key={`${word}-${i}`}
+                        progress={scrollYProgress}
+                        range={[start, Math.min(end, 1)]}
+                      >
+                        {word}
+                      </Word>
+                    );
+                  })
+                )}
+              </p>
 
-          <div className="mt-14 flex flex-col items-center gap-5">
-            <Button
-              href="/contact"
-              size="lg"
-              pill
-              iconRight={ArrowRight}
-              className="bg-ink-900 px-10 py-5 text-[17px] text-page shadow-md hover:bg-ink-700"
-            >
-              Book a demo
-            </Button>
-            <p className="text-[14px] text-ink-500">
-              A 20-minute walkthrough on a real, de-identified case. No slides.
-            </p>
-          </div>
+              <div className="mt-14 flex flex-col items-center gap-5">
+                <Button
+                  href="/contact"
+                  size="lg"
+                  pill
+                  iconRight={ArrowRight}
+                  className="bg-ink-900 px-10 py-5 text-[17px] text-page shadow-md hover:bg-ink-700"
+                >
+                  Book a demo
+                </Button>
+                <p className="text-[14px] text-ink-500">
+                  A 20-minute walkthrough on a real, de-identified case. No slides.
+                </p>
+              </div>
+            </div>
+          </Container>
         </div>
-      </Container>
+      </div>
     </section>
   );
 }
