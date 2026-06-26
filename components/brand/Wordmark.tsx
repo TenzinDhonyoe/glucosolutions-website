@@ -2,58 +2,41 @@ import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-const SOURCE_W = 1920;
-const SOURCE_H = 300;
-
-type Props = {
-  href?: string | null;
-  className?: string;
-  /** "default" → charcoal wordmark for paper/light surfaces. "knockout" → white for dark photos. */
-  variant?: "default" | "knockout";
-  /** Rendered height in px. Width scales from the source aspect. */
-  size?: number;
-  /** Kept for API compatibility — the new lockup is a single wordmark, no separate hex mark. */
-  showMark?: boolean;
-};
+// Source SVG is 1440 × 225 (≈6.4:1), cyan→green gradient wordmark.
+const RATIO = 1440 / 225;
 
 /**
- * Brand wordmark — single-line "GlucoSolutions" lockup with the hex dot above
- * the i. Renders the supplied PNG asset, recolored white or charcoal.
+ * Brand wordmark — the real GlucoSolutions logo (public/logo.svg).
+ * `size` is the rendered box height in px; width scales from the source ratio.
+ * The SVG carries the cyan→green gradient, so it sits on light surfaces as-is.
  */
 export function Wordmark({
   href = "/",
   className,
-  variant = "default",
   size = 26,
-}: Props) {
-  const knockout = variant === "knockout";
-  const src = knockout ? "/brand/wordmark-white.png" : "/brand/wordmark-charcoal.png";
-  const width = Math.round((size * SOURCE_W) / SOURCE_H);
-
-  const inner = (
-    <span
-      className={cn("inline-flex items-center leading-none", className)}
+}: {
+  href?: string | null;
+  className?: string;
+  size?: number;
+}) {
+  const width = Math.round(size * RATIO);
+  const img = (
+    <Image
+      src="/logo.svg"
+      alt="GlucoSolutions"
+      width={width}
+      height={size}
+      priority
+      unoptimized
+      className={cn("block w-auto select-none", className)}
       style={{ height: size }}
-    >
-      <Image
-        src={src}
-        alt="Gluco Solutions"
-        width={width}
-        height={size}
-        priority
-        className="h-full w-auto select-none"
-      />
-    </span>
+    />
   );
 
-  if (!href) return inner;
+  if (!href) return img;
   return (
-    <Link
-      href={href}
-      aria-label="Gluco Solutions home"
-      className="inline-flex items-center"
-    >
-      {inner}
+    <Link href={href} aria-label="GlucoSolutions home" className="inline-flex items-center">
+      {img}
     </Link>
   );
 }
