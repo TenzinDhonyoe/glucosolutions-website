@@ -115,14 +115,13 @@ export function Footer() {
               <div className="mt-12 flex flex-col gap-3 border-t border-page/15 pt-6 text-[13px] text-page/60 sm:flex-row sm:items-center sm:justify-between">
                 <span>© 2026 GlucoSolutions Inc.</span>
                 <div className="flex items-center gap-5">
-                  {/* [CONFIRM] company X handle — placeholder uses founder handle from content.md */}
                   <a
-                    href="https://x.com/_tenZdhon_"
+                    href="https://x.com/gluco_solutions"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="transition-colors hover:text-white"
                   >
-                    X / @_tenZdhon_
+                    X / @gluco_solutions
                   </a>
                   <span>Toronto, Canada</span>
                 </div>

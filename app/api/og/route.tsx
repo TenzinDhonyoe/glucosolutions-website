@@ -6,7 +6,15 @@ export const size = { width: 1200, height: 630 };
 
 const BRAND_GRADIENT = "linear-gradient(100deg, #2BB0DC 0%, #34A89A 50%, #4E9A6B 100%)";
 
-export async function GET() {
+// Warm ink legibility wash, mirrored from the real hero overlay.
+const HERO_WASH =
+  "linear-gradient(95deg, rgba(43,38,32,0.92) 0%, rgba(43,38,32,0.74) 38%, rgba(43,38,32,0.30) 72%, rgba(43,38,32,0.10) 100%)";
+
+const BENEFITS = ["See the weeks between", "Cut the admin", "Prove outcomes"];
+
+export async function GET(req: Request) {
+  const { origin } = new URL(req.url);
+
   return new ImageResponse(
     (
       <div
@@ -16,24 +24,37 @@ export async function GET() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: 80,
-          background: "#F7F3EC",
+          padding: 72,
+          background: "#2B2620",
           fontFamily: "sans-serif",
-          color: "#2B2620",
+          color: "#F7F3EC",
           position: "relative",
         }}
       >
-        {/* soft palette-matched accent, top-right */}
+        {/* the real hero photograph */}
+        <img
+          src={`${origin}/hero-runner.jpg`}
+          width={1200}
+          height={630}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "60% center",
+          }}
+        />
+        {/* warm ink wash for legibility */}
         <div
           style={{
             position: "absolute",
-            top: -140,
-            right: -140,
-            width: 560,
-            height: 560,
-            borderRadius: "50%",
-            background:
-              "radial-gradient(closest-side, rgba(43,176,220,0.20), rgba(78,154,107,0.10) 45%, transparent 72%)",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: HERO_WASH,
           }}
         />
 
@@ -50,27 +71,48 @@ export async function GET() {
           <div
             style={{
               fontFamily: "Georgia, serif",
-              fontSize: 78,
+              fontSize: 76,
               fontWeight: 500,
               letterSpacing: "-0.02em",
               lineHeight: 1.05,
-              maxWidth: 960,
+              maxWidth: 880,
             }}
           >
             Know what your patients do between sessions.
           </div>
           <div
             style={{
-              marginTop: 30,
+              marginTop: 26,
               fontSize: 26,
-              color: "#847B6F",
-              maxWidth: 820,
+              color: "rgba(247,243,236,0.82)",
+              maxWidth: 760,
               lineHeight: 1.4,
             }}
           >
             Clinical software for dietitians.
           </div>
-          <div style={{ marginTop: 34, height: 6, width: 180, borderRadius: 999, background: BRAND_GRADIENT }} />
+
+          {/* benefit chips, mirrored from the hero */}
+          <div style={{ display: "flex", marginTop: 34, gap: 14 }}>
+            {BENEFITS.map((b) => (
+              <div
+                key={b}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  padding: "10px 18px",
+                  borderRadius: 999,
+                  border: "1px solid rgba(247,243,236,0.28)",
+                  fontSize: 20,
+                  color: "rgba(247,243,236,0.92)",
+                }}
+              >
+                <span style={{ color: "#34A89A" }}>+</span>
+                {b}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     ),
