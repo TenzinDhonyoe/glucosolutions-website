@@ -28,7 +28,7 @@ export function organization(): JsonLdNode {
     image: `${SITE_URL}/logo.svg`,
     description: ORG_DESCRIPTION,
     slogan: "Clinical software for dietitians.",
-    email: "hello@glucosolutions.ca",
+    email: "tenzin@glucosolutions.ca",
     address: {
       "@type": "PostalAddress",
       addressLocality: "Toronto",

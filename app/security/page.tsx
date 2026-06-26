@@ -9,7 +9,7 @@ import type { IconType } from "@/components/ui";
 export const metadata: Metadata = {
   title: "Security & Compliance",
   description:
-    "Patient trust is the product. PHIPA- and PIPEDA-aligned data handling, de-identification before any AI processing, and a written custodian/agent agreement.",
+    "Patient trust is the product. PHI-aware safeguards: encrypted storage, row-level access controls, data minimization for AI features, and written vendor agreements before production patient use.",
 };
 
 type Principle = {
@@ -22,37 +22,33 @@ type Principle = {
 const PRINCIPLES: Principle[] = [
   {
     icon: FileSignature,
-    title: "You stay the custodian; we're your agent",
-    body: "The registered dietitian remains the health information custodian. GlucoSolutions operates as your agent under a written data agreement, a real artifact we sign with you.",
+    title: "Written agreement before real patient data",
+    body: "Before any real patient data is used, we put a written data protection agreement in place. You remain the health information custodian; GlucoSolutions processes patient information only on your instructions.",
   },
   {
     icon: Ban,
-    title: "We don't train on your patients' data",
-    body: "Your patients' data is not used to train models. We commit to this in writing in the data agreement.",
-    status: "[CONFIRM before publishing]",
+    title: "AI terms before production PHI use",
+    body: "AI features are limited to demo or de-identified data until our vendor data-processing and retention terms are finalized.",
   },
   {
     icon: Lock,
     title: "Encryption & access controls",
-    body: "Data encrypted in transit and at rest, role-based access, and audit logging. We'll confirm exactly what's live for your account before you sign.",
-    status: "[CONFIRM each item is implemented]",
+    body: "Patient data is protected with encrypted transport and encrypted cloud storage. Access is restricted by authenticated accounts and database row-level security so dietitians only see linked clients.",
   },
   {
     icon: MapPin,
     title: "Data residency",
-    body: "Where PHI is stored matters. We'll tell you precisely where your patients' data lives today and what's in progress. No vague claims.",
-    status: "[CONFIRM: do not claim 'stored in Canada' unless true today]",
+    body: "We document where patient data is hosted and disclose hosting regions before onboarding. We do not make data-residency claims unless they are contractually and technically confirmed.",
   },
   {
     icon: Boxes,
     title: "Subprocessors",
-    body: "We keep a short, current list of the third parties we rely on (hosting and our model provider among them). Ask us for the latest list during diligence.",
-    status: "[CONFIRM the live list]",
+    body: "We maintain a current list of subprocessors, including hosting, authentication, email, analytics, and AI providers, and make it available during diligence.",
   },
 ];
 
-/* De-identification flow — the strongest, most defensible claim, shown as a
-   pipeline: a raw record has its identifiers stripped before any AI sees it. */
+/* Data-minimization flow: raw identifiers are stripped from demo or approved
+   AI inputs so only the necessary clinical context moves forward. */
 function DeidFlow() {
   return (
     <div className="grid items-stretch gap-4 sm:grid-cols-[1fr_auto_1fr_auto_1fr]">
@@ -87,10 +83,10 @@ function DeidFlow() {
         <ArrowRight size={18} className="text-ink-400" aria-hidden />
       </div>
 
-      {/* de-identified → AI */}
+      {/* minimized → AI */}
       <div className="rounded-xl border border-line bg-card p-5 shadow-sm">
         <div className="mono-label mb-3 flex items-center gap-2 text-good">
-          <Cpu size={13} aria-hidden /> Sent to AI · de-identified
+          <Cpu size={13} aria-hidden /> AI input · minimized
         </div>
         <ul className="space-y-1.5 text-[13px]">
           <li className="text-good">✓ No name</li>
@@ -113,7 +109,7 @@ export default function SecurityPage() {
           image="/photos/water-blue.jpg"
           eyebrow="Security & compliance"
           title="Patient trust is the product."
-          lead="We handle protected health information the way a cautious clinician would: PHIPA- and PIPEDA-aligned, de-identified before AI, and accountable in writing."
+          lead="Built with PHI-aware safeguards: encrypted storage, row-level access controls, data minimization for AI features, and written vendor agreements before production patient use."
           objectPosition="center"
           wash="left"
         >
@@ -122,21 +118,22 @@ export default function SecurityPage() {
           </Button>
         </MediaHero>
 
-        {/* The headline commitment — de-identification, shown as a pipeline */}
+        {/* The headline commitment — data minimization, shown as a pipeline */}
         <Section tone="card">
           <Reveal>
             <Eyebrow number="01">The headline commitment</Eyebrow>
           </Reveal>
           <Reveal delay={0.05}>
             <h2 className="display-serif mt-4 max-w-3xl text-[clamp(1.9rem,3.6vw,2.7rem)] text-ink-900 text-balance">
-              De-identified before any AI ever sees it.
+              Data minimization before AI features.
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-5 max-w-2xl text-[17px] leading-relaxed text-ink-500">
-              Patient-identifying data is stripped before anything is sent to an
-              external model. It&apos;s our strongest, most defensible commitment,
-              built into the pipeline, not bolted on.
+              AI features are limited to demo or de-identified data until vendor
+              data-processing and retention terms are finalized. Where AI is
+              used, we minimize inputs first and keep source facts separate from
+              generated narration.
             </p>
           </Reveal>
           <Reveal delay={0.15} variant="scale" className="mt-10">
@@ -186,9 +183,10 @@ export default function SecurityPage() {
               </h2>
               <p className="mt-4 max-w-2xl text-[16px] leading-relaxed text-ink-500">
                 We&apos;re early, and we&apos;d rather tell you than let you assume.
-                Formal certifications (such as SOC&nbsp;2) are not in place yet. When
-                you ask where we stand on any control, you&apos;ll get a straight
-                answer: what&apos;s live, what&apos;s in progress, and when.
+                Formal certifications and compliance labels are not in place
+                yet. We do not claim HIPAA, PHIPA, or SOC&nbsp;2 compliance until
+                the underlying agreements, retention policies, incident process,
+                and audit logging are nailed down.
               </p>
             </Card>
           </Reveal>
