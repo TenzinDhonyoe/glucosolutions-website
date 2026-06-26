@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "baseUrl": "..",
+    "jsx": "react-jsx",
+    "paths": {
+      "next/image": [".design-sync/shims/next-image.tsx"],
+      "next/link": [".design-sync/shims/next-link.tsx"],
+      "next/navigation": [".design-sync/shims/next-navigation.ts"],
+      "next/font/google": [".design-sync/shims/next-font.ts"],
+      "next/font/local": [".design-sync/shims/next-font.ts"],
+      "@/lib/analytics": [".design-sync/shims/analytics.ts"],
+      "@/lib/seo/jsonLd": [".design-sync/shims/seo-jsonld.ts"],
+      "@/app/waitlist/actions": [".design-sync/shims/waitlist-actions.ts"],
+      "@/*": ["./*"]
+    }
+  }
+}

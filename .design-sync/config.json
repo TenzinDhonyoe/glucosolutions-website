@@ -1,0 +1,42 @@
+{
+  "pkg": "gluco_website",
+  "globalName": "GlucoDS",
+  "projectId": "47a2a64e-c231-4eee-8b6e-be4b70b2c927",
+  "shape": "package",
+  "srcDir": "components",
+  "tsconfig": ".design-sync/tsconfig.ds.json",
+  "cssEntry": ".design-sync/compiled.css",
+  "extraFonts": [".design-sync/fonts/brand-fonts.css"],
+  "readmeHeader": ".design-sync/conventions.md",
+  "dtsPropsFor": {
+    "HexMark": "size?: number; className?: string; knockout?: boolean;",
+    "Wordmark": "href?: string | null; className?: string; variant?: \"default\" | \"knockout\"; size?: number; showMark?: boolean;",
+    "CounterStat": "to: number; from?: number; duration?: number; prefix?: string; suffix?: string; decimals?: number; className?: string;",
+    "MagneticButton": "children: React.ReactNode; className?: string; strength?: number; range?: number; href?: string; onClick?: () => void; ariaLabel?: string;",
+    "SectionLabel": "index: number; label: string; className?: string;",
+    "TrendPill": "",
+    "Marquee": "items: string[]; duration?: number; itemClassName?: string; className?: string;",
+    "PhoneFrame": "src?: string; alt?: string; label?: string; className?: string;",
+    "PhotoCard": "src: string; alt: string; caption?: string; ratio?: string; className?: string; priority?: boolean; hex?: boolean; vignette?: boolean;",
+    "GlucoseChart": "className?: string; annotations?: boolean; scrollProgress?: unknown;",
+    "MotionSection": "children: React.ReactNode; className?: string; id?: string; delay?: number; as?: \"section\" | \"div\"; ariaLabelledBy?: string;",
+    "MouseParallax": "children: React.ReactNode; strength?: number; tilt?: number; className?: string;",
+    "JsonLd": "nodes: readonly Record<string, unknown>[];",
+    "Grain": "",
+    "Nav": "",
+    "ScrollProgress": "",
+    "Hero": "",
+    "Problem": "",
+    "Science": "",
+    "Solution": "",
+    "Comparison": "",
+    "Faq": "",
+    "Waitlist": "",
+    "Footer": ""
+  },
+  "overrides": {
+    "Nav": { "cardMode": "single", "primaryStory": "Default" },
+    "Grain": { "cardMode": "single", "primaryStory": "OverPanel" },
+    "Problem": { "cardMode": "column" }
+  }
+}

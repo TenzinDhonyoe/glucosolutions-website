@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Nav } from "@/components/Nav";
-import { Footer } from "@/components/sections/Footer";
+import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { webPage, SITE_URL } from "@/lib/seo/jsonLd";
 import { LEGAL_LAST_MODIFIED } from "@/lib/seo/buildInfo";
@@ -37,21 +37,21 @@ export default function PrivacyPage() {
           }),
         ]}
       />
-      <main className="flex-1 bg-paper text-charcoal">
+      <main className="flex-1 bg-page text-ink-900">
         <article className="mx-auto max-w-3xl px-5 sm:px-8 pt-32 md:pt-40 pb-24 md:pb-32">
-          <p className="caption text-charcoal/55">
+          <p className="mono-label text-ink-500">
             Last updated{" "}
             <time dateTime={LEGAL_LAST_MODIFIED}>May 7, 2026</time>
           </p>
 
-          <h1 className="mt-3 display-serif text-[44px] sm:text-[60px] md:text-[72px] leading-[1] tracking-[-0.02em] text-charcoal text-balance">
+          <h1 className="mt-3 display-serif text-[44px] sm:text-[60px] md:text-[72px] leading-[1] tracking-[-0.02em] text-ink-900 text-balance">
             Privacy{" "}
-            <span className="display-serif-italic text-sage">policy</span>.
+            <span className="display-serif-italic text-sky-700">policy</span>.
           </h1>
 
-          <div className="mt-12 space-y-10 text-[16px] sm:text-[17px] leading-[1.7] text-charcoal/85">
+          <div className="mt-12 space-y-10 text-[16px] sm:text-[17px] leading-[1.7] text-ink-700">
             <section>
-              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-charcoal">
+              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-ink-900">
                 Who we are
               </h2>
               <p className="mt-4">
@@ -59,7 +59,7 @@ export default function PrivacyPage() {
                 &ldquo;our&rdquo;) operates this website at{" "}
                 <a
                   href={SITE_URL}
-                  className="underline decoration-sage/40 underline-offset-4 hover:text-charcoal"
+                  className="underline decoration-sky-700/30 underline-offset-4 hover:text-ink-900"
                 >
                   glucosolutions.ca
                 </a>
@@ -69,7 +69,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-charcoal">
+              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-ink-900">
                 What we collect
               </h2>
               <p className="mt-4">
@@ -84,11 +84,11 @@ export default function PrivacyPage() {
                 <li>
                   <strong>Referrer and source</strong> &mdash; the page you
                   came from (e.g.,{" "}
-                  <code className="font-mono text-[14px] text-charcoal/75">
+                  <code className="font-mono text-[14px] text-ink-500">
                     referrer
                   </code>{" "}
                   and{" "}
-                  <code className="font-mono text-[14px] text-charcoal/75">
+                  <code className="font-mono text-[14px] text-ink-500">
                     source
                   </code>
                   ) so we can understand which channels reach the right people.
@@ -108,7 +108,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-charcoal">
+              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-ink-900">
                 How we use it
               </h2>
               <ul className="mt-4 space-y-2 list-disc pl-6">
@@ -131,7 +131,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-charcoal">
+              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-ink-900">
                 Where it lives
               </h2>
               <p className="mt-4">
@@ -145,7 +145,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-charcoal">
+              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-ink-900">
                 How long we keep it
               </h2>
               <p className="mt-4">
@@ -157,7 +157,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-charcoal">
+              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-ink-900">
                 Your rights
               </h2>
               <p className="mt-4">
@@ -177,7 +177,7 @@ export default function PrivacyPage() {
                 Email{" "}
                 <a
                   href="mailto:hello@glucosolutions.ca"
-                  className="underline decoration-sage/40 underline-offset-4 hover:text-charcoal"
+                  className="underline decoration-sky-700/30 underline-offset-4 hover:text-ink-900"
                 >
                   hello@glucosolutions.ca
                 </a>{" "}
@@ -189,7 +189,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-charcoal">
+              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-ink-900">
                 Cookies
               </h2>
               <p className="mt-4">
@@ -201,7 +201,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-charcoal">
+              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-ink-900">
                 Changes
               </h2>
               <p className="mt-4">
@@ -213,14 +213,14 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-charcoal">
+              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-ink-900">
                 Contact
               </h2>
               <p className="mt-4">
                 Questions about privacy can be sent to{" "}
                 <a
                   href="mailto:hello@glucosolutions.ca"
-                  className="underline decoration-sage/40 underline-offset-4 hover:text-charcoal"
+                  className="underline decoration-sky-700/30 underline-offset-4 hover:text-ink-900"
                 >
                   hello@glucosolutions.ca
                 </a>

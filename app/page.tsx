@@ -1,41 +1,31 @@
 import { Nav } from "@/components/Nav";
-import { Hero } from "@/components/sections/Hero";
-import { Problem } from "@/components/sections/Problem";
-import { Solution } from "@/components/sections/Solution";
-import { Science } from "@/components/sections/Science";
-import { Comparison } from "@/components/sections/Comparison";
-import { Waitlist } from "@/components/sections/Waitlist";
-import { Faq } from "@/components/sections/Faq";
-import { Footer } from "@/components/sections/Footer";
-import { JsonLd } from "@/components/seo/JsonLd";
-import {
-  faqPage,
-  product,
-  service,
-  softwareApplication,
-} from "@/lib/seo/jsonLd";
-import { FAQS } from "@/lib/seo/faqs";
+import { Footer } from "@/components/Footer";
+import { Hero } from "@/components/home/Hero";
+import { Problem } from "@/components/home/Problem";
+import { HowItWorks } from "@/components/home/HowItWorks";
+import { Capabilities } from "@/components/home/Capabilities";
+import { Provenance } from "@/components/home/Provenance";
+import { ReduTeaser } from "@/components/home/ReduTeaser";
+import { SecurityTeaser } from "@/components/home/SecurityTeaser";
+import { PricingTeaser } from "@/components/home/PricingTeaser";
+import { FounderTeaser } from "@/components/home/FounderTeaser";
+import { FinalCta } from "@/components/home/FinalCta";
 
 export default function Home() {
   return (
     <>
-      <JsonLd
-        nodes={[
-          product(),
-          softwareApplication(),
-          service(),
-          faqPage(FAQS),
-        ]}
-      />
       <Nav />
       <main className="flex-1">
         <Hero />
         <Problem />
-        <Science />
-        <Solution />
-        <Comparison />
-        <Waitlist />
-        <Faq />
+        <HowItWorks />
+        <Capabilities />
+        <Provenance />
+        <ReduTeaser />
+        <SecurityTeaser />
+        <PricingTeaser />
+        <FounderTeaser />
+        <FinalCta />
       </main>
       <Footer />
     </>

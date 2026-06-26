@@ -1,0 +1,30 @@
+/* Brand families for the Gluco Solutions DS. Inter (sans, substitutes Suisse Int'l),
+   Fraunces (display, substitutes Canela Deck), JetBrains Mono (mono). Variable weight. */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("./inter-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Fraunces";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("./fraunces-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Fraunces";
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("./fraunces-latin-italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url("./jetbrains-mono-latin.woff2") format("woff2");
+}

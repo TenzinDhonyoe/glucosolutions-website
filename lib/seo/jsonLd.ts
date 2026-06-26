@@ -10,7 +10,7 @@ const APP_ID = `${SITE_URL}/#softwareapplication`;
 const SERVICE_ID = `${SITE_URL}/#service`;
 
 const ORG_DESCRIPTION =
-  "Gluco Solutions helps adults reverse prediabetes before it becomes type 2 diabetes. A non-invasive wearable, AI coaching, and a registered dietitian show you what spikes you, what calms you, and the small daily moves that compound. Wellness product, not a medical device.";
+  "GlucoSolutions is clinical software for solo private-practice dietitians. Patients log in the Redu app; the dashboard turns that daily behavior into sourced, traceable clinical insight and cuts the admin around every appointment.";
 
 export type JsonLdNode = Record<string, unknown>;
 
@@ -18,27 +18,26 @@ export function organization(): JsonLdNode {
   return {
     "@type": "Organization",
     "@id": ORG_ID,
-    name: "Gluco Solutions",
-    legalName: "Gluco Solutions",
-    alternateName: "GlucoSolutions",
+    name: "GlucoSolutions",
+    legalName: "GlucoSolutions Inc.",
     url: SITE_URL,
     logo: {
       "@type": "ImageObject",
-      url: `${SITE_URL}/logo.png`,
+      url: `${SITE_URL}/logo.svg`,
     },
-    image: `${SITE_URL}/logo.png`,
+    image: `${SITE_URL}/logo.svg`,
     description: ORG_DESCRIPTION,
-    slogan: "Reverse prediabetes before it becomes type 2.",
+    slogan: "Clinical software for solo dietitians.",
     email: "hello@glucosolutions.ca",
     address: {
       "@type": "PostalAddress",
+      addressLocality: "Toronto",
+      addressRegion: "ON",
       addressCountry: "CA",
     },
     areaServed: { "@type": "Country", name: "Canada" },
-    sameAs: [
-      "https://x.com/gluco_solutions",
-      "https://www.linkedin.com/company/glucosolutions",
-    ],
+    // [CONFIRM] company social handles
+    sameAs: ["https://x.com/_tenZdhon_"],
   };
 }
 
@@ -47,7 +46,7 @@ export function website(): JsonLdNode {
     "@type": "WebSite",
     "@id": WEBSITE_ID,
     url: SITE_URL,
-    name: "Gluco Solutions",
+    name: "GlucoSolutions",
     description: ORG_DESCRIPTION,
     inLanguage: "en-CA",
     publisher: { "@id": ORG_ID },

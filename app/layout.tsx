@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Fraunces, JetBrains_Mono } from "next/font/google";
+import { Newsreader, Hanken_Grotesk, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ScrollProgress } from "@/components/interactive/ScrollProgress";
@@ -7,68 +7,65 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { organization, website } from "@/lib/seo/jsonLd";
 import "./globals.css";
 
-// Inter is the working substitute for Suisse Int'l (per DESIGN.md).
-// Fraunces is the working substitute for Canela Deck — closest free
-// editorial serif with a strong italic. Replace with licensed Suisse + Canela
-// at launch; flag as substitutions in deliverables.
-const inter = Inter({
-  variable: "--font-sans",
+// GlucoSolutions Design System v1.0 — three voices, one tone.
+// Hanken Grotesk = humanist sans for body & UI.
+// Newsreader    = editorial serif for headlines & quotes.
+// Geist Mono     = monospace for data, units and labels.
+const hanken = Hanken_Grotesk({
+  variable: "--font-hanken",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
-const fraunces = Fraunces({
-  variable: "--font-display",
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
   subsets: ["latin"],
-  weight: ["400", "500"],
   style: ["normal", "italic"],
   display: "swap",
 });
 
-const jetbrains = JetBrains_Mono({
-  variable: "--font-mono",
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
-  weight: ["400", "500"],
   display: "swap",
 });
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://glucosolutions.ca";
 
 const SITE_DESCRIPTION =
-  "Reverse prediabetes before it becomes type 2. A non-invasive wearable, AI coaching, and a registered dietitian help you see what spikes you, what calms you, and the small daily moves that compound.";
+  "See what your patients do between sessions. Sourced AI interpretation, a patient app, and outcomes reporting — clinical software built for solo private-practice dietitians.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "GlucoSolutions — Reverse prediabetes.",
-    template: "%s | Gluco Solutions",
+    default: "GlucoSolutions — Clinical software for solo dietitians",
+    template: "%s — GlucoSolutions",
   },
   description: SITE_DESCRIPTION,
-  applicationName: "Gluco Solutions",
-  authors: [{ name: "Gluco Solutions", url: SITE_URL }],
-  creator: "Gluco Solutions",
-  publisher: "Gluco Solutions",
-  category: "Health & Wellness",
+  applicationName: "GlucoSolutions",
+  authors: [{ name: "GlucoSolutions", url: SITE_URL }],
+  creator: "GlucoSolutions",
+  publisher: "GlucoSolutions",
+  category: "Health Technology",
   keywords: [
-    "reverse prediabetes",
-    "prediabetes",
-    "prediabetes wearable",
-    "non-invasive glucose monitor",
-    "prediabetes reversal",
+    "dietitian software",
+    "registered dietitian dashboard",
+    "private practice dietitian",
+    "between-session patient monitoring",
+    "glucose monitoring software",
+    "CGM dashboard for dietitians",
+    "clinical nutrition software",
+    "patient engagement app",
+    "outcomes reporting",
+    "prediabetes management",
     "metabolic health",
-    "glycemic awareness",
-    "glucose trends",
-    "food-first nutrition",
-    "AI health coach",
-    "registered dietitian",
-    "wellness wearable",
+    "Redu app",
   ],
   openGraph: {
     type: "website",
     url: SITE_URL,
-    siteName: "Gluco Solutions",
-    title: "Reverse prediabetes — before it becomes type 2.",
+    siteName: "GlucoSolutions",
+    title: "Know what your patients do between sessions.",
     description: SITE_DESCRIPTION,
     locale: "en_CA",
     images: [
@@ -76,17 +73,15 @@ export const metadata: Metadata = {
         url: "/api/og",
         width: 1200,
         height: 630,
-        alt: "Gluco Solutions — catch prediabetes before it catches you.",
+        alt: "GlucoSolutions — clinical software for solo private-practice dietitians.",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Gluco Solutions — Reverse prediabetes before it becomes type 2.",
+    title: "GlucoSolutions — Clinical software for solo dietitians",
     description: SITE_DESCRIPTION,
     images: ["/api/og"],
-    site: "@gluco_solutions",
-    creator: "@gluco_solutions",
   },
   alternates: {
     canonical: SITE_URL,
@@ -114,12 +109,12 @@ export const metadata: Metadata = {
   },
   other: {
     "geo.region": "CA",
-    "geo.placename": "Canada",
+    "geo.placename": "Toronto, Canada",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#F6F1E6",
+  themeColor: "#F7F3EC",
   width: "device-width",
   initialScale: 1,
 };
@@ -130,9 +125,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${fraunces.variable} ${jetbrains.variable} h-full antialiased`}
+      className={`${hanken.variable} ${newsreader.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-paper text-charcoal">
+      <body className="flex min-h-full flex-col bg-page text-ink-700">
         <JsonLd nodes={[organization(), website()]} />
         <ScrollProgress />
         {children}
