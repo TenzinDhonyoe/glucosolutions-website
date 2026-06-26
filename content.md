@@ -101,9 +101,9 @@ One-click reports for referring physicians — A1C trends, adherence, behavior c
 **Layout:** headline + 3 short trust points + link.
 
 - **H2: Built for PHI from day one.**
-- Point 1: PHIPA- and PIPEDA-aligned data handling.
-- Point 2: Patient data is de-identified before any AI processing.
-- Point 3: You remain the health information custodian; we operate as your agent under a written agreement.
+- Point 1: Encrypted storage and row-level access controls.
+- Point 2: Data minimization for AI features before production patient use.
+- Point 3: Written data protection agreements before real patient data is used.
 - Link: `How we handle data →` (`/security`)
 
 ### 9. Pricing teaser
@@ -160,8 +160,8 @@ For the RD who clicked through and wants depth. Order:
 - **FAQ** (accordion):
   - Do my patients pay anything? → **[CONFIRM]** (likely: no, it's included.)
   - Do I need CGMs? → No. Patients can log glucose manually; CGM is supported, not required.
-  - Is this PHIPA/PIPEDA compliant? → Short yes + link to `/security`.
-  - Who owns the patient data? → The patient's information stays under your custodianship; we act as your agent. Link to Security.
+  - Is this PHIPA/PIPEDA compliant? → Do not claim compliance until agreements, vendor terms, retention policy, incident process, and audit logging are confirmed. Link to Security.
+  - Who owns the patient data? → Before real patient data is used, a written data protection agreement is put in place. Link to Security.
   - Can I export my data if I leave? → **[CONFIRM]**
   - Is this medical advice / does it diagnose? → No. It organizes and interprets data to support *your* clinical judgment; it doesn't replace it.
 
@@ -171,13 +171,13 @@ For the RD who clicked through and wants depth. Order:
 
 The page that closes a cautious clinician. Be specific; mark anything unverified.
 
-1. **Hero:** `H1: Patient trust is the product.` Sub: one line on PHIPA/PIPEDA alignment.
-2. **Data residency:** where PHI is stored. **[CONFIRM — you flagged a Supabase region migration as a full rebuild; do NOT claim "stored in Canada" unless it's true today. If it isn't yet, say what's accurate and what's in progress.]**
-3. **De-identification before AI processing:** your strongest, most defensible claim — state it plainly. Patient-identifying data is stripped before anything is sent to an external model.
-4. **Custodian / agent relationship:** the RD remains the health information custodian; GlucoSolutions operates as an agent under a written data agreement. Name the agreement as a real artifact you'll sign.
-5. **Encryption & access controls:** in transit and at rest, role-based access, audit logging. **[CONFIRM each before publishing — only list what's actually implemented.]**
-6. **Model training:** state whether patient data is ever used to train models. "We do not train on your patients' data" is high-value **[CONFIRM it's true]**.
-7. **Subprocessors:** a short, honest list (hosting, model provider, etc.). Diligence-minded RDs and investors look for this.
+1. **Hero:** `H1: Patient trust is the product.` Sub: Built with PHI-aware safeguards: encrypted storage, row-level access controls, data minimization for AI features, and written vendor agreements before production patient use.
+2. **Custodian / agent relationship:** before any real patient data is used, put a written data protection agreement in place. If/when signed, say the RD remains the custodian and GlucoSolutions processes patient information only on their instructions.
+3. **AI model terms:** do not broadly say "we don't train on patient data" until vendor coverage is confirmed. Safer public line: AI features are limited to demo or de-identified data until vendor data-processing and retention terms are finalized.
+4. **Encryption & access controls:** encrypted transport, encrypted cloud storage, authenticated accounts, and database row-level security so dietitians only see linked clients.
+5. **Data residency:** document and disclose hosting regions before onboarding. Do not claim Canada unless Supabase, backups, storage, and AI vendors are contractually and technically pinned.
+6. **Subprocessors:** maintain a current list covering hosting, authentication, email, analytics, and AI providers; make it available during diligence.
+7. **Compliance labels:** avoid saying HIPAA compliant, PHIPA compliant, or SOC 2 until BAAs/agreements, vendor coverage, retention policy, incident process, and audit logging are nailed down.
 8. **What we don't do yet:** a short honesty block (e.g., formal certifications in progress) earns more trust than silence. Optional but recommended.
 9. **CTA:** `Questions about compliance? Talk to a founder.`
 
@@ -201,7 +201,7 @@ Warmer, patient-facing. This is your App Store / Product Hunt / SEO surface.
 - **H1: Book a 20-minute demo.**
 - Sub: We'll walk through GlucoSolutions on a real, de-identified case — yours if you have one.
 - Embed Calendly (or a 4-field form: name, email, practice name, "what's your biggest between-session headache?"). The last field is qualifying *and* discovery data.
-- Alt contact: `Prefer email? hello@glucosolutions.ca` **[CONFIRM address — you've set up SPF/DKIM on glucosolutions.ca]**
+- Alt contact: `Prefer email? tenzin@glucosolutions.ca` **[CONFIRM address — you've set up SPF/DKIM on glucosolutions.ca]**
 
 ---
 

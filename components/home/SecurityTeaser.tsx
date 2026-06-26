@@ -4,21 +4,21 @@ import type { IconType } from "@/components/ui";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion";
 
 const POINTS: { icon: IconType; text: string }[] = [
-  { icon: ShieldCheck, text: "PHIPA- and PIPEDA-aligned data handling." },
-  { icon: EyeOff, text: "Patient data is de-identified before any AI processing." },
+  { icon: ShieldCheck, text: "Encrypted storage and row-level access controls." },
+  { icon: EyeOff, text: "Data minimization for AI features before production patient use." },
   {
     icon: FileSignature,
-    text: "You remain the health information custodian; we operate as your agent under a written agreement.",
+    text: "Written data protection agreements before real patient data is used.",
   },
 ];
 
-// Honest compliance markers per content.md — alignment + de-identification +
-// custodian model. No certification claims we can't back yet.
+// Honest security markers. No compliance labels until agreements and controls are
+// fully confirmed.
 const MARKERS = [
-  "PHIPA-aligned",
-  "PIPEDA-aligned",
-  "De-identified before AI",
-  "Custodian / agent model",
+  "Encrypted storage",
+  "Row-level access",
+  "AI data minimization",
+  "Written agreements",
 ];
 
 export function SecurityTeaser() {
@@ -48,7 +48,7 @@ export function SecurityTeaser() {
           </Stagger>
         </div>
 
-        {/* compliance marker strip — the trust band */}
+        {/* security marker strip — the trust band */}
         <Stagger className="mt-14 flex flex-wrap items-center gap-3 border-t border-line pt-8" stagger={0.09}>
           {MARKERS.map((m) => (
             <StaggerItem key={m} variant="scale">

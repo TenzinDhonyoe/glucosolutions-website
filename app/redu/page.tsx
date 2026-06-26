@@ -218,8 +218,9 @@ export default function ReduPage() {
                 <ShieldCheck size={20} aria-hidden />
               </span>
               <p className="text-[16px] leading-relaxed text-ink-500">
-                Your data is yours. It&apos;s de-identified before any AI ever sees it,
-                and shared only with the dietitian you choose to work with.{" "}
+                Your data is yours. AI features use demo or de-identified inputs
+                while vendor terms are finalized, and your information is shared
+                only with the dietitian you choose to work with.{" "}
                 <Link href="/security" className="font-medium text-sky-700 underline decoration-sky-700/40 underline-offset-2 transition-colors hover:decoration-sky-700">
                   How we protect it →
                 </Link>

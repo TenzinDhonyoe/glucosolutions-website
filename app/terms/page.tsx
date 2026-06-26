@@ -193,10 +193,10 @@ export default function TermsPage() {
               <p className="mt-4">
                 Questions about these terms can be sent to{" "}
                 <a
-                  href="mailto:hello@glucosolutions.ca"
+                  href="mailto:tenzin@glucosolutions.ca"
                   className="underline decoration-sky-700/30 underline-offset-4 hover:text-ink-900"
                 >
-                  hello@glucosolutions.ca
+                  tenzin@glucosolutions.ca
                 </a>
                 .
               </p>
