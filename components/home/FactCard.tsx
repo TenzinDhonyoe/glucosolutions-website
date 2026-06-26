@@ -34,7 +34,7 @@ export function FactCard({ expanded = true }: { expanded?: boolean }) {
       </div>
 
       <p className="font-serif text-[22px] leading-snug text-ink-900 text-pretty">
-        Maya's afternoons run higher on days she skips her morning walk.
+        Maya&apos;s afternoons run higher on days she skips her morning walk.
       </p>
 
       {expanded ? (

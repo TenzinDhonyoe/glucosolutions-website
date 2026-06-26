@@ -68,7 +68,7 @@ export async function GET() {
               lineHeight: 1.4,
             }}
           >
-            Clinical software for solo private-practice dietitians.
+            Clinical software for dietitians.
           </div>
           <div style={{ marginTop: 34, height: 6, width: 180, borderRadius: 999, background: BRAND_GRADIENT }} />
         </div>

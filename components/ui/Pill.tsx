@@ -100,6 +100,36 @@ export function Tag({
 }
 
 /**
+ * PlusTag — the editorial `+SAVE TIME` micro-label. Geist Mono, uppercase,
+ * tracked, with an accent `+`. Used in marquee-style benefit rows and as the
+ * capability sub-labels (`+SORT +TRIAGE +SUMMARIZE`). Borderless by default so
+ * a row of them reads as a typographic system, not a row of buttons.
+ */
+export function PlusTag({
+  children,
+  tone = "default",
+  className,
+}: {
+  children: React.ReactNode;
+  tone?: "default" | "light";
+  className?: string;
+}) {
+  const light = tone === "light";
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center font-mono text-[11px] font-medium uppercase tracking-[0.12em]",
+        light ? "text-page/75" : "text-ink-500",
+        className,
+      )}
+    >
+      <span className={cn("mr-1", light ? "text-sky-500" : "text-sky-600")}>+</span>
+      {children}
+    </span>
+  );
+}
+
+/**
  * FeatureStatus — the load-bearing `[Available]` vs `[In development]` tag from
  * content.md. This is what separates shipped features from roadmap in an
  * investor's eyes, so it must always be visible and honest.

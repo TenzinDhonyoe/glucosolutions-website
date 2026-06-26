@@ -39,17 +39,22 @@ export function RingStat({
   const c = 2 * Math.PI * r;
   const total = segments.reduce((sum, s) => sum + s.value, 0) || 1;
 
-  let offset = 0;
-  const arcs = segments.map((s) => {
-    const len = (s.value / total) * c;
-    const arc = {
-      dash: `${len} ${c - len}`,
-      dashoffset: -offset,
-      color: STROKE[s.state],
-    };
-    offset += len;
-    return arc;
-  });
+  const arcs = segments.reduce<{ dash: string; dashoffset: number; color: string; offset: number }[]>(
+    (items, s) => {
+      const offset = items.at(-1)?.offset ?? 0;
+      const len = (s.value / total) * c;
+      return [
+        ...items,
+        {
+          dash: `${len} ${c - len}`,
+          dashoffset: -offset,
+          color: STROKE[s.state],
+          offset: offset + len,
+        },
+      ];
+    },
+    [],
+  );
 
   return (
     <div className={cn("flex items-center gap-5", className)}>

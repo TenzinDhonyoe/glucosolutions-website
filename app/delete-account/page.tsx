@@ -5,7 +5,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { webPage, SITE_URL } from "@/lib/seo/jsonLd";
 import { LEGAL_LAST_MODIFIED } from "@/lib/seo/buildInfo";
 
-const TITLE = "Redu — Account & Data Deletion";
+const TITLE = "Redu: Account & Data Deletion";
 const DESCRIPTION =
   "How to permanently delete your Redu account and all associated data, in the app or by email.";
 
