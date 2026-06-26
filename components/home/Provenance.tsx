@@ -4,9 +4,13 @@ import { FactCard } from "./FactCard";
 
 export function Provenance() {
   return (
-    <section className="bg-card py-20 md:py-28">
-      <Container>
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+    <section className="pt-20 pb-0 md:pt-28">
+      {/* framed card matching the hero/footer bezel: small px-4 side margins,
+          max-w-[1600px], soft rounded corners */}
+      <div className="px-4">
+        <div className="mx-auto max-w-[1600px] rounded-[1.75rem] bg-card ring-1 ring-ink-900/10">
+          <Container className="py-14 md:py-20">
+            <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <Reveal variant="left">
             <Eyebrow slash>Provenance</Eyebrow>
             <h2 className="display-serif mt-5 text-[clamp(2rem,4.4vw,3.2rem)] text-ink-900 text-balance">
@@ -27,8 +31,10 @@ export function Provenance() {
           <Reveal variant="right" className="lg:pl-4">
             <FactCard />
           </Reveal>
+            </div>
+          </Container>
         </div>
-      </Container>
+      </div>
     </section>
   );
 }

@@ -1,8 +1,8 @@
 import { ClipboardList, MessageSquareText, FileText } from "lucide-react";
-import { Container, Card, Eyebrow, FeatureStatus, StatusPill, PlusTag } from "@/components/ui";
+import { Container, Card, FeatureStatus, StatusPill, PlusTag } from "@/components/ui";
 import { GlucoseChart } from "@/components/ui/GlucoseChart";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion";
-import { DataFunnel } from "./DataFunnel";
+import { SignalFunnel } from "./SignalFunnel";
 import { cn } from "@/lib/utils";
 
 /* ---- per-block visuals, built from primitives ---- */
@@ -98,28 +98,14 @@ const BLOCKS = [
 
 export function Capabilities() {
   return (
-    <section className="py-20 md:py-28">
+    <section className="overflow-x-clip pb-20 md:pb-28">
+      {/* full-height centerpiece: heading, funnel, focal card, and a dashboard
+          wheel that spans the screen height. Full-width so it can bleed off the
+          edge. */}
+      <SignalFunnel />
+
       <Container>
-        <Reveal>
-          <Eyebrow slash>Capabilities</Eyebrow>
-        </Reveal>
-        <Reveal delay={0.05}>
-          <h2 className="display-serif mt-5 max-w-3xl text-[clamp(2rem,4.4vw,3.2rem)] text-ink-900 text-balance">
-            Every signal they log, in one personalized view.
-          </h2>
-        </Reveal>
-
-        {/* the data-funnel animation: everything a patient logs streams into one
-            personalized dashboard */}
-        <Reveal delay={0.1} className="mt-10 md:mt-14">
-          <DataFunnel />
-          <p className="mx-auto mt-4 max-w-md text-center text-[15px] leading-relaxed text-ink-500">
-            Meals, glucose, movement, sleep, and more, organized into one read on
-            the weeks between sessions.
-          </p>
-        </Reveal>
-
-        <div className="mt-20 space-y-20 md:mt-28 md:space-y-28">
+        <div className="space-y-20 md:space-y-28">
           {BLOCKS.map((b, i) => {
             const flip = i % 2 === 1;
             return (

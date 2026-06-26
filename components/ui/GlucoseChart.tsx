@@ -23,6 +23,7 @@ export function GlucoseChart({
   title = "Today · continuous glucose",
   mealIdx,
   height = 220,
+  legend = true,
   className,
 }: {
   values?: number[];
@@ -32,6 +33,8 @@ export function GlucoseChart({
   yMin?: number;
   yMax?: number;
   title?: string;
+  /** Show the glucose/target/meals legend. Hide it in tight layouts. */
+  legend?: boolean;
   /** Indices into `values` to mark as meals (white dot ringed in amber, like the real dashboard). */
   mealIdx?: number[];
   /** SVG viewBox height — lower it for a flatter, more compact chart. */
@@ -58,7 +61,7 @@ export function GlucoseChart({
     <div className={cn("rounded-lg border border-line bg-card p-7 shadow-sm", className)}>
       <div className="mb-2 flex items-center justify-between gap-4">
         <h3 className="font-serif text-xl text-ink-900">{title}</h3>
-        <div className="hidden gap-4 text-xs text-ink-500 sm:flex">
+        <div className={cn("hidden gap-4 text-xs text-ink-500", legend && "sm:flex")}>
           <span className="inline-flex items-center gap-1.5">
             <span className="h-[3px] w-3.5 rounded-sm bg-sky-700" />
             Glucose

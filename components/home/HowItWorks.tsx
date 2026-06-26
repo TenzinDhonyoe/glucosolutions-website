@@ -192,7 +192,10 @@ export function HowItWorks() {
   const pinnedAllowed = reduce !== true;
 
   return (
-    <section id="how" className="scroll-mt-24 bg-sunken">
+    <section
+      id="how"
+      className="relative z-10 -mt-[100vh] scroll-mt-24 rounded-t-[2rem] bg-sunken shadow-[0_-30px_60px_-40px_rgba(43,38,32,0.45)] md:rounded-t-[2.5rem]"
+    >
       {pinnedAllowed ? <PinnedSteps className="hidden lg:block" /> : null}
       <StaticSteps className={pinnedAllowed ? "lg:hidden" : ""} />
     </section>
