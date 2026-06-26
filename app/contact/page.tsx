@@ -47,7 +47,7 @@ export default function ContactPage() {
               }}
             />
 
-            <div className="relative z-10 grid w-full gap-8 px-8 pb-8 pt-24 sm:px-12 sm:pb-10 md:px-16 lg:grid-cols-[minmax(0,1fr)_minmax(360px,500px)] lg:items-center lg:gap-14 lg:pb-10 lg:pt-28 xl:gap-20">
+            <div className="relative z-10 grid w-full gap-8 px-8 pb-6 pt-24 sm:px-12 sm:pb-6 md:px-16 lg:grid-cols-[minmax(0,1fr)_minmax(360px,500px)] lg:items-center lg:gap-14 lg:pb-6 lg:pt-24 xl:gap-20">
               <Reveal variant="left">
                 <p className="font-mono text-[12px] font-medium uppercase tracking-[0.16em] text-page/70">
                   <span className="mr-2 text-page/40">~</span>
@@ -83,7 +83,10 @@ export default function ContactPage() {
 
               <Reveal variant="right">
                 <div className="overflow-hidden rounded-[1.5rem] bg-page p-1.5 shadow-2xl ring-1 ring-page/14">
-                  <CalendlyEmbed url={CALENDLY_URL} className="rounded-[1.1rem]" />
+                  <CalendlyEmbed
+                    url={CALENDLY_URL}
+                    className="h-[clamp(420px,calc(100svh-14.5rem),700px)] rounded-[1.1rem]"
+                  />
                 </div>
                 <Button href="/" variant="ghost" className="mt-3 text-page/70 hover:bg-page/10 hover:text-page">
                   Not ready yet? Back to overview
