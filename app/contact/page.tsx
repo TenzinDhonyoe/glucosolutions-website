@@ -5,7 +5,10 @@ import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion";
-import { ContactForm } from "./ContactForm";
+import { CalendlyEmbed } from "./CalendlyEmbed";
+
+const CALENDLY_URL =
+  "https://calendly.com/tenzin-glucosolutions/30min?hide_gdpr_banner=1&primary_color=1690c2";
 
 export const metadata: Metadata = {
   title: "Book a demo",
@@ -79,8 +82,8 @@ export default function ContactPage() {
               </Reveal>
 
               <Reveal variant="right">
-                <div className="rounded-[1.5rem] bg-page/12 p-1.5 ring-1 ring-page/14">
-                  <ContactForm compact className="border-page/20 bg-page/95" />
+                <div className="overflow-hidden rounded-[1.5rem] bg-page p-1.5 shadow-2xl ring-1 ring-page/14">
+                  <CalendlyEmbed url={CALENDLY_URL} className="rounded-[1.1rem]" />
                 </div>
                 <Button href="/" variant="ghost" className="mt-3 text-page/70 hover:bg-page/10 hover:text-page">
                   Not ready yet? Back to overview
