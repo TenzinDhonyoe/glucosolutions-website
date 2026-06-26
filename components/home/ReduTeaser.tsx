@@ -7,7 +7,7 @@ import { PhoneFrame } from "./PhoneFrame";
 export function ReduTeaser() {
   return (
     <section
-      className="py-20 md:py-28"
+      className="pt-14 pb-20 md:pt-16 md:pb-28"
       style={{ background: "linear-gradient(180deg, var(--color-page) 0%, #EFF8FB 100%)" }}
     >
       <Container>
