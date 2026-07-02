@@ -38,27 +38,35 @@ function Word({
 }
 
 export function Mission() {
-  const ref = useRef<HTMLParagraphElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
+  // Track scroll against the tall *track*, not the paragraph. While the panel
+  // is pinned the paragraph is frozen in the viewport, so its own progress
+  // would never advance. The track keeps moving, so 0 -> 1 maps cleanly across
+  // the pinned dwell: 0 the instant the panel locks centre-screen, 1 as it
+  // releases.
   const { scrollYProgress } = useScroll({
     target: ref,
-    // Finish the word reveal just before the panel locks to the top, so it's
-    // fully readable for the beat it stays pinned.
-    offset: ["start 0.9", "end 0.6"],
+    offset: ["start start", "end end"],
   });
+
+  // Hold everything muted for a beat once the text settles full-screen, run the
+  // reveal across the bulk of the pin, then leave the finished sentence legible
+  // before the panel releases. The reader scrolls *through* the sentence while
+  // the page stays put.
+  const reveal = useTransform(scrollYProgress, [0.08, 0.9], [0, 1]);
 
   const words = STATEMENT.split(" ");
 
-  // The statement pins inside a tall track. The extra height past the pinned
-  // panel is the "dwell" the next section rises across to cover it.
+  // The statement pins inside a tall track. The generous height is the "dwell"
+  // the reader scrubs the reveal across before the panel releases.
   return (
     <section className="relative bg-page">
-      <div className="h-[200vh]">
+      <div ref={ref} className="h-[280vh]">
         <div className="sticky top-0 z-0 flex h-screen items-center">
           <Container>
             <div className="mx-auto max-w-4xl text-center">
               <p
-                ref={ref}
                 id="mission-statement"
                 className="display-serif text-[clamp(1.9rem,4.6vw,3.5rem)] leading-[1.16] text-balance"
               >
@@ -71,7 +79,7 @@ export function Mission() {
                     return (
                       <Word
                         key={`${word}-${i}`}
-                        progress={scrollYProgress}
+                        progress={reveal}
                         range={[start, Math.min(end, 1)]}
                       >
                         {word}
