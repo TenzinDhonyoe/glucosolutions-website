@@ -31,10 +31,26 @@ const COLUMNS: { heading: string; links: { label: string; href: string }[] }[] =
 /**
  * Footer — the closing band. Mirrors the hero's framed treatment (a full-bleed
  * photo inside a rounded card with an even cream bezel) but only on the sides
- * and top; the bottom runs flush to the page edge. The "Book a demo" CTA and the
- * footer navigation both live over the image, kept legible by a warm ink wash.
+ * and top; the bottom runs flush to the page edge. The CTA and the footer
+ * navigation both live over the image, kept legible by a warm ink wash.
+ *
+ * The CTA band is configurable so individual pages can close on their own note
+ * (e.g. the Redu page uses its "Why Redu?" story instead of the demo pitch);
+ * defaults reproduce the site-wide dietitian CTA.
  */
-export function Footer() {
+export function Footer({
+  eyebrow = "Ready when you are",
+  headline = "See it on your own caseload.",
+  blurb = "A 20-minute walkthrough on a real, de-identified case. No slides.",
+  ctaLabel = "Book a demo",
+  ctaHref = "/contact",
+}: {
+  eyebrow?: string;
+  headline?: string;
+  blurb?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+} = {}) {
   return (
     <footer className="bg-page">
       <div className="px-4 pt-4">
@@ -60,23 +76,23 @@ export function Footer() {
             {/* Book a demo CTA */}
             <Container className="px-6 pb-16 pt-24 text-center md:pb-20 md:pt-32">
               <p className="font-mono text-[12px] font-medium uppercase tracking-[0.16em] text-page/60">
-                <span className="mr-2 text-page/40">~</span>Ready when you are
+                <span className="mr-2 text-page/40">~</span>{eyebrow}
               </p>
               <h2 className="display-serif mt-5 text-[clamp(2.2rem,5vw,3.75rem)] text-page text-balance">
-                See it on your own caseload.
+                {headline}
               </h2>
               <p className="mx-auto mt-5 max-w-xl text-[18px] leading-relaxed text-page/75">
-                A 20-minute walkthrough on a real, de-identified case. No slides.
+                {blurb}
               </p>
               <div className="mt-9 flex justify-center">
                 <Button
-                  href="/contact"
+                  href={ctaHref}
                   size="lg"
                   pill
                   variant="secondary"
                   iconRight={ArrowRight}
                 >
-                  Book a demo
+                  {ctaLabel}
                 </Button>
               </div>
             </Container>
