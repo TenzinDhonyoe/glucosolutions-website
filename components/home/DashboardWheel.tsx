@@ -175,10 +175,12 @@ function OrbitPanel({
 }) {
   const left = useTransform(rotation, (r) => `${50 + Math.cos(rad(angle + r)) * R}%`);
   const top = useTransform(rotation, (r) => `${50 + Math.sin(rad(angle + r)) * R}%`);
-  // visible on the left arc (cos < 0); fade and shrink toward the back/right
+  // visible on the left arc (cos < 0); fade and shrink toward the back/right.
+  // Cards at the top/bottom of the orbit (cos near 0) sit on the band's clip
+  // edge, so they must be close to transparent before they get cut off.
   const opacity = useTransform(rotation, (r) => {
     const c = Math.cos(rad(angle + r));
-    return c < -0.12 ? 1 : c < 0.4 ? (0.4 - c) / 0.52 : 0;
+    return c < -0.35 ? 1 : c < 0.05 ? (0.05 - c) / 0.4 : 0;
   });
   const scale = useTransform(rotation, (r) => 0.92 - Math.cos(rad(angle + r)) * 0.08);
 
