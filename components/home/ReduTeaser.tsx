@@ -32,7 +32,7 @@ export function ReduTeaser() {
             <Parallax offset={36}>
               <PhoneFrame>
                 <Image
-                  src="/redu-app.png"
+                  src="/screens/redu-home.png"
                   alt="The Redu patient app home screen: metabolic score, personalized tips, and daily logging."
                   fill
                   sizes="320px"
