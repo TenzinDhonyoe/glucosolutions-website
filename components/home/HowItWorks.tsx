@@ -58,7 +58,7 @@ function PinnedSteps({ className }: { className?: string }) {
   });
 
   return (
-    <div ref={ref} className={cn("h-[300vh]", className)}>
+    <div ref={ref} className={cn("relative h-[300vh]", className)}>
       <div className="sticky top-0 flex h-screen items-center overflow-hidden pt-16">
         <Container className="w-full">
           <div className="grid items-center gap-12 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">

@@ -68,7 +68,7 @@ export function Footer({
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(180deg, rgba(43,38,32,0.82) 0%, rgba(43,38,32,0.48) 42%, rgba(43,38,32,0.60) 68%, rgba(43,38,32,0.91) 100%)",
+                "linear-gradient(180deg, rgba(43,38,32,0.82) 0%, rgba(43,38,32,0.48) 42%, rgba(43,38,32,0.80) 68%, rgba(43,38,32,0.96) 100%)",
             }}
           />
 
@@ -102,14 +102,14 @@ export function Footer({
               <div className="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
                 <div className="max-w-xs">
                   <Wordmark href="/" size={28} className="brightness-0 invert" />
-                  <p className="mt-4 text-[14px] text-page/65">
+                  <p className="mt-4 text-[14px] text-page/80">
                     Clinical software for dietitians.
                   </p>
                 </div>
 
                 {COLUMNS.map((col) => (
                   <nav key={col.heading} aria-label={col.heading}>
-                    <h3 className="mb-4 font-mono text-[11px] font-medium uppercase tracking-[0.1em] text-page/50">
+                    <h3 className="mb-4 font-mono text-[11px] font-medium uppercase tracking-[0.1em] text-page/75">
                       {col.heading}
                     </h3>
                     <ul className="space-y-2.5">
@@ -117,7 +117,7 @@ export function Footer({
                         <li key={l.href}>
                           <Link
                             href={l.href}
-                            className="text-[14px] text-page/80 transition-colors hover:text-white"
+                            className="text-[14px] text-page/90 transition-colors hover:text-white"
                           >
                             {l.label}
                           </Link>
@@ -128,7 +128,7 @@ export function Footer({
                 ))}
               </div>
 
-              <div className="mt-12 flex flex-col gap-3 border-t border-page/15 pt-6 text-[13px] text-page/60 sm:flex-row sm:items-center sm:justify-between">
+              <div className="mt-12 flex flex-col gap-3 border-t border-page/15 pt-6 text-[13px] text-page/75 sm:flex-row sm:items-center sm:justify-between">
                 <span>© 2026 GlucoSolutions Inc.</span>
                 <div className="flex items-center gap-5">
                   <a

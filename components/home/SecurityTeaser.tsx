@@ -28,7 +28,7 @@ export function SecurityTeaser() {
         <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
           <Reveal variant="left">
             <Eyebrow slash>Security</Eyebrow>
-            <h2 className="display-serif mt-5 text-[clamp(2rem,4.4vw,3.2rem)] text-ink-900">
+            <h2 className="display-serif mt-5 text-[clamp(2rem,4.4vw,3.2rem)] text-ink-900 text-balance">
               Built for PHI from day one.
             </h2>
             <Button href="/security" variant="ghost" iconRight={ArrowRight} className="mt-6 -ml-4">
