@@ -26,12 +26,14 @@ function Region({
   label,
   children,
   className,
+  dimClassName = "opacity-40 blur-[1px] saturate-[0.85]",
 }: {
   index: number;
   highlight?: number;
   label?: string;
   children: React.ReactNode;
   className?: string;
+  dimClassName?: string;
 }) {
   const dimmed = highlight !== undefined && highlight !== index;
   const active = highlight === index;
@@ -39,7 +41,7 @@ function Region({
     <div
       className={cn(
         "relative transition-all duration-500 ease-out",
-        dimmed ? "opacity-40 blur-[1px] saturate-[0.85]" : "opacity-100",
+        dimmed ? dimClassName : "opacity-100",
         active && "z-10",
         className,
       )}
@@ -187,7 +189,14 @@ export function DashboardMock({
         </Region>
 
         {/* region 1 — sourced interpretation */}
-        <Region index={REGION.insight} highlight={highlight} label="Sourced insight">
+        {/* the near-black card can't dim like the light regions — at 40% it
+            reads as a broken gray slab with half-legible text, so ghost it */}
+        <Region
+          index={REGION.insight}
+          highlight={highlight}
+          label="Sourced insight"
+          dimClassName="opacity-[0.18] blur-[1px]"
+        >
           <div className="rounded-lg bg-ink-900 p-5 shadow-sm">
             <div className="flex items-center gap-2 font-mono text-[11px] font-medium uppercase tracking-[0.1em] text-sky-500">
               <Sparkles size={13} aria-hidden /> Interpretation · this week
