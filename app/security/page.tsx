@@ -192,28 +192,14 @@ export default function SecurityPage() {
           </Reveal>
         </Section>
 
-        {/* CTA */}
-        <Section tone="ink" className="text-center">
-          <Reveal>
-            <h2 className="display-serif mx-auto max-w-2xl text-[clamp(1.8rem,3.4vw,2.6rem)] text-page text-balance">
-              Questions about compliance?
-            </h2>
-          </Reveal>
-          <Reveal delay={0.05}>
-            <p className="mx-auto mt-4 max-w-xl text-[17px] text-page/70">
-              Talk to a founder, not a sales rep.
-            </p>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <div className="mt-8 flex justify-center">
-              <Button href="/contact" size="lg" pill variant="secondary" iconRight={ArrowRight}>
-                Talk to a founder
-              </Button>
-            </div>
-          </Reveal>
-        </Section>
       </main>
-      <Footer />
+      <Footer
+        eyebrow="Straight answers"
+        headline="Questions about compliance?"
+        blurb="Talk to a founder, not a sales rep."
+        ctaLabel="Talk to a founder"
+        ctaHref="/contact"
+      />
     </>
   );
 }
