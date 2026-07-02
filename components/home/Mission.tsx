@@ -50,11 +50,13 @@ export function Mission() {
     offset: ["start start", "end end"],
   });
 
-  // Hold everything muted for a beat once the text settles full-screen, run the
-  // reveal across the bulk of the pin, then leave the finished sentence legible
-  // before the panel releases. The reader scrolls *through* the sentence while
-  // the page stays put.
-  const reveal = useTransform(scrollYProgress, [0.08, 0.9], [0, 1]);
+  // The next section (HowItWorks) rises over this panel via -mt-[100vh] + z-10,
+  // and starts entering the viewport at ~0.44 of this track's progress. So the
+  // whole sentence must finish revealing *before* then. Run the reveal across
+  // the front of the pin, complete it by ~0.36, and hold the finished sentence
+  // legible for a beat before the cover begins. The page stays put the entire
+  // time the reader scrubs through the words.
+  const reveal = useTransform(scrollYProgress, [0.04, 0.36], [0, 1]);
 
   const words = STATEMENT.split(" ");
 
