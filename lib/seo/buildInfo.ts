@@ -20,4 +20,4 @@ const BAKED_BUILD_DATE = "2026-05-07T00:00:00.000Z";
 
 export const LAST_MODIFIED: string = resolveLastModified();
 
-export const LEGAL_LAST_MODIFIED = "2026-05-07";
+export const LEGAL_LAST_MODIFIED = "2026-07-15";

@@ -41,7 +41,7 @@ export default function PrivacyPage() {
         <article className="mx-auto max-w-3xl px-5 sm:px-8 pt-32 md:pt-40 pb-24 md:pb-32">
           <p className="mono-label text-ink-500">
             Last updated{" "}
-            <time dateTime={LEGAL_LAST_MODIFIED}>May 7, 2026</time>
+            <time dateTime={LEGAL_LAST_MODIFIED}>July 15, 2026</time>
           </p>
 
           <h1 className="mt-3 display-serif text-[44px] sm:text-[60px] md:text-[72px] leading-[1] tracking-[-0.02em] text-ink-900 text-balance">
@@ -127,6 +127,50 @@ export default function PrivacyPage() {
               <p className="mt-4">
                 We do not sell your information. We do not share your email
                 with advertisers or data brokers.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-ink-900">
+                Text messaging (SMS)
+              </h2>
+              <p className="mt-4">
+                Patients of participating registered dietitians can enroll in
+                our text-message logging program. For enrolled patients we
+                collect the mobile phone number provided at enrollment and the
+                content of text messages sent to our number, so the patient&rsquo;s
+                dietitian can review them and keep their record current.
+                Enrollment is confirmed by double opt-in: after your dietitian
+                enters your number, you receive a single confirmation text and
+                are enrolled only if you reply YES.
+              </p>
+              <ul className="mt-4 space-y-2 list-disc pl-6">
+                <li>
+                  <strong>
+                    No mobile information will be shared with third parties or
+                    affiliates for marketing or promotional purposes.
+                  </strong>{" "}
+                  Text messaging originator opt-in data and consent will not
+                  be shared with any third parties.
+                </li>
+                <li>
+                  Message frequency varies; at most one reminder per day.
+                  Message and data rates may apply.
+                </li>
+                <li>
+                  Reply STOP at any time to opt out, or HELP for help. You can
+                  also ask your clinic to withdraw you from the program.
+                </li>
+              </ul>
+              <p className="mt-4">
+                The full program description lives at{" "}
+                <a
+                  href="/sms"
+                  className="underline decoration-sky-700/30 underline-offset-4 hover:text-ink-900"
+                >
+                  glucosolutions.ca/sms
+                </a>
+                .
               </p>
             </section>
 

@@ -41,7 +41,7 @@ export default function TermsPage() {
         <article className="mx-auto max-w-3xl px-5 sm:px-8 pt-32 md:pt-40 pb-24 md:pb-32">
           <p className="mono-label text-ink-500">
             Last updated{" "}
-            <time dateTime={LEGAL_LAST_MODIFIED}>May 7, 2026</time>
+            <time dateTime={LEGAL_LAST_MODIFIED}>July 15, 2026</time>
           </p>
 
           <h1 className="mt-3 display-serif text-[44px] sm:text-[60px] md:text-[72px] leading-[1] tracking-[-0.02em] text-ink-900 text-balance">
@@ -122,6 +122,53 @@ export default function TermsPage() {
                   good faith are explicitly welcome.
                 </li>
               </ul>
+            </section>
+
+            <section>
+              <h2 className="display-serif text-[24px] sm:text-[28px] leading-[1.2] text-ink-900">
+                Text messaging (SMS) program
+              </h2>
+              <p className="mt-4">
+                GlucoSolutions offers an optional text-message logging program
+                for patients of participating registered dietitians.
+                Enrollment happens with your dietitian, who reviews the
+                program with you during an appointment and enters your mobile
+                number. You then receive a single confirmation text and are
+                enrolled only if you reply YES; no other messages are sent
+                unless you confirm.
+              </p>
+              <ul className="mt-4 space-y-2 list-disc pl-6">
+                <li>
+                  Message frequency varies, up to one reminder per day.
+                  Message and data rates may apply.
+                </li>
+                <li>
+                  Reply STOP to cancel at any time and HELP for help, or
+                  contact your clinic.
+                </li>
+                <li>
+                  Carriers are not liable for delayed or undelivered
+                  messages.
+                </li>
+              </ul>
+              <p className="mt-4">
+                The full program description is at{" "}
+                <a
+                  href="/sms"
+                  className="underline decoration-sky-700/30 underline-offset-4 hover:text-ink-900"
+                >
+                  glucosolutions.ca/sms
+                </a>
+                . See our{" "}
+                <a
+                  href="/privacy"
+                  className="underline decoration-sky-700/30 underline-offset-4 hover:text-ink-900"
+                >
+                  Privacy Policy
+                </a>{" "}
+                for how SMS data is handled; mobile information is never
+                shared with third parties for marketing.
+              </p>
             </section>
 
             <section>
