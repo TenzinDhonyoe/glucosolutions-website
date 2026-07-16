@@ -63,7 +63,7 @@ export function Mission() {
   // The statement pins inside a tall track. The generous height is the "dwell"
   // the reader scrubs the reveal across before the panel releases.
   return (
-    <section className="relative bg-page">
+    <section className="relative bg-[#f6f6f4]">
       <div ref={ref} className="h-[280vh]">
         <div className="sticky top-0 z-0 flex h-screen items-center">
           <Container>
@@ -97,7 +97,7 @@ export function Mission() {
                   size="lg"
                   pill
                   iconRight={ArrowRight}
-                  className="bg-ink-900 px-10 py-5 text-[17px] text-page shadow-md hover:bg-ink-700"
+                  className="bg-ink-900 px-7 py-3.5 text-[15px] text-white shadow-md hover:bg-ink-700"
                 >
                   Book a demo
                 </Button>

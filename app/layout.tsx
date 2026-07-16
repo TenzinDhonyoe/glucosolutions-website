@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Newsreader, Hanken_Grotesk, Geist_Mono } from "next/font/google";
+import { Newsreader, Hanken_Grotesk, Geist_Mono, Nunito_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ScrollProgress } from "@/components/interactive/ScrollProgress";
@@ -28,6 +28,16 @@ const newsreader = Newsreader({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
+});
+
+// Nunito Sans — hero-only display face for the 2026 hero direction.
+// Full weight range so the hero can dial the headline back from ExtraBold
+// toward the tighter, cleaner weight the reference uses.
+const nunitoSans = Nunito_Sans({
+  variable: "--font-nunito-sans",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
   display: "swap",
 });
 
@@ -126,7 +136,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${hanken.variable} ${newsreader.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${hanken.variable} ${newsreader.variable} ${geistMono.variable} ${nunitoSans.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-page text-ink-700">
         <JsonLd nodes={[organization(), website()]} />

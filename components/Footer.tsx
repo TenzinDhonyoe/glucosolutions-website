@@ -91,6 +91,7 @@ export function Footer({
                   pill
                   variant="secondary"
                   iconRight={ArrowRight}
+                  className="text-[15px]"
                 >
                   {ctaLabel}
                 </Button>

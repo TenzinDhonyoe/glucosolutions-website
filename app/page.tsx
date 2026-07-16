@@ -1,6 +1,7 @@
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/home/Hero";
+import { Showcase } from "@/components/home/Showcase";
 import { Mission } from "@/components/home/Mission";
 import { HowItWorks } from "@/components/home/HowItWorks";
 import { Capabilities } from "@/components/home/Capabilities";
@@ -11,9 +12,10 @@ import { SecurityTeaser } from "@/components/home/SecurityTeaser";
 export default function Home() {
   return (
     <>
-      <Nav transparentOverHero revealUntilSelector="#mission-statement" />
+      <Nav revealUntilSelector="#mission-statement" />
       <main className="flex-1">
         <Hero />
+        <Showcase />
         <Mission />
         <HowItWorks />
         <Capabilities />
