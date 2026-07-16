@@ -19,6 +19,7 @@ import Lenis from "lenis";
  */
 export function SmoothScroll() {
   useEffect(() => {
+    if (typeof window !== "undefined" && window.location.search.includes("nolenis")) return;
     const prefersReduced = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;

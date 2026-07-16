@@ -210,7 +210,7 @@ export function Showcase() {
                 left into a floating browser corner of the real dashboard, which
                 bleeds off the card's right edge (the "platform example" shot). */}
             <Reveal variant="up" immediate delay={0.15}>
-              <div className="relative min-h-[460px] overflow-hidden rounded-2xl bg-[#101114] p-7 md:min-h-[400px] md:p-9">
+              <div className="relative min-h-[400px] overflow-hidden rounded-2xl bg-[#101114] p-7 md:min-h-[400px] md:p-9">
                 <div className="relative z-10 max-w-[260px]">
                   <span className="inline-flex rounded-md bg-white/10 px-2.5 py-1 text-[12px] font-semibold text-white/90 ring-1 ring-white/15">
                     Platform
@@ -225,10 +225,10 @@ export function Showcase() {
 
                 {/* Floating browser corner — bleeds off the card, framed so the
                     sidebar, client masthead and session continuity land in view. */}
-                <div className="pointer-events-none absolute left-[26%] top-[42%] md:left-[42%] md:top-[9%]">
+                <div className="pointer-events-none absolute left-[4%] top-[41%] md:left-[42%] md:top-[9%]">
                   <div
                     aria-hidden
-                    style={{ transform: "scale(0.62)", transformOrigin: "top left" }}
+                    className="origin-top-left scale-[0.56] md:scale-[0.62]"
                   >
                     <DashboardWindow />
                   </div>

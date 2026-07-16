@@ -266,7 +266,7 @@ export function SignalFunnel() {
       {/* mobile — heading, a compact icon row, then the dashboard */}
       <div className="px-6 py-16 lg:hidden">
         <Heading />
-        <div className="mx-auto mb-7 mt-10 flex max-w-sm flex-wrap items-start justify-center gap-x-5 gap-y-4">
+        <div className="mx-auto mb-7 mt-10 grid max-w-[17rem] grid-cols-3 place-items-center gap-x-2 gap-y-5">
           {SOURCES.map((s) => (
             <div key={s.label} className="flex flex-col items-center gap-2">
               <NodeBadge icon={s.icon} />
