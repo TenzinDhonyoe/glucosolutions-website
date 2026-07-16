@@ -58,6 +58,7 @@ export function Reveal({
   amount = 0.3,
   once = true,
   as = "div",
+  immediate = false,
 }: {
   children: React.ReactNode;
   className?: string;
@@ -67,16 +68,25 @@ export function Reveal({
   amount?: number;
   once?: boolean;
   as?: Tag;
+  /** Play the entrance on mount (page load) instead of waiting to scroll into
+   *  view. Use for content near the top that should animate in right away. */
+  immediate?: boolean;
 }) {
   const reduce = useReducedMotion();
   const Comp = TAGS[as];
+
+  const trigger = immediate
+    ? { animate: SHOWN }
+    : {
+        whileInView: SHOWN,
+        viewport: { once, amount, margin: "0px 0px -8% 0px" },
+      };
 
   return (
     <Comp
       className={className}
       initial={reduce ? { opacity: 0 } : HIDDEN[variant]}
-      whileInView={SHOWN}
-      viewport={{ once, amount, margin: "0px 0px -8% 0px" }}
+      {...trigger}
       transition={{ duration: reduce ? 0.3 : duration, ease: EASE, delay }}
     >
       {children}

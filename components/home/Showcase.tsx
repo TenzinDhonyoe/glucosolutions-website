@@ -379,17 +379,16 @@ export function Showcase() {
   const reduce = useReducedMotion() ?? false;
   return (
     <section className="w-full px-4 pb-8 md:px-6 md:pb-10" style={{ background: "#f6f6f4" }}>
-      <div
-        className="overflow-hidden rounded-[1.75rem]"
-        style={{
-          background:
-            "radial-gradient(900px 520px at 6% 8%, #f5a623 0%, transparent 52%), radial-gradient(760px 560px at 46% 118%, #ffcf40 0%, transparent 50%), radial-gradient(1000px 700px at 104% -6%, #2bb0dc 0%, transparent 55%), linear-gradient(115deg, #1aabb3 0%, #127399 100%)",
-        }}
-      >
-        <div className="px-5 pt-10 pb-8 md:px-9 md:pt-12 md:pb-10">
+      <div className="relative overflow-hidden rounded-[1.75rem] bg-[#127399]">
+        {/* animated "liquid metal" background — generated metal texture that
+            slowly pans, with a diagonal glint sweeping across for the shine */}
+        <div className="showcase-bg" aria-hidden />
+        <div className="showcase-glint" aria-hidden />
+
+        <div className="relative px-5 pt-10 pb-8 md:px-9 md:pt-12 md:pb-10">
           <div className="grid gap-5 lg:grid-cols-[1.5fr_1fr]">
             {/* Left — dark pitch card with floating dashboard mockup */}
-            <Reveal variant="up">
+            <Reveal variant="up" immediate delay={0.15}>
               <div className="relative min-h-[460px] overflow-hidden rounded-2xl bg-[#101114] p-7 md:min-h-[400px] md:p-9">
                 <div className="relative z-10 max-w-[260px]">
                   <span className="inline-flex rounded-md bg-white/10 px-2.5 py-1 text-[12px] font-semibold text-white/90 ring-1 ring-white/15">
@@ -418,7 +417,7 @@ export function Showcase() {
             </Reveal>
 
             {/* Right — honest capabilities card, filling its full height */}
-            <Reveal variant="up" delay={0.1}>
+            <Reveal variant="up" immediate delay={0.3}>
               <div className="flex h-full flex-col rounded-2xl bg-white p-7 shadow-xl ring-1 ring-black/5 md:p-8">
                 <div className="flex items-center justify-between">
                   <div className="text-[12px] font-semibold uppercase tracking-[0.16em] text-[#127399]">

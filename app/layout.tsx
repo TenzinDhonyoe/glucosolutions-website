@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Newsreader, Hanken_Grotesk, Geist_Mono, Nunito_Sans } from "next/font/google";
+import { Newsreader, Geist_Mono, Nunito_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ScrollProgress } from "@/components/interactive/ScrollProgress";
@@ -8,16 +8,9 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { organization, website } from "@/lib/seo/jsonLd";
 import "./globals.css";
 
-// GlucoSolutions Design System v1.0 — three voices, one tone.
-// Hanken Grotesk = humanist sans for body & UI.
-// Newsreader    = editorial serif for headlines & quotes.
-// Geist Mono     = monospace for data, units and labels.
-const hanken = Hanken_Grotesk({
-  variable: "--font-hanken",
-  subsets: ["latin"],
-  display: "swap",
-});
-
+// GlucoSolutions Design System — Nunito Sans is the primary face site-wide
+// (body, UI and display). Newsreader is kept only for the in-product mockup's
+// client name; Geist Mono is for data, units and labels.
 const newsreader = Newsreader({
   variable: "--font-newsreader",
   subsets: ["latin"],
@@ -31,9 +24,8 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-// Nunito Sans — hero-only display face for the 2026 hero direction.
-// Full weight range so the hero can dial the headline back from ExtraBold
-// toward the tighter, cleaner weight the reference uses.
+// Nunito Sans — the site's primary face (body + display). Full weight range so
+// body copy, UI and headlines all draw from one family.
 const nunitoSans = Nunito_Sans({
   variable: "--font-nunito-sans",
   subsets: ["latin"],
@@ -136,7 +128,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${hanken.variable} ${newsreader.variable} ${geistMono.variable} ${nunitoSans.variable} h-full antialiased`}
+      className={`${newsreader.variable} ${geistMono.variable} ${nunitoSans.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-page text-ink-700">
         <JsonLd nodes={[organization(), website()]} />
