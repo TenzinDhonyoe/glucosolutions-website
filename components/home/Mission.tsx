@@ -67,10 +67,10 @@ export function Mission() {
       <div ref={ref} className="h-[280vh]">
         <div className="sticky top-0 z-0 flex h-screen items-center">
           <Container>
-            <div className="mx-auto max-w-4xl text-center">
+            <div className="mx-auto max-w-3xl text-center">
               <p
                 id="mission-statement"
-                className="display-serif text-[clamp(1.9rem,4.6vw,3.5rem)] leading-[1.16] text-balance"
+                className="display-serif text-[clamp(1.8rem,4vw,3rem)] leading-[1.18] text-balance"
               >
                 {reduce ? (
                   <span className="text-ink-900">{STATEMENT}</span>
