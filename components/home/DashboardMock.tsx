@@ -94,17 +94,17 @@ export function DashboardMock({
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <div
-            className="grid h-11 w-11 flex-none place-items-center rounded-full text-[15px] font-bold"
+            className="grid h-10 w-10 flex-none place-items-center rounded-full text-[14px] font-bold"
             style={{ background: C.sky100, color: C.primary }}
           >
-            TD
+            JD
           </div>
           <div>
-            <div className="text-[10.5px] font-semibold uppercase tracking-[0.14em]" style={{ ...mono, color: C.primary }}>
+            <div className="text-[10px] font-semibold uppercase tracking-[0.14em]" style={{ ...mono, color: C.primary }}>
               Prediabetes Reversal
             </div>
-            <div className="text-[20px] font-medium leading-tight tracking-[-0.01em]" style={{ color: C.text }}>
-              Tenzin Dhonyoe
+            <div className="text-[18px] font-medium leading-tight tracking-[-0.01em]" style={{ color: C.text }}>
+              John Doe
             </div>
             <div className="mt-1 flex items-center gap-2 text-[12px]" style={{ color: C.text2 }}>
               <span style={mono}>RDU-7AEF54</span>
@@ -131,13 +131,13 @@ export function DashboardMock({
         </div>
       </div>
 
-      <div className="mt-3.5 space-y-3">
+      <div className="mt-3 space-y-2.5">
         {/* region 0 — logged data */}
         <Region index={REGION.data} highlight={highlight} label="Logged in Redu">
-          <div className="rounded-lg p-4" style={{ background: C.raised, border: `1px solid ${C.border}` }}>
+          <div className="rounded-lg p-3.5" style={{ background: C.raised, border: `1px solid ${C.border}` }}>
             <div className="mb-2 flex items-center justify-between">
               <span className="text-[12.5px] font-semibold" style={{ color: C.text }}>
-                Tenzin · glucose + meals · today
+                John · glucose + meals · today
               </span>
               <span className="text-[10px] uppercase tracking-[0.1em]" style={{ ...mono, color: C.textLight }}>
                 14-day window
@@ -152,7 +152,7 @@ export function DashboardMock({
               <GlucoseChart
                 title=""
                 mealIdx={[3, 7, 10]}
-                height={116}
+                height={84}
                 legend={false}
                 className="border-0 bg-transparent p-0 shadow-none"
               />
@@ -169,6 +169,7 @@ export function DashboardMock({
           dimClassName="opacity-[0.18] blur-[1px]"
         >
           <InterpretationPanel
+            className="!p-4"
             meta={
               <span className="text-[10px] uppercase tracking-[0.12em] text-white/55" style={mono}>
                 data through 2026-07-15

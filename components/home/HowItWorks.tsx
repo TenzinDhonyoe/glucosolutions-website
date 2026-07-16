@@ -59,7 +59,7 @@ function PinnedSteps({ className }: { className?: string }) {
 
   return (
     <div ref={ref} className={cn("relative h-[300vh]", className)}>
-      <div className="sticky top-0 flex h-screen items-center overflow-hidden pt-16">
+      <div className="sticky top-0 flex h-screen items-center overflow-hidden pt-20">
         <Container className="w-full">
           <div className="grid items-center gap-12 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">
             {/* left — header + rail-tracked step list */}
@@ -135,8 +135,10 @@ function PinnedSteps({ className }: { className?: string }) {
               </ol>
             </div>
 
-            {/* right — the real dashboard, with the active part spotlit */}
-            <div>
+            {/* right — the real dashboard, with the active part spotlit. Scaled
+                to fit inside the pinned viewport (clears the nav, keeps the
+                outcomes row in view) at common laptop heights. */}
+            <div className="origin-center [transform:scale(0.9)] 2xl:[transform:scale(0.98)]">
               <DashboardMock highlight={active} />
             </div>
           </div>

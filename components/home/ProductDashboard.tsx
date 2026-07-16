@@ -33,7 +33,7 @@ import {
      · the dark "Data Interpretation" panel — signal ledger with delta chips
      · the pinned "Ask about {client}" chat dock
 
-   Sample data is a clean, demo-friendly record (Tenzin Dhonyoe · prediabetes
+   Sample data is a clean, demo-friendly record (John Doe · prediabetes
    reversal), the same fixture the product's demo route uses.
    ========================================================================== */
 
@@ -116,7 +116,7 @@ function Masthead() {
           className="grid h-[58px] w-[58px] flex-none place-items-center rounded-full text-[19px] font-bold"
           style={{ background: C.sky100, color: C.primary }}
         >
-          TD
+          JD
         </div>
         <div>
           <div className="text-[11px] font-semibold uppercase tracking-[0.14em]" style={{ ...mono, color: C.primary }}>
@@ -126,7 +126,7 @@ function Masthead() {
             className="mt-[7px] text-[34px] font-medium leading-[1.04] tracking-[-0.02em]"
             style={{ ...display, color: C.text }}
           >
-            Tenzin Dhonyoe
+            John Doe
           </h1>
           <div className="mt-[11px] flex flex-wrap items-center gap-[13px] text-[13px]" style={{ color: C.text2 }}>
             <span className="text-[12px]" style={mono}>
@@ -255,7 +255,7 @@ function ChatDock() {
       >
         <Sparkles size={18} strokeWidth={2} style={{ color: C.sky500 }} />
         <span className="flex-1 text-[14px]" style={{ color: C.textLight }}>
-          Ask about Tenzin…
+          Ask about John…
         </span>
         <span className="grid h-9 w-9 place-items-center rounded-full" style={{ background: C.sunk }}>
           <ArrowUp size={17} strokeWidth={2.2} style={{ color: C.textLight }} />
