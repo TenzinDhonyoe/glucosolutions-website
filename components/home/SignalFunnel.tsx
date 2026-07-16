@@ -191,11 +191,11 @@ function Dashboard() {
             className="grid h-9 w-9 place-items-center rounded-full text-[13px] font-semibold"
             style={{ background: C.sky100, color: C.primary }}
           >
-            TD
+            JD
           </span>
           <div className="leading-tight">
             <div className="text-[15px] font-medium tracking-[-0.01em]" style={{ color: C.text }}>
-              Tenzin Dhonyoe
+              John Doe
             </div>
             <div className="text-[10px] uppercase tracking-[0.12em]" style={{ ...mono, color: C.textLight }}>
               This week
