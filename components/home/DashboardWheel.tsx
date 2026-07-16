@@ -12,6 +12,7 @@ import {
 import { MessageSquareText, ClipboardList } from "lucide-react";
 import { GlucoseChart } from "@/components/ui/GlucoseChart";
 import { cn } from "@/lib/utils";
+import { C, mono, display } from "./product-ui";
 
 /**
  * DashboardWheel — a dial that bleeds off the right edge to fill the empty side
@@ -32,21 +33,20 @@ function rad(deg: number) {
 function WheelCard({ className, children }: { className?: string; children: ReactNode }) {
   return (
     <div
-      className={cn(
-        "rounded-xl border border-line bg-card p-3.5 shadow-[0_10px_30px_-18px_rgba(43,38,32,0.4)]",
-        className,
-      )}
-      style={{ width: CARD_W }}
+      className={cn("rounded-xl p-3.5 shadow-[0_10px_30px_-18px_rgba(27,31,38,0.4)]", className)}
+      style={{ width: CARD_W, background: C.surface, border: `1px solid ${C.border}`, ...display }}
     >
       {children}
     </div>
   );
 }
 
+const kicker = { ...mono, color: C.text2 } as const;
+
 function GlucoseCard() {
   return (
     <WheelCard>
-      <div className="mb-1 font-mono text-[9.5px] uppercase tracking-[0.12em] text-ink-400">
+      <div className="mb-1 text-[9.5px] uppercase tracking-[0.12em]" style={kicker}>
         Glucose · today
       </div>
       <GlucoseChart
@@ -64,14 +64,14 @@ function ScoreCard() {
   return (
     <WheelCard className="flex items-center gap-3.5">
       <span
-        className="grid h-13 w-13 shrink-0 place-items-center rounded-full text-[17px] font-semibold text-white"
-        style={{ background: "var(--brand-gradient)", height: 52, width: 52 }}
+        className="grid shrink-0 place-items-center rounded-full text-[17px] font-semibold text-white"
+        style={{ background: C.good, height: 52, width: 52, ...mono }}
       >
         94
       </span>
       <div>
-        <div className="font-serif text-[15px] text-ink-900">On track</div>
-        <div className="text-[12px] text-ink-500">Time in range, up 6% this week.</div>
+        <div className="text-[15px] font-medium" style={{ color: C.text }}>On track</div>
+        <div className="text-[12px]" style={{ color: C.text2 }}>Time in range, up 6% this week.</div>
       </div>
     </WheelCard>
   );
@@ -80,10 +80,10 @@ function ScoreCard() {
 function MessageCard() {
   return (
     <WheelCard>
-      <div className="mb-2 flex items-center gap-2 font-mono text-[9.5px] uppercase tracking-[0.12em] text-ink-400">
+      <div className="mb-2 flex items-center gap-2 text-[9.5px] uppercase tracking-[0.12em]" style={kicker}>
         <MessageSquareText size={12} aria-hidden /> In-app note
       </div>
-      <p className="text-[12.5px] leading-snug text-ink-700">
+      <p className="text-[12.5px] leading-snug" style={{ color: C.text2 }}>
         Nice work pairing carbs with protein at lunch. That flattened your
         afternoon.
       </p>
@@ -94,7 +94,7 @@ function MessageCard() {
 function StatsCard() {
   return (
     <WheelCard>
-      <div className="mb-2 font-mono text-[9.5px] uppercase tracking-[0.12em] text-ink-400">
+      <div className="mb-2 text-[9.5px] uppercase tracking-[0.12em]" style={kicker}>
         This week
       </div>
       <div className="grid grid-cols-3 gap-2">
@@ -103,11 +103,11 @@ function StatsCard() {
           { k: "Sleep", v: "7.2h" },
           { k: "Fibre", v: "27g" },
         ].map((s) => (
-          <div key={s.k} className="rounded-lg border border-line bg-page/60 px-2 py-1.5">
-            <div className="font-mono text-[8.5px] uppercase tracking-[0.08em] text-ink-400">
+          <div key={s.k} className="rounded-lg px-2 py-1.5" style={{ background: C.raised, border: `1px solid ${C.border}` }}>
+            <div className="text-[8.5px] uppercase tracking-[0.08em]" style={kicker}>
               {s.k}
             </div>
-            <div className="tnum mt-0.5 text-[13px] font-medium text-ink-900">{s.v}</div>
+            <div className="mt-0.5 text-[13px] font-medium" style={{ ...mono, color: C.text }}>{s.v}</div>
           </div>
         ))}
       </div>
@@ -118,13 +118,13 @@ function StatsCard() {
 function SummaryCard() {
   return (
     <WheelCard>
-      <div className="mb-2 flex items-center gap-2 font-mono text-[9.5px] uppercase tracking-[0.12em] text-ink-400">
+      <div className="mb-2 flex items-center gap-2 text-[9.5px] uppercase tracking-[0.12em]" style={kicker}>
         <ClipboardList size={12} aria-hidden /> Pre-session
       </div>
-      <ul className="space-y-1.5 text-[12px] text-ink-700">
+      <ul className="space-y-1.5 text-[12px]" style={{ color: C.text2 }}>
         {["Steadier on weekdays", "Logged 6 of 7 days", "Two post-dinner spikes"].map((t) => (
           <li key={t} className="flex gap-2">
-            <span className="mt-[6px] h-1 w-1 shrink-0 rounded-full bg-sky-600" />
+            <span className="mt-[6px] h-1 w-1 shrink-0 rounded-full" style={{ background: C.sky600 }} />
             {t}
           </li>
         ))}
@@ -136,18 +136,19 @@ function SummaryCard() {
 function AdherenceCard() {
   return (
     <WheelCard>
-      <div className="mb-2 font-mono text-[9.5px] uppercase tracking-[0.12em] text-ink-400">
+      <div className="mb-2 text-[9.5px] uppercase tracking-[0.12em]" style={kicker}>
         Logging streak
       </div>
       <div className="flex items-baseline gap-1.5">
-        <span className="tnum font-serif text-[22px] text-ink-900">6</span>
-        <span className="text-[12px] text-ink-500">of 7 days</span>
+        <span className="text-[22px] font-semibold" style={{ ...mono, color: C.text }}>6</span>
+        <span className="text-[12px]" style={{ color: C.text2 }}>of 7 days</span>
       </div>
       <div className="mt-2.5 flex gap-1.5">
         {[1, 1, 1, 0, 1, 1, 1].map((on, i) => (
           <span
             key={i}
-            className={cn("h-1.5 flex-1 rounded-full", on ? "bg-sky-600" : "bg-line-2")}
+            className="h-1.5 flex-1 rounded-full"
+            style={{ background: on ? C.sky600 : C.border }}
           />
         ))}
       </div>
