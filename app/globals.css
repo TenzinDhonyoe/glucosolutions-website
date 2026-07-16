@@ -44,9 +44,11 @@
   --color-low-bg: #e1e9f3;
   --color-info: #5e6b7a;
 
-  /* ---- Type families (wired to next/font in layout.tsx) ---- */
-  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-serif: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  /* ---- Type families (wired to next/font in layout.tsx) ----
+     Nunito Sans is the primary face site-wide so every section matches the
+     hero. The display token resolves to it too, keeping headlines in-family. */
+  --font-sans: var(--font-nunito-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: var(--font-nunito-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
 
   /* ---- Radii ---- */
@@ -136,19 +138,20 @@ html.lenis body {
   pointer-events: none;
 }
 
-/* Newsreader carries a touch of optical sizing at display scale. */
+/* Display headings share the hero's Nunito Sans, dialed to a tight bold weight
+   so they read as strong display type rather than body copy. */
 .display-serif {
   font-family: var(--font-serif);
-  font-weight: 500;
-  letter-spacing: var(--tracking-display);
-  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
 }
 
 .display-serif-italic {
   font-family: var(--font-serif);
   font-style: italic;
-  font-weight: 400;
-  letter-spacing: var(--tracking-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 /* =========================================================================
@@ -266,6 +269,61 @@ html.lenis body {
 ::selection {
   background: var(--color-sky-100);
   color: var(--color-sky-700);
+}
+
+/* =========================================================================
+   Showcase — animated "liquid metal" band. Three stacked layers: a slowly
+   panning color base, drifting iridescent sheen blobs, and a periodic diagonal
+   glint that sweeps across like light on brushed metal. All auto-freeze under
+   the reduced-motion rule below.
+   ========================================================================= */
+
+.showcase-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url("/showcase-metal.jpg");
+  background-size: 132% 132%;
+  background-position: 0% 42%;
+  will-change: background-position;
+  animation: showcase-pan 28s ease-in-out infinite alternate;
+}
+
+.showcase-glint {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.28) 48%,
+    rgba(255, 255, 255, 0.55) 50%,
+    rgba(255, 255, 255, 0.28) 52%,
+    transparent 62%
+  );
+  background-size: 300% 100%;
+  background-repeat: no-repeat;
+  mix-blend-mode: soft-light;
+  animation: showcase-glint 9s ease-in-out infinite;
+}
+
+@keyframes showcase-pan {
+  0% {
+    background-position: 0% 38%;
+  }
+  100% {
+    background-position: 100% 62%;
+  }
+}
+
+@keyframes showcase-glint {
+  0% {
+    background-position: 175% 0;
+  }
+  55% {
+    background-position: -75% 0;
+  }
+  100% {
+    background-position: -75% 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
