@@ -77,6 +77,24 @@
 }
 
 /* =========================================================================
+   2026 hero direction — teal/gold brand tokens
+   Scoped brand palette for the redesigned hero. Kept as plain custom
+   properties (referenced via var() in the Hero) so they sit alongside the
+   v1.0 sky/green system without colliding with its --color-* utilities.
+   ========================================================================= */
+
+:root {
+  --gluco-teal: #1aabb3;       /* primary — emphasis text, accents */
+  --gluco-gold: #f5a623;       /* primary accent — CTA, callouts */
+  --gluco-black: #0a0a0a;      /* body text on light background */
+  --gluco-white: #ffffff;
+  --gluco-teal-light: #a8d8da; /* secondary — subtle tints */
+  --gluco-yellow: #ffcf40;     /* secondary accent */
+  --gluco-offwhite: #f5f5f0;   /* light section background, if needed */
+  --gluco-muted: #6b7280;      /* de-emphasized text — muted H1 half + eyebrow icon */
+}
+
+/* =========================================================================
    Base
    ========================================================================= */
 
