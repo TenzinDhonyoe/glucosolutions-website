@@ -7,6 +7,7 @@ import { Container, Eyebrow, type IconType } from "@/components/ui";
 import { Reveal } from "@/components/motion";
 import { GlucoseChart } from "@/components/ui/GlucoseChart";
 import { DashboardWheel } from "./DashboardWheel";
+import { C, mono, display } from "./product-ui";
 
 /**
  * SignalFunnel — the Capabilities centerpiece. A full-height band: six source
@@ -177,7 +178,8 @@ function Dashboard() {
   const reduce = useReducedMotion() === true;
   return (
     <motion.div
-      className="relative z-10 rounded-2xl border border-line bg-card p-5 shadow-lg"
+      className="relative z-10 rounded-2xl p-5 shadow-lg"
+      style={{ background: C.surface, border: `1px solid ${C.border}`, ...display }}
       initial={reduce ? false : { opacity: 0, x: 18 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, amount: 0.3 }}
@@ -185,24 +187,32 @@ function Dashboard() {
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <span className="grid h-9 w-9 place-items-center rounded-full bg-sky-100 text-[13px] font-semibold text-sky-800">
-            ER
+          <span
+            className="grid h-9 w-9 place-items-center rounded-full text-[13px] font-semibold"
+            style={{ background: C.sky100, color: C.primary }}
+          >
+            TD
           </span>
           <div className="leading-tight">
-            <div className="font-serif text-[15px] text-ink-900">Elena Rodriguez</div>
-            <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-ink-400">
+            <div className="text-[15px] font-medium tracking-[-0.01em]" style={{ color: C.text }}>
+              Tenzin Dhonyoe
+            </div>
+            <div className="text-[10px] uppercase tracking-[0.12em]" style={{ ...mono, color: C.textLight }}>
               This week
             </div>
           </div>
         </div>
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-good-bg px-2 py-0.5 text-[11px] font-semibold text-good">
-          <span className="h-1.5 w-1.5 rounded-full bg-good" /> Live
+        <span
+          className="inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11px] font-semibold"
+          style={{ background: "#E2F1E8", color: C.goodInk }}
+        >
+          <span className="h-1.5 w-1.5 rounded-full" style={{ background: C.good }} /> Live
         </span>
       </div>
 
       <div className="mt-4">
         <GlucoseChart
-          title="Glucose · this week"
+          title=""
           height={130}
           mealIdx={[3, 7]}
           legend={false}
@@ -212,17 +222,17 @@ function Dashboard() {
 
       <div className="mt-4 grid grid-cols-3 gap-2.5">
         {STATS.map((s) => (
-          <div key={s.k} className="rounded-lg border border-line bg-page/60 px-3 py-2">
-            <div className="font-mono text-[9.5px] uppercase tracking-[0.1em] text-ink-400">
+          <div key={s.k} className="rounded-lg px-3 py-2" style={{ background: C.raised, border: `1px solid ${C.border}` }}>
+            <div className="text-[9.5px] uppercase tracking-[0.1em]" style={{ ...mono, color: C.text2 }}>
               {s.k}
             </div>
-            <div className="tnum mt-0.5 text-[15px] font-medium text-ink-900">{s.v}</div>
+            <div className="mt-0.5 text-[15px] font-medium" style={{ ...mono, color: C.text }}>{s.v}</div>
           </div>
         ))}
       </div>
 
-      <div className="mt-4 rounded-lg bg-sky-50 px-3.5 py-2.5 text-[13px] leading-snug text-ink-700">
-        Walk before lunch keeps her afternoons steady.
+      <div className="mt-4 rounded-lg px-3.5 py-2.5 text-[13px] leading-snug" style={{ background: C.sky100, color: C.text }}>
+        Walk before lunch keeps their afternoons steady.
       </div>
     </motion.div>
   );
