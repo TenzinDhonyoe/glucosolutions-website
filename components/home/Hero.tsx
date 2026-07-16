@@ -243,9 +243,9 @@ export function Hero() {
           className="mt-6 max-w-[600px]"
           style={{ fontSize: "17px", fontWeight: 400, lineHeight: 1.55, color: "#9aa0a6" }}
         >
-          Half your patients go quiet between sessions and never come back.
-          GlucoSolutions tracks the gap and briefs you before every visit, so you
-          catch the drop-off before it happens.
+          Clients go quiet between sessions and never come back. GlucoSolutions
+          tracks the gap and briefs you before every visit, so you catch the
+          drop-off before it happens.
         </motion.p>
 
         {/* 4 — CTA row (soft rounded rectangles, yellow accent) */}
