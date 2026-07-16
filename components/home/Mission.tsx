@@ -67,7 +67,7 @@ export function Mission() {
       <div ref={ref} className="h-[280vh]">
         <div className="sticky top-0 z-0 flex h-screen items-center">
           <Container>
-            <div className="mx-auto max-w-5xl text-center">
+            <div className="mx-auto max-w-4xl text-center">
               <p
                 id="mission-statement"
                 className="display-serif text-[clamp(1.8rem,4vw,3rem)] leading-[1.18] text-balance"
@@ -102,7 +102,7 @@ export function Mission() {
                   Book a demo
                 </Button>
                 <p className="max-w-md text-[14px] text-ink-500">
-                  A 20-minute walkthrough on a real, de-identified case. No slides.
+                  A 20-minute walkthrough on a real, de-identified case.
                 </p>
               </div>
             </div>
