@@ -61,7 +61,7 @@ function StepCaption({
   current: boolean;
 }) {
   return (
-    <div>
+    <div className="mx-auto max-w-[19rem] text-center">
       <span
         className={cn(
           "tnum text-[13px] font-semibold transition-colors duration-500",
@@ -91,14 +91,16 @@ function StepCaption({
 }
 
 export function RelayBoard({ active, reduce }: { active: number; reduce: boolean }) {
+  // The outer surface columns are held equal so the engine card lands dead
+  // center under the (centered) heading; the connectors take the slack and each
+  // surface + caption is centered in its own column, keeping the whole relay
+  // left-right symmetric about the page center.
+  const cols =
+    "minmax(240px,20rem) minmax(1.75rem,1fr) minmax(280px,24rem) minmax(1.75rem,1fr) minmax(240px,20rem)";
   return (
     <div
-      className="mx-auto grid w-full max-w-[60rem] items-stretch gap-x-3"
-      style={{
-        gridTemplateColumns:
-          "minmax(0,10.5rem) minmax(2.5rem,4rem) minmax(0,24rem) minmax(2.5rem,4rem) minmax(0,21rem)",
-        gridTemplateRows: "21rem auto",
-      }}
+      className="grid w-full items-center gap-x-4 sm:gap-x-6"
+      style={{ gridTemplateColumns: cols, gridTemplateRows: "auto auto" }}
     >
       {STEPS.map((step, i) => {
         const Stage = STAGES[i];
@@ -106,7 +108,7 @@ export function RelayBoard({ active, reduce }: { active: number; reduce: boolean
         const col = i * 2 + 1;
         return (
           <div key={step.n} style={{ display: "contents" }}>
-            {/* the surface itself, vertically centered so connectors align */}
+            {/* the surface, centered in its column */}
             <div
               className={cn(
                 "flex items-center justify-center transition-all duration-700 ease-out",
@@ -116,17 +118,7 @@ export function RelayBoard({ active, reduce }: { active: number; reduce: boolean
               )}
               style={{ gridColumn: col, gridRow: 1 }}
             >
-              <Stage />
-            </div>
-            {/* its caption, beneath */}
-            <div
-              className={cn(
-                "pt-5 transition-all duration-700 ease-out",
-                reached ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2",
-              )}
-              style={{ gridColumn: col, gridRow: 2 }}
-            >
-              <StepCaption step={step} reached={reached} current={i === active} />
+              <Stage className={i === 0 ? "max-w-[150px]" : undefined} />
             </div>
             {/* the connector into the next surface */}
             {i < STEPS.length - 1 ? (
@@ -134,6 +126,16 @@ export function RelayBoard({ active, reduce }: { active: number; reduce: boolean
                 <Connector lit={active > i} reduce={reduce} />
               </div>
             ) : null}
+            {/* its caption, centered beneath */}
+            <div
+              className={cn(
+                "pt-7 transition-all duration-700 ease-out",
+                reached ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2",
+              )}
+              style={{ gridColumn: col, gridRow: 2 }}
+            >
+              <StepCaption step={step} reached={reached} current={i === active} />
+            </div>
           </div>
         );
       })}
@@ -160,16 +162,16 @@ function PinnedRelay({ className }: { className?: string }) {
 
   return (
     <div ref={ref} className={cn("relative h-[300vh]", className)}>
-      <div className="sticky top-0 flex h-screen items-center overflow-hidden pt-20">
+      <div className="sticky top-0 flex h-screen items-center overflow-hidden pt-16">
         <Container className="w-full">
-          <div className="mx-auto mb-10 max-w-2xl text-center 2xl:mb-14">
+          <div className="mx-auto mb-8 max-w-2xl text-center 2xl:mb-12">
             <Eyebrow slash className="justify-center">
               {EYEBROW}
             </Eyebrow>
-            <h2 className="display-serif mt-5 text-[clamp(2rem,3.4vw,2.9rem)] text-ink-900 text-balance">
+            <h2 className="display-serif mt-4 text-[clamp(1.9rem,3vw,2.6rem)] text-ink-900 text-balance">
               {HEADING}
             </h2>
-            <p className="mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-ink-500 text-pretty">
+            <p className="mx-auto mt-3.5 max-w-xl text-[15px] leading-relaxed text-ink-500 text-pretty">
               {SUBHEAD}
             </p>
           </div>
