@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Zap, LineChart, HeartHandshake, Stethoscope } from "lucide-react";
+import Image from "next/image";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { PhoneFrame } from "@/components/home/PhoneFrame";
@@ -53,26 +54,24 @@ const SCREENS: { src: string; alt: string; offset: number; topLine: string; body
   },
 ];
 
-/* Real Apple mark — lucide ships no trademarked logos, so this is the actual
-   Apple glyph (correct geometry, monochrome). Google Play omitted: Redu is
+/* Apple's official "Download on the App Store" badge (black lockup), used as-is
+   per the App Store marketing guidelines. Google Play omitted: Redu is
    iOS-only for now. */
-function AppleGlyph({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className={className}>
-      <path d="M17.05 12.54c-.03-2.75 2.24-4.07 2.34-4.13-1.28-1.87-3.27-2.12-3.97-2.15-1.69-.17-3.3.99-4.15.99-.86 0-2.18-.97-3.58-.94-1.84.03-3.54 1.07-4.49 2.72-1.91 3.32-.49 8.23 1.37 10.92.91 1.32 1.99 2.79 3.41 2.74 1.37-.05 1.89-.88 3.54-.88 1.64 0 2.11.88 3.55.85 1.47-.02 2.4-1.34 3.3-2.66 1.04-1.53 1.47-3.01 1.49-3.09-.03-.01-2.86-1.1-2.89-4.36zM14.28 4.6c.76-.92 1.27-2.2 1.13-3.47-1.09.04-2.42.73-3.2 1.64-.7.81-1.31 2.11-1.15 3.35 1.22.1 2.46-.62 3.22-1.52z" />
-    </svg>
-  );
-}
-
 const STORE_BUTTONS = (
   <div className="flex flex-wrap gap-3">
     <a
       href="https://apps.apple.com/ca/app/redu-prediabetes-reversal/id6757512229"
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-center gap-2.5 rounded-xl bg-ink-900 px-5 py-3 text-[15px] font-semibold text-page transition-opacity hover:opacity-90"
+      className="inline-block transition-opacity hover:opacity-85"
     >
-      <AppleGlyph className="h-[19px] w-[19px]" /> Download on the App Store
+      <Image
+        src="/app-store-badge.svg"
+        alt="Download on the App Store"
+        width={162}
+        height={54}
+        className="h-[54px] w-auto"
+      />
     </a>
   </div>
 );
