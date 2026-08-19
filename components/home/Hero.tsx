@@ -196,7 +196,7 @@ export function Hero() {
         >
           <span className="block">
             <Words
-              words={["AI", "that", "retains", "patients"]}
+              words={["AI", "copilot", "for", "managing"]}
               baseDelay={0.3}
               color="#0a0a0a"
               reduce={reduce}
@@ -204,7 +204,7 @@ export function Hero() {
           </span>
           <span className="block">
             <Words
-              words={["for", "your"]}
+              words={["prediabetes", "in", "your"]}
               baseDelay={0.55}
               color="#0a0a0a"
               reduce={reduce}
@@ -229,8 +229,8 @@ export function Hero() {
               </motion.span>
             </span>{" "}
             <Words
-              words={["Dietitian", "Practice"]}
-              baseDelay={0.7}
+              words={["Clinic"]}
+              baseDelay={0.75}
               color="#b7b6b0"
               reduce={reduce}
             />
