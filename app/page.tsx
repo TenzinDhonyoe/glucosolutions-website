@@ -5,7 +5,7 @@ import { Showcase } from "@/components/home/Showcase";
 import { Mission } from "@/components/home/Mission";
 import { HowItWorks } from "@/components/home/HowItWorks";
 import { Capabilities } from "@/components/home/Capabilities";
-import { Provenance } from "@/components/home/Provenance";
+import { BuiltFor } from "@/components/home/BuiltFor";
 import { ReduTeaser } from "@/components/home/ReduTeaser";
 import { SecurityTeaser } from "@/components/home/SecurityTeaser";
 
@@ -19,7 +19,7 @@ export default function Home() {
         <Mission />
         <HowItWorks />
         <Capabilities />
-        <Provenance />
+        <BuiltFor />
         <ReduTeaser />
         <SecurityTeaser />
       </main>
