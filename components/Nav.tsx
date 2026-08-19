@@ -9,7 +9,7 @@ import { Wordmark } from "@/components/brand/Wordmark";
 import { Button } from "@/components/ui";
 
 const LINKS = [
-  { href: "/product", label: "Product" },
+  { href: "/product", label: "For Clinicians" },
   { href: "/security", label: "Security" },
   { href: "/redu", label: "Redu" },
 ];
