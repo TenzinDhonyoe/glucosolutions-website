@@ -66,9 +66,10 @@ function AppleGlyph({ className }: { className?: string }) {
 
 const STORE_BUTTONS = (
   <div className="flex flex-wrap gap-3">
-    {/* [CONFIRM] real App Store link */}
     <a
-      href="#"
+      href="https://apps.apple.com/ca/app/redu-prediabetes-reversal/id6757512229"
+      target="_blank"
+      rel="noopener noreferrer"
       className="inline-flex items-center gap-2.5 rounded-xl bg-ink-900 px-5 py-3 text-[15px] font-semibold text-page transition-opacity hover:opacity-90"
     >
       <AppleGlyph className="h-[19px] w-[19px]" /> Download on the App Store
@@ -220,7 +221,7 @@ export default function ReduPage() {
         headline="Every day is a fresh chance to do the small thing well."
         blurb="It's the re-do. Health isn't a streak you can't break, it's one you can always restart."
         ctaLabel="Download on the App Store"
-        ctaHref="#"
+        ctaHref="https://apps.apple.com/ca/app/redu-prediabetes-reversal/id6757512229"
       />
     </>
   );
