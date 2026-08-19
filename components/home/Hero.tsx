@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 /**
  * WritingLoop — a flipbook of the dietitian illustration. Every frame is
@@ -98,6 +98,69 @@ function Words({
         </span>
       ))}
     </>
+  );
+}
+
+/**
+ * RotatingWord — the closing word of the headline cycles through the practice
+ * types we serve. Each term rolls up through the same overflow mask the Words
+ * cascade uses (plus a touch of blur), so the swap reads as one continuous
+ * choreography. First term enters on the cascade's schedule; reduced motion
+ * gets a plain crossfade.
+ */
+const PRACTICE_TERMS = [
+  "Clinic",
+  "Solo Practice",
+  "Dietitian Clinic",
+  "Nutrition Practice",
+  "Endo Clinic",
+  "Wellness Center",
+];
+
+function RotatingWord({ reduce }: { reduce: boolean }) {
+  const [index, setIndex] = useState(0);
+  const [cycled, setCycled] = useState(false);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setIndex((i) => (i + 1) % PRACTICE_TERMS.length);
+      setCycled(true);
+    }, 2600);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <span className="inline-block overflow-hidden pb-[0.12em] -mb-[0.12em] align-bottom">
+      <AnimatePresence mode="wait" initial={!reduce}>
+        <motion.span
+          key={PRACTICE_TERMS[index]}
+          className="inline-block whitespace-nowrap"
+          style={{ color: "#b7b6b0" }}
+          initial={
+            reduce
+              ? { opacity: 0 }
+              : { y: "110%", opacity: 0, filter: "blur(5px)" }
+          }
+          animate={
+            reduce
+              ? { opacity: 1 }
+              : { y: "0%", opacity: 1, filter: "blur(0px)" }
+          }
+          exit={
+            reduce
+              ? { opacity: 0 }
+              : { y: "-110%", opacity: 0, filter: "blur(5px)" }
+          }
+          transition={{
+            duration: reduce ? 0.4 : cycled ? 0.5 : 0.6,
+            ease: WORD_EASE,
+            delay: cycled || reduce ? 0 : 0.75,
+          }}
+        >
+          {PRACTICE_TERMS[index]}
+        </motion.span>
+      </AnimatePresence>
+    </span>
   );
 }
 
@@ -228,12 +291,7 @@ export function Hero() {
                 <WritingLoop reduce={reduce} className="h-[60px] w-auto md:h-[88px]" />
               </motion.span>
             </span>{" "}
-            <Words
-              words={["Clinic"]}
-              baseDelay={0.75}
-              color="#b7b6b0"
-              reduce={reduce}
-            />
+            <RotatingWord reduce={reduce} />
           </span>
         </h1>
 
