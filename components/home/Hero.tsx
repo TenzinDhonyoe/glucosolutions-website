@@ -109,13 +109,16 @@ function Words({
  * gets a plain crossfade.
  */
 const PRACTICE_TERMS = [
-  "Clinic",
-  "Solo Practice",
   "Dietitian Clinic",
+  "Solo Practice",
   "Nutrition Practice",
   "Endo Clinic",
   "Wellness Center",
 ];
+
+const LONGEST_TERM = PRACTICE_TERMS.reduce((a, b) =>
+  b.length > a.length ? b : a,
+);
 
 function RotatingWord({ reduce }: { reduce: boolean }) {
   const [index, setIndex] = useState(0);
@@ -130,11 +133,16 @@ function RotatingWord({ reduce }: { reduce: boolean }) {
   }, []);
 
   return (
-    <span className="inline-block overflow-hidden pb-[0.12em] -mb-[0.12em] align-bottom">
+    <span className="relative inline-block overflow-hidden pb-[0.12em] -mb-[0.12em] text-left align-bottom">
+      {/* invisible sizer — holds the slot at the widest term so the headline's
+          line breaks (and everything below the hero) never move as terms rotate */}
+      <span aria-hidden className="invisible whitespace-nowrap">
+        {LONGEST_TERM}
+      </span>
       <AnimatePresence mode="wait" initial={!reduce}>
         <motion.span
           key={PRACTICE_TERMS[index]}
-          className="inline-block whitespace-nowrap"
+          className="absolute left-0 top-0 inline-block whitespace-nowrap"
           style={{ color: "#b7b6b0" }}
           initial={
             reduce
