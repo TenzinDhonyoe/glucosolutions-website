@@ -226,7 +226,7 @@ export function Hero() {
         </>
       )}
 
-      <div className="relative z-10 mx-auto flex w-full max-w-[880px] flex-col items-center">
+      <div className="relative z-10 mx-auto flex w-full max-w-[1020px] flex-col items-center">
         {/* 1 — Eyebrow pill (restrained, monochrome) */}
         <motion.div
           {...rise(0.1, 0.6)}
@@ -262,12 +262,12 @@ export function Hero() {
 
         {/* 2 — H1 (compact, tight tracking, Bold not ExtraBold) */}
         <h1
-          className="mt-6 text-[clamp(35px,4.5vw,56px)]"
+          className="mt-6 text-[clamp(32px,4.2vw,52px)]"
           style={{ fontWeight: 700, lineHeight: 1.1, letterSpacing: "-0.03em" }}
         >
           <span className="block">
             <Words
-              words={["AI", "copilot", "for", "managing"]}
+              words={["AI", "copilot", "for", "managing", "prediabetes"]}
               baseDelay={0.3}
               color="#0a0a0a"
               reduce={reduce}
@@ -275,8 +275,8 @@ export function Hero() {
           </span>
           <span className="block">
             <Words
-              words={["prediabetes", "in", "your"]}
-              baseDelay={0.55}
+              words={["in", "your"]}
+              baseDelay={0.6}
               color="#0a0a0a"
               reduce={reduce}
             />{" "}
