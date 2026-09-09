@@ -70,8 +70,14 @@ export default function ContactPage() {
                   ))}
                 </Stagger>
 
-                <p className="mt-5 text-[14px] text-page/62">
-                  Prefer email?{" "}
+                <p className="mt-5 text-[14px] text-page/62">Prefer email?</p>
+                <p className="mt-1 flex flex-col text-[14px]">
+                  <a
+                    href="mailto:justin@glucosolutions.ca"
+                    className="font-medium text-page underline decoration-page/35 underline-offset-4 transition-colors hover:decoration-page"
+                  >
+                    justin@glucosolutions.ca
+                  </a>
                   <a
                     href="mailto:tenzin@glucosolutions.ca"
                     className="font-medium text-page underline decoration-page/35 underline-offset-4 transition-colors hover:decoration-page"

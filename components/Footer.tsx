@@ -16,6 +16,7 @@ const COLUMNS: { heading: string; links: { label: string; href: string }[] }[] =
   {
     heading: "Company",
     links: [
+      { label: "Team", href: "/team" },
       { label: "Contact", href: "/contact" },
     ],
   },
@@ -44,12 +45,14 @@ export function Footer({
   blurb = "A 20-minute walkthrough on a real, de-identified case. No slides.",
   ctaLabel = "Book a demo",
   ctaHref = "/contact",
+  tagline = "Clinical software for dietitians.",
 }: {
   eyebrow?: string;
   headline?: string;
   blurb?: string;
   ctaLabel?: string;
   ctaHref?: string;
+  tagline?: string;
 } = {}) {
   return (
     <footer className="bg-page">
@@ -75,9 +78,11 @@ export function Footer({
           <div className="relative z-10">
             {/* Book a demo CTA */}
             <Container className="px-6 pb-16 pt-24 text-center md:pb-20 md:pt-32">
-              <p className="font-mono text-[12px] font-medium uppercase tracking-[0.16em] text-page/60">
-                <span className="mr-2 text-page/40">~</span>{eyebrow}
-              </p>
+              {eyebrow ? (
+                <p className="font-mono text-[12px] font-medium uppercase tracking-[0.16em] text-page/60">
+                  <span className="mr-2 text-page/40">~</span>{eyebrow}
+                </p>
+              ) : null}
               <h2 className="display-serif mt-5 text-[clamp(2.2rem,5vw,3.75rem)] text-page text-balance">
                 {headline}
               </h2>
@@ -103,9 +108,9 @@ export function Footer({
               <div className="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
                 <div className="max-w-xs">
                   <Wordmark href="/" size={28} className="brightness-0 invert" />
-                  <p className="mt-4 text-[14px] text-page/80">
-                    Clinical software for dietitians.
-                  </p>
+                  {tagline ? (
+                    <p className="mt-4 text-[14px] text-page/80">{tagline}</p>
+                  ) : null}
                 </div>
 
                 {COLUMNS.map((col) => (

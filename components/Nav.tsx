@@ -12,6 +12,7 @@ const LINKS = [
   { href: "/product", label: "For Clinicians" },
   { href: "/security", label: "Security" },
   { href: "/redu", label: "Redu" },
+  { href: "/team", label: "Team" },
 ];
 
 export function Nav({
