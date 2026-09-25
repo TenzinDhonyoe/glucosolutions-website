@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { LAST_MODIFIED } from "@/lib/seo/buildInfo";
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://glucosolutions.ca";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.glucosolutionsinc.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

@@ -1,133 +1,96 @@
-# Gluco Solutions
+# GlucoSolutions: full overview
 
-> Helps adults reverse prediabetes before it becomes type 2 diabetes. Non-invasive wearable + AI coach + registered dietitian. Pre-launch beta, iOS first, Canada-based.
+> A needle-free glucose band for people with prediabetes. In development; waitlist open.
 
-Site: https://glucosolutions.ca
+Site: https://www.glucosolutionsinc.com
 Contact: tenzin@glucosolutions.ca
 
 ---
 
 ## Hero
 
-**Catch prediabetes before it catches you.**
+**See how your body answers every meal.**
 
-Whether you were just diagnosed or want to stay ahead of it, we pair a wellness wearable and AI coaching with a registered dietitian. Built for adults with prediabetes.
+A needle-free band for people with prediabetes. It follows your glucose through the skin and shows you which meals, walks and nights of sleep are moving you back toward normal.
 
-Primary call to action: Join the waitlist.
-Secondary: See the science.
+Call to action: Join the waitlist. We're inviting people in small groups, starting in Canada. iPhone first.
 
 ---
 
-## The problem
+## Prediabetes is the stage you can still turn around
 
-**The biggest health crisis nobody is watching.**
+Your blood sugar is higher than it should be, but it isn't type 2. Most people leave that appointment with the advice to eat better, move more and check back in a few months. The advice is sound. What's missing is a way to tell which changes are working for you.
 
-Prediabetes hides inside ordinary days. A smoothie at breakfast, a sandwich at lunch, dessert with friends. The body keeps score long before anyone notices.
+- 6.4 million Canadians were estimated to be living with prediabetes in 2025. (Diabetes Canada)
+- More than half of people with prediabetes go on to develop type 2 within 8 to 10 years if nothing changes. (Diabetes Canada)
+- 58% lower risk of type 2 for people who changed how they ate and moved, in the Diabetes Prevention Program. (New England Journal of Medicine, 2002)
 
-### Stats
+---
 
-- **1 in 3** US adults has prediabetes. (Source: CDC, National Diabetes Statistics Report, 2024.)
-- **80%** of people with prediabetes don't know they have it. (Source: CDC Prediabetes Surveillance.)
-- **70%** progress to type 2 diabetes within a decade. (Source: American Diabetes Association.)
+## The advice is right. It just isn't specific to you.
 
-> Prediabetes is silent. Until it isn't.
-
-By the time symptoms surface, type 2 has often already begun. The window to course-correct is the one most people miss.
+The same bowl of rice can send one person's glucose climbing and barely move another's. What you eat first, a short walk, last night's sleep: each one changes the shape. Published studies show eating vegetables before carbohydrates (Shukla et al., Diabetes Care, 2015) and walking after meals (Buffey et al., Sports Medicine, 2022) both soften the post-meal rise.
 
 ---
 
 ## How it works
 
-**See your day, before it happens.**
-
-The wearable reads how your body is responding in real time. You learn what spikes you, what calms you.
-
-### The wearable — reads through your skin
-
-A safe, low-power light shines into your skin and reads how glucose is moving in your body. No needles. No patches. No consumables.
-
-- Non-invasive
-- Charge once a week
-- Wear daily
-
-### The AI coach — learns your body
-
-Instead of one-size-fits-all rules, the app learns how food, sleep, and stress affect *you*. It nudges you in plain language: eat this, walk now, sleep earlier.
-
-- Personalized
-- In plain English
-- No charts to read
+1. **Put it on.** A soft band that reads your wrist with near-infrared light. No needles, no patches, nothing to replace. Charge it about once a week.
+2. **Eat and move the way you normally do.** Snap a photo of your meals. The band follows your glucose in the background.
+3. **See what moved you, and what to try next.** After each meal the app shows whether you rose, held steady or settled, then gives one plain-English suggestion at a time: walk now, start with the vegetables, get to bed earlier.
 
 ---
 
-## The solution — trends, not pricks
+## The band: light instead of needles
 
-Glycemic awareness designed to fit a real life. At your desk, at the dinner table, on the trail.
+- How it reads: near-infrared light at two wavelengths, through the skin of the wrist.
+- What it shows: the direction of your glucose (rising, steady or settling), not an exact reading.
+- Accuracy so far: about 80% of trends classified correctly in benchtop testing.
+- Needles, patches, refills: none.
+- Charging: about once a week.
+- App: iPhone first, Android after.
+- Status: in development.
 
-### Day one — see what shapes your metabolic health
-
-Start with a quick intake — medications, family history, sleep, activity. Every recommendation begins from your real baseline, not an average.
-
-### Meals — snap a meal. See the score.
-
-A photo is enough. Get an instant metabolic score, macro breakdown, and a one-line note on how this plate tends to move your glucose.
-
-### Coach — activity, sleep, and the next small move
-
-Your wearable folds steps, sleep, and weight into one metabolic score, then surfaces one plain-English nudge — like a ten-minute post-meal walk.
-
----
-
-## How we're different — not a CGM, not a smartwatch
-
-| Capability                  | Gluco Solutions | CGM (Dexcom, Libre) | Smartwatches |
-| --------------------------- | --------------- | ------------------- | ------------ |
-| No needles                  | Yes             | No                  | Yes          |
-| Tracks your blood sugar     | Yes             | Yes                 | No           |
-| AI coach included           | Yes             | No                  | No           |
-| No prescription needed      | Yes             | No                  | Yes          |
-| No throwaway sensors        | Yes             | No                  | Yes          |
-
----
-
-## Early access
-
-**The next 10 years of your metabolic health starts now.**
-
-Small choices compound into decades. Join the waitlist for early access at https://glucosolutions.ca/#waitlist. We'll only email about early access. No spam, ever.
+Compared with a CGM: a CGM reads exact numbers through a filament under the skin and needs a new sensor every 10 to 15 days. If you need exact numbers for treatment decisions, a CGM is the right tool. If you want to learn which habits move you, direction is what you act on.
 
 ---
 
 ## FAQ
 
-### Is this a medical device?
+### What does the band actually measure?
 
-No. Gluco Solutions is a wellness product. It is not intended to diagnose, treat, cure, or prevent any disease, and it is not a substitute for medical-grade glucose monitoring.
-
-### Do I need a prescription?
-
-No. The wearable and app are available without a prescription as wellness tools for glycemic trend awareness.
+The direction of your glucose: whether it's rising, holding steady or settling back down. It uses near-infrared light through the skin of your wrist. It doesn't give you an exact number in mmol/L or mg/dL the way a finger-prick meter or CGM does.
 
 ### How accurate is it?
 
-Roughly 80% trend classification accuracy in benchtop testing. We classify glycemic trends — rising, stable, falling — rather than reporting absolute mg/dL values.
+In benchtop testing, the band classified about 80% of glucose trends correctly. We'll publish more results as testing continues.
 
-### iOS or Android?
+### Is this a medical device?
 
-iOS first. Android is on the roadmap and will follow once the iOS beta cohort matures.
+No. GlucoSolutions is a wellness product. It is not intended to diagnose, treat, cure, or prevent any disease, and it is not a substitute for medical-grade glucose monitoring.
 
-### When can I get one?
+### Does it replace my doctor or dietitian?
 
-Early access is rolling out to a limited beta cohort now. Broader rollout dates will be announced as we expand. Join the waitlist for invites.
+No. It helps you learn which habits move your glucose in the right direction. Keep working with your care team, and bring what you learn to your appointments.
 
-### Is my data private?
+### Do I need a prescription?
 
-Yes. Your data is encrypted at rest and in transit, and we never sell it. You own your data and can delete it at any time.
+No. The band and app will be available without a prescription.
+
+### When can I get one, and what will it cost?
+
+The band is in development. We'll invite people from the waitlist in small groups, starting in Canada. We haven't set a price yet; people on the waitlist will hear it first.
+
+### iPhone or Android?
+
+iPhone first. Android will follow.
+
+### What happens to my data?
+
+Your data is encrypted in transit and at rest, and we never sell it. You own it and can delete it at any time.
 
 ---
 
-## Disclaimers
+## Disclaimer
 
-Gluco Solutions is a wellness product. Not a medical device, not intended to diagnose, treat, cure, or prevent any disease, and not a substitute for medical-grade glucose monitoring or professional medical advice.
-
-© 2026 Gluco Solutions
+GlucoSolutions is a wellness product. It is not a medical device, is not intended to diagnose, treat, cure, or prevent any disease, and is not a substitute for medical-grade glucose monitoring or professional medical advice.

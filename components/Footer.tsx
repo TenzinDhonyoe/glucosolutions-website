@@ -1,150 +1,82 @@
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { Wordmark } from "@/components/brand/Wordmark";
-import { Container, Button } from "@/components/ui";
+import { Logo } from "@/components/brand/Logo";
 
-const COLUMNS: { heading: string; links: { label: string; href: string }[] }[] = [
+const COLUMNS = [
   {
     heading: "Product",
     links: [
-      { label: "Product", href: "/product" },
-      { label: "Security", href: "/security" },
-      { label: "Redu", href: "/redu" },
+      { label: "How it works", href: "/#how" },
+      { label: "The band", href: "/#band" },
+      { label: "Questions", href: "/#faq" },
+      { label: "Join the waitlist", href: "/#join" },
     ],
   },
   {
     heading: "Company",
     links: [
-      { label: "Contact", href: "/contact" },
+      { label: "tenzin@glucosolutions.ca", href: "mailto:tenzin@glucosolutions.ca" },
+      { label: "X", href: "https://x.com/gluco_solutions" },
     ],
   },
   {
     heading: "Legal",
     links: [
-      { label: "Privacy Policy", href: "/privacy" },
+      { label: "Privacy", href: "/privacy" },
       { label: "Terms", href: "/terms" },
+      { label: "SMS program", href: "/sms" },
     ],
   },
 ];
 
-/**
- * Footer — the closing band. Mirrors the hero's framed treatment (a full-bleed
- * photo inside a rounded card with an even cream bezel) but only on the sides
- * and top; the bottom runs flush to the page edge. The CTA and the footer
- * navigation both live over the image, kept legible by a warm ink wash.
- *
- * The CTA band is configurable so individual pages can close on their own note
- * (e.g. the Redu page uses its "Why Redu?" story instead of the demo pitch);
- * defaults reproduce the site-wide dietitian CTA.
- */
-export function Footer({
-  eyebrow = "Ready when you are",
-  headline = "See it on your own caseload.",
-  blurb = "A 20-minute walkthrough on a real, de-identified case. No slides.",
-  ctaLabel = "Book a demo",
-  ctaHref = "/contact",
-}: {
-  eyebrow?: string;
-  headline?: string;
-  blurb?: string;
-  ctaLabel?: string;
-  ctaHref?: string;
-} = {}) {
+export function Footer() {
   return (
-    <footer className="bg-page">
-      <div className="px-4 pt-4">
-        <div className="relative overflow-hidden rounded-t-[1.75rem] ring-1 ring-ink-900/10">
-          <Image
-            src="/cta-bg.jpg"
-            alt=""
-            fill
-            sizes="100vw"
-            className="object-cover object-center"
-          />
-          {/* warm legibility wash — dark at the CTA and footer, sunflowers showing through the middle */}
-          <div
-            aria-hidden
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(180deg, rgba(43,38,32,0.82) 0%, rgba(43,38,32,0.48) 42%, rgba(43,38,32,0.80) 68%, rgba(43,38,32,0.96) 100%)",
-            }}
-          />
-
-          <div className="relative z-10">
-            {/* Book a demo CTA */}
-            <Container className="px-6 pb-16 pt-24 text-center md:pb-20 md:pt-32">
-              <p className="font-mono text-[12px] font-medium uppercase tracking-[0.16em] text-page/60">
-                <span className="mr-2 text-page/40">~</span>{eyebrow}
-              </p>
-              <h2 className="display-serif mt-5 text-[clamp(2.2rem,5vw,3.75rem)] text-page text-balance">
-                {headline}
-              </h2>
-              <p className="mx-auto mt-5 max-w-xl text-[18px] leading-relaxed text-page/75">
-                {blurb}
-              </p>
-              <div className="mt-9 flex justify-center">
-                <Button
-                  href={ctaHref}
-                  size="lg"
-                  pill
-                  variant="secondary"
-                  iconRight={ArrowRight}
-                  className="text-[15px]"
-                >
-                  {ctaLabel}
-                </Button>
-              </div>
-            </Container>
-
-            {/* footer navigation */}
-            <Container className="border-t border-page/15 py-12">
-              <div className="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
-                <div className="max-w-xs">
-                  <Wordmark href="/" size={28} className="brightness-0 invert" />
-                  <p className="mt-4 text-[14px] text-page/80">
-                    Clinical software for dietitians.
-                  </p>
-                </div>
-
-                {COLUMNS.map((col) => (
-                  <nav key={col.heading} aria-label={col.heading}>
-                    <h3 className="mb-4 font-mono text-[11px] font-medium uppercase tracking-[0.1em] text-page/75">
-                      {col.heading}
-                    </h3>
-                    <ul className="space-y-2.5">
-                      {col.links.map((l) => (
-                        <li key={l.href}>
-                          <Link
-                            href={l.href}
-                            className="text-[14px] text-page/90 transition-colors hover:text-white"
-                          >
+    <footer className="bg-pine text-white/70">
+      <div className="mx-auto max-w-page px-5 pb-10 pt-16 sm:px-8 md:pt-20">
+        <div className="grid gap-12 md:grid-cols-12">
+          <div className="md:col-span-5">
+            <Logo tone="light" />
+            <p className="mt-5 max-w-[22rem] text-[15.5px] leading-relaxed">
+              A needle-free glucose band for people with prediabetes. Made in Toronto.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 md:col-span-7">
+            {COLUMNS.map((c) => (
+              <div key={c.heading}>
+                <h2 className="text-[14px] font-semibold text-white">{c.heading}</h2>
+                <ul className="mt-4 space-y-2.5 text-[15px]">
+                  {c.links.map((l) => {
+                    const external = l.href.startsWith("http");
+                    return (
+                      <li key={l.href}>
+                        {l.href.startsWith("/") ? (
+                          <Link href={l.href} className="transition-colors hover:text-white">
                             {l.label}
                           </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </nav>
-                ))}
+                        ) : (
+                          <a
+                            href={l.href}
+                            className="break-all transition-colors hover:text-white sm:break-normal"
+                            {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                          >
+                            {l.label}
+                          </a>
+                        )}
+                      </li>
+                    );
+                  })}
+                </ul>
               </div>
-
-              <div className="mt-12 flex flex-col gap-3 border-t border-page/15 pt-6 text-[13px] text-page/75 sm:flex-row sm:items-center sm:justify-between">
-                <span>© 2026 GlucoSolutions Inc.</span>
-                <div className="flex items-center gap-5">
-                  <a
-                    href="https://x.com/gluco_solutions"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="transition-colors hover:text-white"
-                  >
-                    X / @gluco_solutions
-                  </a>
-                  <span>Toronto, Canada</span>
-                </div>
-              </div>
-            </Container>
+            ))}
           </div>
+        </div>
+
+        <div className="mt-16 border-t border-white/12 pt-8 text-[13px] leading-relaxed text-white/50">
+          <p className="max-w-[52rem]">
+            GlucoSolutions is a wellness product. It is not a medical device, is not
+            intended to diagnose, treat, cure, or prevent any disease, and is not a
+            substitute for medical-grade glucose monitoring or professional medical advice.
+          </p>
+          <p className="mt-4">&copy; 2026 GlucoSolutions Inc.</p>
         </div>
       </div>
     </footer>

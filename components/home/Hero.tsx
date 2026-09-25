@@ -1,352 +1,68 @@
-"use client";
+import { getImageProps } from "next/image";
+import { WaitlistForm } from "@/components/WaitlistForm";
+import { ResponseCard } from "@/components/home/ResponseCard";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { ArrowRight } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-
-/**
- * WritingLoop — a flipbook of the dietitian illustration. Every frame is
- * pixel-identical except the pen/hand position (frames generated with Gemini),
- * so cycling them reads as her writing a meal plan. All frames are stacked and
- * cross-toggled by opacity (no reflow, no flash). Static on reduced-motion.
- */
-const WRITE_FRAMES = [
-  "/dietitian-0.png",
-  "/dietitian-1.png",
-  "/dietitian-3.png",
-  "/dietitian-2.png",
-  "/dietitian-4.png",
-];
-
-function WritingLoop({
-  reduce,
-  className,
-}: {
-  reduce: boolean;
-  className: string;
-}) {
-  const [frame, setFrame] = useState(0);
-  useEffect(() => {
-    if (reduce) return;
-    const id = setInterval(
-      () => setFrame((f) => (f + 1) % WRITE_FRAMES.length),
-      300,
-    );
-    return () => clearInterval(id);
-  }, [reduce]);
-  return (
-    <span className="relative inline-block align-middle">
-      {WRITE_FRAMES.map((src, idx) => (
-        <Image
-          key={src}
-          src={src}
-          alt=""
-          width={874}
-          height={850}
-          priority
-          className={`${idx === 0 ? "block" : "absolute left-0 top-0 block"} ${className}`}
-          style={{ opacity: frame === idx ? 1 : 0 }}
-        />
-      ))}
-    </span>
-  );
-}
-
-// 2026 hero direction — compact centered block on a near-white ground,
-// matching the supplied reference. Typeface: Nunito Sans (--font-nunito-sans),
-// dialed to 700 with tight tracking so it reads clean rather than bubbly.
-
-const WORD_EASE = [0.25, 1, 0.5, 1] as const;
-
-/**
- * Words — renders a phrase word-by-word. Each word rises out of a clipped
- * wrapper (masked reveal) with a 50ms stagger from `baseDelay`.
- */
-function Words({
-  words,
-  baseDelay,
-  color,
-  reduce,
-}: {
-  words: string[];
-  baseDelay: number;
-  color: string;
-  reduce: boolean;
-}) {
-  return (
-    <>
-      {words.map((word, i) => (
-        <span key={`${word}-${i}`}>
-          <span className="inline-block overflow-hidden pb-[0.12em] -mb-[0.12em] align-bottom">
-            <motion.span
-              className="inline-block"
-              style={{ color }}
-              initial={reduce ? { opacity: 0 } : { y: "110%", opacity: 0 }}
-              animate={reduce ? { opacity: 1 } : { y: "0%", opacity: 1 }}
-              transition={{
-                duration: reduce ? 0.4 : 0.6,
-                ease: WORD_EASE,
-                delay: reduce ? 0 : baseDelay + i * 0.05,
-              }}
-            >
-              {word}
-            </motion.span>
-          </span>
-          {i < words.length - 1 ? " " : null}
-        </span>
-      ))}
-    </>
-  );
-}
-
-/**
- * RotatingWord — the closing word of the headline cycles through the practice
- * types we serve. Each term rolls up through the same overflow mask the Words
- * cascade uses (plus a touch of blur), so the swap reads as one continuous
- * choreography. First term enters on the cascade's schedule; reduced motion
- * gets a plain crossfade.
- */
-const PRACTICE_TERMS = [
-  "Dietitian Clinic",
-  "Solo Practice",
-  "Nutrition Practice",
-  "Endo Clinic",
-  "Wellness Center",
-];
-
-const LONGEST_TERM = PRACTICE_TERMS.reduce((a, b) =>
-  b.length > a.length ? b : a,
-);
-
-function RotatingWord({ reduce }: { reduce: boolean }) {
-  const [index, setIndex] = useState(0);
-  const [cycled, setCycled] = useState(false);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setIndex((i) => (i + 1) % PRACTICE_TERMS.length);
-      setCycled(true);
-    }, 2600);
-    return () => clearInterval(id);
-  }, []);
-
-  return (
-    <span className="relative inline-block overflow-hidden pb-[0.12em] -mb-[0.12em] text-left align-bottom">
-      {/* invisible sizer — holds the slot at the widest term so the headline's
-          line breaks (and everything below the hero) never move as terms rotate */}
-      <span aria-hidden className="invisible whitespace-nowrap">
-        {LONGEST_TERM}
-      </span>
-      <AnimatePresence mode="wait" initial={!reduce}>
-        <motion.span
-          key={PRACTICE_TERMS[index]}
-          className="absolute left-0 top-0 inline-block whitespace-nowrap"
-          style={{ color: "#b7b6b0" }}
-          initial={
-            reduce
-              ? { opacity: 0 }
-              : { y: "110%", opacity: 0, filter: "blur(5px)" }
-          }
-          animate={
-            reduce
-              ? { opacity: 1 }
-              : { y: "0%", opacity: 1, filter: "blur(0px)" }
-          }
-          exit={
-            reduce
-              ? { opacity: 0 }
-              : { y: "-110%", opacity: 0, filter: "blur(5px)" }
-          }
-          transition={{
-            duration: reduce ? 0.4 : cycled ? 0.5 : 0.6,
-            ease: WORD_EASE,
-            delay: cycled || reduce ? 0 : 0.75,
-          }}
-        >
-          {PRACTICE_TERMS[index]}
-        </motion.span>
-      </AnimatePresence>
-    </span>
-  );
-}
+const ALT =
+  "Morning light across a kitchen table: a forearm wearing a slim black band rests beside a bowl of oatmeal and berries.";
 
 export function Hero() {
-  const reduce = useReducedMotion() ?? false;
-
-  const rise = (delay: number, duration: number) => ({
-    initial: reduce ? { opacity: 0 } : { opacity: 0, y: 24 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: reduce ? 0.4 : duration, ease: "easeOut" as const, delay: reduce ? 0 : delay },
-  });
-
-  const pop = (delay: number, duration = 0.5) => ({
-    initial: reduce ? { opacity: 0 } : { opacity: 0, scale: 0.6 },
-    animate: { opacity: 1, scale: 1 },
-    transition: { duration: reduce ? 0.4 : duration, ease: "backOut" as const, delay: reduce ? 0 : delay },
+  // Art direction: a wide frame with negative space on the left for desktop,
+  // a portrait frame with negative space on top for phones.
+  const common = { alt: ALT, sizes: "100vw" };
+  const {
+    props: { srcSet: wide },
+  } = getImageProps({ ...common, src: "/images/hero-breakfast.jpg", width: 2560, height: 1429 });
+  const {
+    props: { srcSet: tall, ...rest },
+  } = getImageProps({
+    ...common,
+    src: "/images/hero-breakfast-portrait.jpg",
+    width: 1450,
+    height: 1800,
+    loading: "eager",
+    fetchPriority: "high",
   });
 
   return (
     <section
-      className="relative flex flex-col items-center overflow-hidden px-6 pt-24 pb-12 text-center md:px-10 md:pt-32 md:pb-16"
-      style={{ fontFamily: "var(--font-nunito-sans)", background: "#f6f6f4" }}
+      id="top"
+      aria-labelledby="hero-title"
+      className="grain relative isolate flex min-h-[max(100svh,640px)] overflow-hidden bg-pine text-white"
     >
-      {/* Ambient life — slow-drifting brand-tinted glows behind the content */}
-      {!reduce && (
-        <>
-          <motion.div
-            aria-hidden
-            className="pointer-events-none absolute rounded-full blur-3xl"
-            style={{
-              width: 560,
-              height: 560,
-              left: "4%",
-              top: "8%",
-              background:
-                "radial-gradient(circle, rgba(26,171,179,0.20), transparent 70%)",
-            }}
-            animate={{ x: [0, 44, 0], y: [0, 30, 0], scale: [1, 1.08, 1] }}
-            transition={{ duration: 17, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div
-            aria-hidden
-            className="pointer-events-none absolute rounded-full blur-3xl"
-            style={{
-              width: 480,
-              height: 480,
-              right: "3%",
-              top: "18%",
-              background:
-                "radial-gradient(circle, rgba(245,166,35,0.16), transparent 70%)",
-            }}
-            animate={{ x: [0, -40, 0], y: [0, 26, 0], scale: [1.05, 1, 1.05] }}
-            transition={{ duration: 21, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </>
-      )}
+      <picture className="absolute inset-x-0 bottom-0 top-[26%] -z-20 md:inset-0">
+        <source media="(min-width: 768px)" srcSet={wide} />
+        <source srcSet={tall} />
+        <img
+          {...rest}
+          alt={ALT}
+          className="h-full w-full object-cover object-[50%_30%] md:object-[62%_50%]"
+        />
+      </picture>
+      {/* Legibility wash. Phones: solid pine up top, fading into the photo's dark
+          upper half. Desktop: from the left, where the photo leaves room. */}
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(15_43_46)_0%,rgb(15_43_46)_26%,rgb(15_43_46/0.55)_42%,rgb(15_43_46/0.12)_72%,rgb(15_43_46/0.3)_100%)] md:bg-[linear-gradient(180deg,rgb(15_43_46/0.55)_0%,rgb(15_43_46/0)_16%),linear-gradient(90deg,rgb(15_43_46/0.82)_0%,rgb(15_43_46/0.5)_34%,rgb(15_43_46/0)_60%),linear-gradient(0deg,rgb(15_43_46/0.55)_0%,rgb(15_43_46/0)_40%)]"
+      />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-[1020px] flex-col items-center">
-        {/* 1 — Eyebrow pill (restrained, monochrome) */}
-        <motion.div
-          {...rise(0.1, 0.6)}
-          className="inline-flex items-center"
-          style={{
-            gap: "8px",
-            padding: "4px 10px 4px 4px",
-            borderRadius: "9px",
-            background: "#efeeea",
-            border: "1px solid rgba(0,0,0,0.05)",
-          }}
-        >
-          <span
-            className="inline-flex items-center justify-center"
-            style={{
-              width: "26px",
-              height: "20px",
-              borderRadius: "5px",
-              background: "#ffffff",
-              border: "1px solid rgba(0,0,0,0.08)",
-              boxShadow: "0 1px 1px rgba(0,0,0,0.04)",
-              color: "#374151",
-              fontSize: "11px",
-              fontWeight: 700,
-            }}
-          >
-            AI
-          </span>
-          <span style={{ fontSize: "13px", fontWeight: 500, color: "#6b7280" }}>
-            Continuity between sessions &amp; outcomes reporting
-          </span>
-        </motion.div>
+      <div className="relative mx-auto flex w-full max-w-page flex-col justify-start px-5 pb-12 pt-28 sm:px-8 md:justify-end md:pb-16">
+        <div className="max-w-[44rem]">
+          <h1 id="hero-title" className="display text-[clamp(2.6rem,1.2rem+4.4vw,5.1rem)]">
+            See how your body answers every meal.
+          </h1>
+          <p className="lede mt-5 max-w-[33rem] text-white/85">
+            A needle-free band for people with prediabetes. It follows your glucose
+            through the skin and shows you which meals, walks and nights of sleep are
+            moving you back toward normal.
+          </p>
+          <WaitlistForm source="hero" className="mt-8" />
+          <p className="mt-4 pl-1 text-[14.5px] text-white/65">
+            We&rsquo;re inviting people in small groups, starting in Canada. iPhone first.
+          </p>
+        </div>
 
-        {/* 2 — H1 (compact, tight tracking, Bold not ExtraBold) */}
-        <h1
-          className="mt-6 text-[clamp(32px,4.2vw,52px)]"
-          style={{ fontWeight: 700, lineHeight: 1.1, letterSpacing: "-0.03em" }}
-        >
-          <span className="block">
-            <Words
-              words={["AI", "copilot", "for", "managing", "prediabetes"]}
-              baseDelay={0.3}
-              color="#0a0a0a"
-              reduce={reduce}
-            />
-          </span>
-          <span className="block">
-            <Words
-              words={["in", "your"]}
-              baseDelay={0.6}
-              color="#0a0a0a"
-              reduce={reduce}
-            />{" "}
-            <span className="relative mx-1 my-[-8px] inline-flex items-center justify-center align-middle md:mx-2 md:my-[-12px]">
-              {/* soft breathing glow behind the illustration */}
-              {!reduce && (
-                <motion.span
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 rounded-full blur-xl"
-                  style={{
-                    background:
-                      "radial-gradient(circle, rgba(26,171,179,0.28), transparent 70%)",
-                  }}
-                  animate={{ scale: [1, 1.18, 1], opacity: [0.45, 0.85, 0.45] }}
-                  transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
-                />
-              )}
-              {/* entrance scale-in + the writing animation (no up/down float) */}
-              <motion.span {...pop(0.75, 0.6)} className="relative inline-block" aria-hidden>
-                <WritingLoop reduce={reduce} className="h-[60px] w-auto md:h-[88px]" />
-              </motion.span>
-            </span>{" "}
-            <RotatingWord reduce={reduce} />
-          </span>
-        </h1>
-
-        {/* 3 — Subheading (light gray, narrow measure) */}
-        <motion.p
-          {...rise(1.0, 0.8)}
-          className="mt-6 max-w-[600px]"
-          style={{ fontSize: "17px", fontWeight: 400, lineHeight: 1.55, color: "#9aa0a6" }}
-        >
-          Clients go quiet between sessions and never come back. GlucoSolutions
-          tracks the gap and briefs you before every visit, so you catch the
-          drop-off before it happens.
-        </motion.p>
-
-        {/* 4 — CTA row (soft rounded rectangles, yellow accent) */}
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <motion.div {...pop(1.2)}>
-            <Link
-              href="/#how"
-              className="inline-flex items-center justify-center rounded-full px-7 py-3.5 transition-transform"
-              style={{
-                background: "#ffffff",
-                border: "1px solid var(--color-line)",
-                boxShadow: "0 1px 2px rgba(60,50,40,0.06)",
-                color: "#0a0a0a",
-                fontSize: "15px",
-                fontWeight: 600,
-              }}
-            >
-              Let&apos;s Talk
-            </Link>
-          </motion.div>
-          <motion.div {...pop(1.3)}>
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 shadow-md transition-transform hover:scale-[1.02]"
-              style={{
-                background: "var(--color-ink-900)",
-                color: "#ffffff",
-                fontSize: "15px",
-                fontWeight: 700,
-              }}
-            >
-              Book a Demo
-              <ArrowRight size={17} />
-            </Link>
-          </motion.div>
+        <div className="absolute left-[54%] top-[18%] hidden w-[19.5rem] xl:block">
+          <ResponseCard animate note="App preview. The band is in development." />
         </div>
       </div>
     </section>

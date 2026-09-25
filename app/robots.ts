@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://glucosolutions.ca";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.glucosolutionsinc.com";
 
 // AI / answer-engine crawlers we explicitly welcome. Listing them by name
 // (rather than relying on the universal rule) makes intent clear and is

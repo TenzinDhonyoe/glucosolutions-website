@@ -20,17 +20,24 @@ const IMMUTABLE_CACHE = [
   },
 ];
 
+// Pages from the dietitian-software era. Sent home rather than 404ing so old
+// links (emails, bookmarks, search results) still land somewhere useful.
+const RETIRED_PATHS = ["/product", "/redu", "/contact", "/security"];
+
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  async redirects() {
+    return RETIRED_PATHS.map((source) => ({
+      source,
+      destination: "/",
+      permanent: false,
+    }));
+  },
   async headers() {
     return [
       {
         source: "/:path*",
         headers: SECURITY_HEADERS,
-      },
-      {
-        source: "/photos/:path*",
-        headers: IMMUTABLE_CACHE,
       },
       {
         source: "/(logo|wordmark|icon|apple-icon)\\.(png|svg|webp|ico)",

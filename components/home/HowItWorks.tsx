@@ -1,261 +1,63 @@
-"use client";
+import Image from "next/image";
+import { ResponseCard } from "@/components/home/ResponseCard";
 
-import { useRef, useState } from "react";
-import {
-  useScroll,
-  useMotionValueEvent,
-  useReducedMotion,
-} from "framer-motion";
-import { Container, Eyebrow } from "@/components/ui";
-import { Reveal } from "@/components/motion";
-import { cn } from "@/lib/utils";
-import { PhoneStage, EngineStage, BriefStage, Connector } from "./relay";
-
-/* =============================================================================
-   HowItWorks — the record's journey across three real product surfaces. Instead
-   of dimming one dashboard three ways, we show the actual relay: the patient's
-   phone hands a log to the interpretation engine, which hands two signals to the
-   clinician's session brief. On desktop the section pins and the relay assembles
-   as you scroll, connectors firing left to right. On mobile / reduced-motion it
-   stacks vertically, fully lit.
-   ========================================================================== */
-
-type Step = { n: string; title: string; body: string };
-
-const STEPS: Step[] = [
+const STEPS = [
   {
-    n: "01",
-    title: "Your patient logs",
-    body: "Meals, glucose, activity, and sleep, captured in seconds in Redu. It reaches your dashboard the moment they save.",
+    title: "Put it on.",
+    body: "A soft band that reads your wrist with near-infrared light. No needles, no patches, nothing to replace. Charge it about once a week.",
   },
   {
-    n: "02",
-    title: "GlucoSolutions interprets",
-    body: "Each entry becomes a signal you can trust, traced to the exact readings behind it. The math stays in plain sight.",
+    title: "Eat and move the way you normally do.",
+    body: "Snap a photo of your meals. The band follows your glucose in the background while you get on with your day.",
   },
   {
-    n: "03",
-    title: "You walk in ready",
-    body: "A brief assembles from those signals. Open with what changed, message between visits, export outcomes referrers trust.",
+    title: "See what moved you, and what to try next.",
+    body: "After each meal the app shows whether you rose, held steady or settled, then gives you one plain-English suggestion at a time: walk now, start with the vegetables, get to bed earlier.",
   },
 ];
 
-const EYEBROW = "How it works";
-const HEADING = "Three surfaces. One record.";
-const SUBHEAD =
-  "The entry your patient logs on their phone becomes a sourced read, then the brief you open the session with. One record, handed along, never re-keyed.";
-
-const STAGES = [PhoneStage, EngineStage, BriefStage] as const;
-
-/* ---- The relay board: three captioned surfaces wired in sequence. `active`
-   is the furthest-reached stage (0–2); stages at or before it are revealed and
-   the connectors up to it are lit. Shared by the pinned and static layouts. --- */
-
-function StepCaption({
-  step,
-  reached,
-  current,
-}: {
-  step: Step;
-  reached: boolean;
-  current: boolean;
-}) {
-  return (
-    <div className="mx-auto max-w-[19rem] text-center">
-      <span
-        className={cn(
-          "tnum text-[13px] font-semibold transition-colors duration-500",
-          current ? "text-sky-700" : reached ? "text-ink-500" : "text-ink-400",
-        )}
-      >
-        {step.n}
-      </span>
-      <h3
-        className={cn(
-          "mt-1.5 text-[17px] font-semibold tracking-[-0.01em] transition-colors duration-500",
-          reached ? "text-ink-900" : "text-ink-400",
-        )}
-      >
-        {step.title}
-      </h3>
-      <p
-        className={cn(
-          "mt-2 text-[13.5px] leading-relaxed transition-colors duration-500",
-          reached ? "text-ink-500" : "text-ink-400/70",
-        )}
-      >
-        {step.body}
-      </p>
-    </div>
-  );
-}
-
-export function RelayBoard({ active, reduce }: { active: number; reduce: boolean }) {
-  // The outer surface columns are held equal so the engine card lands dead
-  // center under the (centered) heading; the connectors take the slack and each
-  // surface + caption is centered in its own column, keeping the whole relay
-  // left-right symmetric about the page center.
-  const cols =
-    "minmax(240px,20rem) minmax(1.75rem,1fr) minmax(280px,24rem) minmax(1.75rem,1fr) minmax(240px,20rem)";
-  return (
-    <div
-      className="grid w-full items-center gap-x-4 sm:gap-x-6"
-      style={{ gridTemplateColumns: cols, gridTemplateRows: "auto auto" }}
-    >
-      {STEPS.map((step, i) => {
-        const Stage = STAGES[i];
-        const reached = i <= active;
-        const col = i * 2 + 1;
-        return (
-          <div key={step.n} style={{ display: "contents" }}>
-            {/* the surface, centered in its column */}
-            <div
-              className={cn(
-                "flex items-center justify-center transition-all duration-700 ease-out",
-                reached
-                  ? "opacity-100 translate-y-0 blur-0"
-                  : "opacity-0 translate-y-4 blur-[2px]",
-              )}
-              style={{ gridColumn: col, gridRow: 1 }}
-            >
-              <Stage className={i === 0 ? "max-w-[150px]" : undefined} />
-            </div>
-            {/* the connector into the next surface */}
-            {i < STEPS.length - 1 ? (
-              <div style={{ gridColumn: col + 1, gridRow: 1 }}>
-                <Connector lit={active > i} reduce={reduce} />
-              </div>
-            ) : null}
-            {/* its caption, centered beneath */}
-            <div
-              className={cn(
-                "pt-7 transition-all duration-700 ease-out",
-                reached ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2",
-              )}
-              style={{ gridColumn: col, gridRow: 2 }}
-            >
-              <StepCaption step={step} reached={reached} current={i === active} />
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
-/* ---- desktop: pinned section, relay assembles on scroll -------------------- */
-
-function PinnedRelay({ className }: { className?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end end"],
-  });
-  const [active, setActive] = useState(0);
-
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    // Assemble one surface per third of the pinned track, so each stage gets an
-    // equal dwell and the relay completes just before the section releases.
-    const next = v < 0.34 ? 0 : v < 0.67 ? 1 : 2;
-    setActive((prev) => (prev === next ? prev : next));
-  });
-
-  return (
-    <div ref={ref} className={cn("relative h-[300vh]", className)}>
-      <div className="sticky top-0 flex h-screen items-center overflow-hidden pt-16">
-        <Container className="w-full">
-          <div className="mx-auto mb-8 max-w-2xl text-center 2xl:mb-12">
-            <Eyebrow slash className="justify-center">
-              {EYEBROW}
-            </Eyebrow>
-            <h2 className="display-serif mt-4 text-[clamp(1.9rem,3vw,2.6rem)] text-ink-900 text-balance">
-              {HEADING}
-            </h2>
-            <p className="mx-auto mt-3.5 max-w-xl text-[15px] leading-relaxed text-ink-500 text-pretty">
-              {SUBHEAD}
-            </p>
-          </div>
-          <RelayBoard active={active} reduce={false} />
-        </Container>
-      </div>
-    </div>
-  );
-}
-
-/* ---- mobile + reduced-motion: stacked, fully lit --------------------------- */
-
-export function StaticRelay({ className }: { className?: string }) {
-  return (
-    <div className={cn("py-20 md:py-28", className)}>
-      <Container>
-        <div className="mx-auto max-w-2xl text-center">
-          <Reveal>
-            <Eyebrow slash className="justify-center">
-              {EYEBROW}
-            </Eyebrow>
-          </Reveal>
-          <Reveal delay={0.05}>
-            <h2 className="display-serif mt-5 text-[clamp(2rem,7vw,2.6rem)] text-ink-900 text-balance">
-              {HEADING}
-            </h2>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p className="mx-auto mt-4 max-w-lg text-[15px] leading-relaxed text-ink-500 text-pretty">
-              {SUBHEAD}
-            </p>
-          </Reveal>
-        </div>
-
-        <div className="mx-auto mt-12 flex max-w-md flex-col items-stretch">
-          {STEPS.map((step, i) => {
-            const Stage = STAGES[i];
-            return (
-              <div key={step.n}>
-                <Reveal variant="up" delay={0.05}>
-                  <div className="flex items-baseline gap-3">
-                    <span className="tnum text-[13px] font-semibold text-sky-700">
-                      {step.n}
-                    </span>
-                    <div>
-                      <h3 className="text-[18px] font-semibold tracking-[-0.01em] text-ink-900">
-                        {step.title}
-                      </h3>
-                      <p className="mt-1.5 text-[14px] leading-relaxed text-ink-500">
-                        {step.body}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="mt-5 flex justify-center">
-                    <Stage />
-                  </div>
-                </Reveal>
-                {i < STEPS.length - 1 ? (
-                  <div className="my-3 flex justify-center">
-                    <div className="w-10">
-                      <Connector lit reduce vertical />
-                    </div>
-                  </div>
-                ) : null}
-              </div>
-            );
-          })}
-        </div>
-      </Container>
-    </div>
-  );
-}
-
 export function HowItWorks() {
-  const reduce = useReducedMotion();
-  const pinnedAllowed = reduce !== true;
-
   return (
-    <section
-      id="how"
-      className="relative z-10 -mt-[100vh] scroll-mt-24 rounded-t-[2rem] bg-sunken shadow-[0_-30px_60px_-40px_rgba(43,38,32,0.45)] md:rounded-t-[2.5rem]"
-    >
-      {pinnedAllowed ? <PinnedRelay className="hidden lg:block" /> : null}
-      <StaticRelay className={pinnedAllowed ? "lg:hidden" : ""} />
+    <section id="how" aria-labelledby="how-title" className="bg-paper py-24 md:py-36">
+      <div className="mx-auto max-w-page px-5 sm:px-8">
+        <div className="grid gap-14 lg:grid-cols-12 lg:gap-10">
+          <div className="lg:col-span-5">
+            <div className="grain relative overflow-hidden rounded-[28px] lg:sticky lg:top-28">
+              <Image
+                src="/images/evening-walk.jpg"
+                alt="A man in his fifties on an evening walk down a tree-lined street, the band on his wrist."
+                width={1450}
+                height={1800}
+                sizes="(min-width: 1024px) 40vw, 100vw"
+                className="aspect-[4/5] h-auto w-full object-cover"
+              />
+            </div>
+          </div>
+
+          <div className="lg:col-span-7 lg:pl-10">
+            <h2 id="how-title" className="display h-section">
+              It works in the background of an ordinary day.
+            </h2>
+
+            <ol className="mt-14 space-y-12">
+              {STEPS.map((s, i) => (
+                <li key={s.title} className="grid grid-cols-[3rem_1fr] gap-x-4 border-t border-line pt-8">
+                  <span className="tnum pt-0.5 text-[15px] font-semibold text-teal-deep">{i + 1}</span>
+                  <div>
+                    <h3 className="text-[1.375rem] font-semibold leading-snug tracking-[-0.01em]">{s.title}</h3>
+                    <p className="mt-3 max-w-[34rem] text-[17px] leading-relaxed text-ink-soft">{s.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+
+            <div className="mt-14 rounded-[28px] bg-pine p-4 sm:ml-16 sm:w-fit sm:p-5 xl:hidden">
+              <ResponseCard className="bg-transparent p-2 shadow-none ring-0 backdrop-blur-none" />
+            </div>
+            <p className="mt-3 text-[13px] text-ink-faint sm:ml-16 xl:hidden">What a meal looks like in the app. The band is in development.</p>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

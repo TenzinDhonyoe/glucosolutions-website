@@ -1,48 +1,30 @@
 import type { Metadata, Viewport } from "next";
-import { Newsreader, Geist_Mono, Nunito_Sans } from "next/font/google";
+import { Nunito_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { ScrollProgress } from "@/components/interactive/ScrollProgress";
-import { SmoothScroll } from "@/components/motion";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { organization, website } from "@/lib/seo/jsonLd";
 import "./globals.css";
 
-// GlucoSolutions Design System — Nunito Sans is the primary face site-wide
-// (body, UI and display). Newsreader is kept only for the in-product mockup's
-// client name; Geist Mono is for data, units and labels.
-const newsreader = Newsreader({
-  variable: "--font-newsreader",
-  subsets: ["latin"],
-  style: ["normal", "italic"],
-  display: "swap",
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-// Nunito Sans — the site's primary face (body + display). Full weight range so
-// body copy, UI and headlines all draw from one family.
+// Nunito Sans is the brand face for everything. Loaded as a variable font with
+// the width and optical-size axes so headlines can be set wide and light.
 const nunitoSans = Nunito_Sans({
   variable: "--font-nunito-sans",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
+  axes: ["wdth", "opsz"],
   display: "swap",
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://glucosolutions.ca";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.glucosolutionsinc.com";
 
 const SITE_DESCRIPTION =
-  "See what your patients do between sessions. Sourced AI interpretation, a patient app, and outcomes reporting. Clinical software built for dietitians.";
+  "A needle-free band that shows how your glucose responds to meals, walks and sleep, so people with prediabetes can see what's working and reverse it sooner. Join the waitlist.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "GlucoSolutions: Clinical software for dietitians",
-    template: "%s · GlucoSolutions",
+    default: "GlucoSolutions: See how your body answers every meal",
+    template: "%s | GlucoSolutions",
   },
   description: SITE_DESCRIPTION,
   applicationName: "GlucoSolutions",
@@ -51,24 +33,21 @@ export const metadata: Metadata = {
   publisher: "GlucoSolutions",
   category: "Health Technology",
   keywords: [
-    "dietitian software",
-    "registered dietitian dashboard",
-    "dietitian software platform",
-    "between-session patient monitoring",
-    "glucose monitoring software",
-    "CGM dashboard for dietitians",
-    "clinical nutrition software",
-    "patient engagement app",
-    "outcomes reporting",
-    "prediabetes management",
+    "prediabetes",
+    "reverse prediabetes",
+    "non-invasive glucose monitor",
+    "needle-free glucose wearable",
+    "glucose response to food",
+    "post-meal glucose",
+    "blood sugar wearable",
+    "prediabetes Canada",
     "metabolic health",
-    "Redu app",
   ],
   openGraph: {
     type: "website",
     url: SITE_URL,
     siteName: "GlucoSolutions",
-    title: "Know what your patients do between sessions.",
+    title: "See how your body answers every meal.",
     description: SITE_DESCRIPTION,
     locale: "en_CA",
     images: [
@@ -76,13 +55,13 @@ export const metadata: Metadata = {
         url: "/api/og",
         width: 1200,
         height: 630,
-        alt: "GlucoSolutions: clinical software for dietitians.",
+        alt: "GlucoSolutions: a needle-free glucose band for people with prediabetes.",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "GlucoSolutions: Clinical software for dietitians",
+    title: "See how your body answers every meal.",
     description: SITE_DESCRIPTION,
     images: ["/api/og"],
   },
@@ -117,7 +96,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#F7F3EC",
+  themeColor: "#0f2b2e",
   width: "device-width",
   initialScale: 1,
 };
@@ -126,14 +105,9 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={`${newsreader.variable} ${geistMono.variable} ${nunitoSans.variable} h-full antialiased`}
-    >
-      <body className="flex min-h-full flex-col bg-page text-ink-700">
+    <html lang="en-CA" className={`${nunitoSans.variable} h-full`}>
+      <body className="flex min-h-full flex-col">
         <JsonLd nodes={[organization(), website()]} />
-        <SmoothScroll />
-        <ScrollProgress />
         {children}
         <Analytics />
         <SpeedInsights />
