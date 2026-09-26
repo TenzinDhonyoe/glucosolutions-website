@@ -9,9 +9,9 @@ Contact: tenzin@glucosolutions.ca
 
 ## Hero
 
-**See how your body answers every meal.**
+**See what moves your blood sugar.**
 
-A needle-free band for people with prediabetes. It follows your glucose through the skin and shows you which meals, walks and nights of sleep are moving you back toward normal.
+A needle-free band for people with prediabetes. It follows your glucose through the skin and shows you which meals, walks, nights of sleep and stressful days are moving you back toward normal.
 
 Call to action: Join the waitlist. We're inviting people in small groups, starting in Canada. iPhone first.
 
@@ -35,15 +35,15 @@ The same bowl of rice can send one person's glucose climbing and barely move ano
 
 ## How it works
 
-1. **Put it on.** A soft band that reads your wrist with near-infrared light. No needles, no patches, nothing to replace. Charge it about once a week.
-2. **Eat and move the way you normally do.** Snap a photo of your meals. The band follows your glucose in the background.
-3. **See what moved you, and what to try next.** After each meal the app shows whether you rose, held steady or settled, then gives one plain-English suggestion at a time: walk now, start with the vegetables, get to bed earlier.
+1. **Put it on.** A soft band that reads your wrist through the skin. No needles, no patches, nothing to replace. Charge it about once a week.
+2. **Live the way you normally do.** Eat, move, work, sleep. The band follows your glucose in the background.
+3. **See what moved you, and what to try next.** After a meal, a walk or a rough night the app shows whether you rose, held steady or settled, then gives one plain-English suggestion at a time: walk now, start with the vegetables, get to bed earlier.
 
 ---
 
 ## The band: light instead of needles
 
-- How it reads: near-infrared light at two wavelengths, through the skin of the wrist.
+- How it reads: through the skin of the wrist, with no needles.
 - What it shows: the direction of your glucose (rising, steady or settling), not an exact reading.
 - Accuracy so far: about 80% of trends classified correctly in benchtop testing.
 - Needles, patches, refills: none.
@@ -59,7 +59,7 @@ Compared with a CGM: a CGM reads exact numbers through a filament under the skin
 
 ### What does the band actually measure?
 
-The direction of your glucose: whether it's rising, holding steady or settling back down. It uses near-infrared light through the skin of your wrist. It doesn't give you an exact number in mmol/L or mg/dL the way a finger-prick meter or CGM does.
+The direction of your glucose: whether it's rising, holding steady or settling back down. It reads through the skin of your wrist. It doesn't give you an exact number in mmol/L or mg/dL the way a finger-prick meter or CGM does.
 
 ### How accurate is it?
 

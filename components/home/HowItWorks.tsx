@@ -1,63 +1,62 @@
-import Image from "next/image";
-import { ResponseCard } from "@/components/home/ResponseCard";
+import { Container, SectionHeader } from "@/components/ui";
+import { ParticleFigure } from "@/components/stage/ParticleFigure";
+
+// A soft pool of light behind each figure: no edges, no box.
+const FIGURE_LIGHT =
+  "radial-gradient(ellipse 62% 58% at 50% 52%, var(--stage-center) 0%, color-mix(in srgb, var(--stage-center) 60%, transparent) 52%, transparent 100%)";
 
 const STEPS = [
   {
-    title: "Put it on.",
-    body: "A soft band that reads your wrist with near-infrared light. No needles, no patches, nothing to replace. Charge it about once a week.",
+    shape: "band" as const,
+    title: "Wear the band",
+    body: "It reads your wrist through the skin. No needles, no patches, nothing to replace. Charge it about once a week.",
   },
   {
-    title: "Eat and move the way you normally do.",
-    body: "Snap a photo of your meals. The band follows your glucose in the background while you get on with your day.",
+    shape: "meal" as const,
+    title: "Live like you normally do",
+    body: "Eat, move, work, sleep. The band follows your glucose in the background while you get on with your day.",
   },
   {
-    title: "See what moved you, and what to try next.",
-    body: "After each meal the app shows whether you rose, held steady or settled, then gives you one plain-English suggestion at a time: walk now, start with the vegetables, get to bed earlier.",
+    shape: "trend" as const,
+    title: "See what moved you",
+    body: "After a meal, a walk or a rough night, see whether you rose, held steady or settled, with one plain-English suggestion for next time.",
   },
 ];
 
 export function HowItWorks() {
   return (
-    <section id="how" aria-labelledby="how-title" className="bg-paper py-24 md:py-36">
-      <div className="mx-auto max-w-page px-5 sm:px-8">
-        <div className="grid gap-14 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-5">
-            <div className="grain relative overflow-hidden rounded-[28px] lg:sticky lg:top-28">
-              <Image
-                src="/images/evening-walk.jpg"
-                alt="A man in his fifties on an evening walk down a tree-lined street, the band on his wrist."
-                width={1450}
-                height={1800}
-                sizes="(min-width: 1024px) 40vw, 100vw"
-                className="aspect-[4/5] h-auto w-full object-cover"
-              />
-            </div>
-          </div>
+    <section id="how" aria-labelledby="how-title" className="scroll-mt-24 bg-page py-24 md:py-32">
+      <Container>
+        <SectionHeader
+          id="how-title"
+          kicker="How it works"
+          title="It runs in the background of an ordinary day."
+          lede="Three steps, and the first two are things you already do."
+        />
 
-          <div className="lg:col-span-7 lg:pl-10">
-            <h2 id="how-title" className="display h-section">
-              It works in the background of an ordinary day.
-            </h2>
-
-            <ol className="mt-14 space-y-12">
-              {STEPS.map((s, i) => (
-                <li key={s.title} className="grid grid-cols-[3rem_1fr] gap-x-4 border-t border-line pt-8">
-                  <span className="tnum pt-0.5 text-[15px] font-semibold text-teal-deep">{i + 1}</span>
-                  <div>
-                    <h3 className="text-[1.375rem] font-semibold leading-snug tracking-[-0.01em]">{s.title}</h3>
-                    <p className="mt-3 max-w-[34rem] text-[17px] leading-relaxed text-ink-soft">{s.body}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-
-            <div className="mt-14 rounded-[28px] bg-pine p-4 sm:ml-16 sm:w-fit sm:p-5 xl:hidden">
-              <ResponseCard className="bg-transparent p-2 shadow-none ring-0 backdrop-blur-none" />
-            </div>
-            <p className="mt-3 text-[13px] text-ink-faint sm:ml-16 xl:hidden">What a meal looks like in the app. The band is in development.</p>
-          </div>
-        </div>
-      </div>
+        <ol className="mt-14 grid gap-x-8 gap-y-14 md:mt-20 md:grid-cols-3">
+          {STEPS.map((s, i) => (
+            <li key={s.title}>
+              <div className="relative aspect-[5/4]" style={{ background: FIGURE_LIGHT }}>
+                <ParticleFigure scene={s.shape} className="absolute inset-0" />
+              </div>
+              {/* The rule under each step fills in turn, so the three read as
+                  one sequence. */}
+              <div className="relative mt-6 pt-6">
+                <span aria-hidden className="absolute inset-x-0 top-0 h-px bg-line" />
+                <span
+                  aria-hidden
+                  className="step-rail absolute inset-x-0 top-0 h-px origin-left bg-ink-900"
+                  style={{ animationDelay: `${i * 3}s` }}
+                />
+                <p className="tnum text-[13px] font-medium text-ink-400">Step {i + 1}</p>
+                <h3 className="mt-2 text-[20px] font-semibold tracking-[-0.02em] text-ink-900">{s.title}</h3>
+                <p className="mt-2.5 max-w-[22rem] text-[15.5px] leading-relaxed text-ink-500">{s.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </Container>
     </section>
   );
 }

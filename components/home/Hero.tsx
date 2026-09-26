@@ -1,68 +1,154 @@
-import { getImageProps } from "next/image";
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { Container } from "@/components/ui";
+import { cn } from "@/lib/utils";
 import { WaitlistForm } from "@/components/WaitlistForm";
-import { ResponseCard } from "@/components/home/ResponseCard";
+import { HeroParticles, HERO_TIMELINE } from "@/components/home/HeroParticles";
+import { STAGE_BACKGROUND } from "@/components/stage/Stage";
 
-const ALT =
-  "Morning light across a kitchen table: a forearm wearing a slim black band rests beside a bowl of oatmeal and berries.";
+const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
+const smooth = ([a, b]: readonly [number, number], v: number) => {
+  const t = clamp01((v - a) / (b - a));
+  return t * t * (3 - 2 * t);
+};
 
+/**
+ * The hero is a scroll track with a pinned stage. The band comes apart into
+ * glucose molecules, it "locks on" to one and scans it, and the left column swaps the
+ * pitch for an explanation of what you're seeing. Timings come from
+ * HERO_TIMELINE so the copy and the canvas stay in step. Styles are written
+ * straight to the DOM on scroll so nothing re-renders.
+ */
 export function Hero() {
-  // Art direction: a wide frame with negative space on the left for desktop,
-  // a portrait frame with negative space on top for phones.
-  const common = { alt: ALT, sizes: "100vw" };
-  const {
-    props: { srcSet: wide },
-  } = getImageProps({ ...common, src: "/images/hero-breakfast.jpg", width: 2560, height: 1429 });
-  const {
-    props: { srcSet: tall, ...rest },
-  } = getImageProps({
-    ...common,
-    src: "/images/hero-breakfast-portrait.jpg",
-    width: 1450,
-    height: 1800,
-    loading: "eager",
-    fetchPriority: "high",
-  });
+  const trackRef = useRef<HTMLElement>(null);
+  const copyRef = useRef<HTMLDivElement>(null);
+  const captionRef = useRef<HTMLDivElement>(null);
+  const hintRef = useRef<HTMLDivElement>(null);
+  const scatterRef = useRef<HTMLDivElement>(null);
+  const [scattered, setScattered] = useState(false);
+
+  useEffect(() => {
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const el = trackRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const span = rect.height - window.innerHeight;
+      const p = span > 0 ? clamp01(-rect.top / span) : 0;
+
+      const out = smooth(HERO_TIMELINE.copyOut, p);
+      if (copyRef.current) {
+        copyRef.current.style.opacity = String(1 - out);
+        copyRef.current.style.transform = `translateY(${-out * 24}px)`;
+        copyRef.current.style.visibility = out > 0.98 ? "hidden" : "visible";
+      }
+      const idle = 1 - smooth([0, 0.05], p);
+      if (hintRef.current) hintRef.current.style.opacity = String(idle);
+      if (scatterRef.current) {
+        scatterRef.current.style.opacity = String(idle);
+        scatterRef.current.style.visibility = idle < 0.02 ? "hidden" : "visible";
+      }
+      const cap = smooth(HERO_TIMELINE.captionIn, p);
+      if (captionRef.current) {
+        captionRef.current.style.opacity = String(cap);
+        captionRef.current.style.transform = `translateY(${(1 - cap) * 20}px)`;
+      }
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
+  // Phones: the words sit under the band. Desktop: vertically centred on the
+  // band, in the left column.
+  const slot =
+    "pointer-events-none absolute inset-x-0 bottom-0 lg:bottom-auto lg:top-1/2 lg:-translate-y-[42%]";
 
   return (
-    <section
-      id="top"
-      aria-labelledby="hero-title"
-      className="grain relative isolate flex min-h-[max(100svh,640px)] overflow-hidden bg-pine text-white"
-    >
-      <picture className="absolute inset-x-0 bottom-0 top-[26%] -z-20 md:inset-0">
-        <source media="(min-width: 768px)" srcSet={wide} />
-        <source srcSet={tall} />
-        <img
-          {...rest}
-          alt={ALT}
-          className="h-full w-full object-cover object-[50%_30%] md:object-[62%_50%]"
-        />
-      </picture>
-      {/* Legibility wash. Phones: solid pine up top, fading into the photo's dark
-          upper half. Desktop: from the left, where the photo leaves room. */}
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(15_43_46)_0%,rgb(15_43_46)_26%,rgb(15_43_46/0.55)_42%,rgb(15_43_46/0.12)_72%,rgb(15_43_46/0.3)_100%)] md:bg-[linear-gradient(180deg,rgb(15_43_46/0.55)_0%,rgb(15_43_46/0)_16%),linear-gradient(90deg,rgb(15_43_46/0.82)_0%,rgb(15_43_46/0.5)_34%,rgb(15_43_46/0)_60%),linear-gradient(0deg,rgb(15_43_46/0.55)_0%,rgb(15_43_46/0)_40%)]"
-      />
+    <section ref={trackRef} id="top" aria-labelledby="hero-title" className="relative h-[190vh]">
+      <div className="sticky top-0 h-[100svh] overflow-hidden" style={{ background: STAGE_BACKGROUND }}>
+        <HeroParticles trackRef={trackRef} scattered={scattered} className="absolute inset-0" />
 
-      <div className="relative mx-auto flex w-full max-w-page flex-col justify-start px-5 pb-12 pt-28 sm:px-8 md:justify-end md:pb-16">
-        <div className="max-w-[44rem]">
-          <h1 id="hero-title" className="display text-[clamp(2.6rem,1.2rem+4.4vw,5.1rem)]">
-            See how your body answers every meal.
-          </h1>
-          <p className="lede mt-5 max-w-[33rem] text-white/85">
-            A needle-free band for people with prediabetes. It follows your glucose
-            through the skin and shows you which meals, walks and nights of sleep are
-            moving you back toward normal.
-          </p>
-          <WaitlistForm source="hero" className="mt-8" />
-          <p className="mt-4 pl-1 text-[14.5px] text-white/65">
-            We&rsquo;re inviting people in small groups, starting in Canada. iPhone first.
-          </p>
+        {/* Copy ignores the pointer so hovering anywhere stirs the particles;
+            only the form takes input. */}
+        <div className={slot}>
+          <div ref={copyRef} className="will-change-transform">
+            <Container className="pb-10 lg:pb-0">
+              <div className="max-w-[26rem]">
+                <h1
+                  id="hero-title"
+                  className="text-[clamp(2rem,1.3rem+2.2vw,3.25rem)] font-semibold leading-[1.05] tracking-[-0.038em] text-ink-900 text-balance"
+                >
+                  See what moves your blood sugar.
+                </h1>
+                <p className="mt-4 text-[16px] leading-relaxed text-ink-500">
+                  A needle-free wristband for people with prediabetes that shows how meals,
+                  movement, sleep and stress affect your glucose.
+                </p>
+                <div className="pointer-events-auto mt-7">
+                  <WaitlistForm source="hero" />
+                </div>
+              </div>
+            </Container>
+          </div>
         </div>
 
-        <div className="absolute left-[54%] top-[18%] hidden w-[19.5rem] xl:block">
-          <ResponseCard animate note="App preview. The band is in development." />
+        <div className={slot}>
+          <div ref={captionRef} className="opacity-0">
+            <Container className="pb-10 lg:pb-0">
+              <div className="max-w-[26rem]">
+                <p className="text-[13px] font-medium text-ink-400">What the band reads</p>
+                <p className="mt-3 text-[clamp(1.75rem,1.2rem+1.8vw,2.6rem)] font-semibold leading-[1.05] tracking-[-0.035em] text-ink-900">
+                  Glucose, C<sub className="text-[0.55em]">6</sub>H<sub className="text-[0.55em]">12</sub>O
+                  <sub className="text-[0.55em]">6</sub>
+                </p>
+                <p className="mt-4 text-[16px] leading-relaxed text-ink-500">
+                  Everything in your day, from meals and walks to sleep and stress, shows
+                  up in the glucose in your blood. The band reads it through your skin and
+                  tells you whether it&rsquo;s rising, steady or settling.
+                </p>
+              </div>
+            </Container>
+          </div>
+        </div>
+
+        <div
+          ref={hintRef}
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-10 hidden lg:block"
+        >
+          <Container className="text-[12px] text-ink-400">Scroll to see how it works</Container>
+        </div>
+
+        {/* A small toy: scatter the dots into a spectroscope (a beam of light
+            split by a prism into a spectrum), then gather them back into the
+            hand. Top right on phones (the copy owns the bottom), bottom right
+            on desktop. */}
+        <div
+          ref={scatterRef}
+          className="pointer-events-none absolute inset-x-0 top-[4.75rem] lg:bottom-9 lg:top-auto"
+        >
+          <Container className="flex justify-end">
+            <button
+              type="button"
+              aria-pressed={scattered}
+              onClick={() => setScattered((v) => !v)}
+              className="pointer-events-auto inline-flex items-center gap-2 rounded-full border border-line bg-card/80 px-3.5 py-1.5 text-[13px] font-medium text-ink-700 backdrop-blur transition-colors duration-300 hover:border-line-2 hover:text-ink-900"
+            >
+              <span aria-hidden className={cn("size-1.5 rounded-full bg-signal", scattered && "animate-pulse")} />
+              {scattered ? "Gather" : "Scatter"}
+            </button>
+          </Container>
         </div>
       </div>
     </section>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
+import { Container } from "@/components/ui";
 import { cn } from "@/lib/utils";
 
 const PAGES = [
@@ -31,12 +32,12 @@ export function LegalPage({
   return (
     <>
       <Nav />
-      <main className="flex-1 bg-paper">
-        <div className="mx-auto grid max-w-page gap-12 px-5 pb-24 pt-32 sm:px-8 md:pb-32 md:pt-40 lg:grid-cols-12 lg:gap-10">
+      <main className="flex-1 bg-page">
+        <Container className="grid gap-12 pb-24 pt-36 md:pb-32 md:pt-44 lg:grid-cols-12 lg:gap-10">
           <aside className="lg:col-span-4">
             <div className="lg:sticky lg:top-32">
-              <h1 className="display text-[clamp(2.4rem,1.6rem+2.6vw,3.6rem)]">{title}</h1>
-              <p className="mt-4 text-[15px] text-ink-faint">
+              <h1 className="display-serif text-[clamp(2.2rem,1.6rem+2.2vw,3.25rem)]">{title}</h1>
+              <p className="mt-4 text-[15px] text-ink-400">
                 Last updated <time dateTime={updated}>{updatedLabel}</time>
               </p>
               <nav aria-label="Legal pages" className="mt-10 hidden border-t border-line pt-6 lg:block">
@@ -47,8 +48,8 @@ export function LegalPage({
                         href={p.href}
                         aria-current={p.href === path ? "page" : undefined}
                         className={cn(
-                          "transition-colors hover:text-ink",
-                          p.href === path ? "font-semibold text-ink" : "text-ink-soft"
+                          "transition-colors hover:text-ink-900",
+                          p.href === path ? "font-medium text-ink-900" : "text-ink-500"
                         )}
                       >
                         {p.label}
@@ -63,7 +64,7 @@ export function LegalPage({
           <article className="legal max-w-prose lg:col-span-8 lg:pl-6 [&>section:first-child>h2]:mt-0">
             {children}
           </article>
-        </div>
+        </Container>
       </main>
       <Footer />
     </>

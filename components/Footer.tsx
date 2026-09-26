@@ -1,84 +1,90 @@
 import Link from "next/link";
-import { Logo } from "@/components/brand/Logo";
+import { Wordmark } from "@/components/brand/Wordmark";
+import { Container } from "@/components/ui";
 
-const COLUMNS = [
+const COLUMNS: { heading: string; links: { label: string; href: string }[] }[] = [
   {
     heading: "Product",
     links: [
       { label: "How it works", href: "/#how" },
-      { label: "The band", href: "/#band" },
-      { label: "Questions", href: "/#faq" },
-      { label: "Join the waitlist", href: "/#join" },
+      { label: "FAQ", href: "/#faq" },
+      { label: "Join the waitlist", href: "/#waitlist" },
     ],
   },
   {
     heading: "Company",
     links: [
-      { label: "tenzin@glucosolutions.ca", href: "mailto:tenzin@glucosolutions.ca" },
+      { label: "Contact", href: "mailto:tenzin@glucosolutions.ca" },
       { label: "X", href: "https://x.com/gluco_solutions" },
     ],
   },
   {
     heading: "Legal",
     links: [
-      { label: "Privacy", href: "/privacy" },
+      { label: "Privacy Policy", href: "/privacy" },
       { label: "Terms", href: "/terms" },
-      { label: "SMS program", href: "/sms" },
+      { label: "SMS Program", href: "/sms" },
     ],
   },
 ];
 
 export function Footer() {
   return (
-    <footer className="bg-pine text-white/70">
-      <div className="mx-auto max-w-page px-5 pb-10 pt-16 sm:px-8 md:pt-20">
-        <div className="grid gap-12 md:grid-cols-12">
-          <div className="md:col-span-5">
-            <Logo tone="light" />
-            <p className="mt-5 max-w-[22rem] text-[15.5px] leading-relaxed">
-              A needle-free glucose band for people with prediabetes. Made in Toronto.
+    <footer className="border-t border-line bg-page">
+      <Container className="pb-10 pt-16 md:pt-20">
+        <div className="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
+          <div className="max-w-xs">
+            <Wordmark href="/" size={24} />
+            <p className="mt-4 text-[14px] leading-relaxed text-ink-500">
+              A needle-free glucose band for people with prediabetes.
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 md:col-span-7">
-            {COLUMNS.map((c) => (
-              <div key={c.heading}>
-                <h2 className="text-[14px] font-semibold text-white">{c.heading}</h2>
-                <ul className="mt-4 space-y-2.5 text-[15px]">
-                  {c.links.map((l) => {
-                    const external = l.href.startsWith("http");
+
+          {COLUMNS.map((col) => (
+            <nav key={col.heading} aria-label={col.heading}>
+              <h3 className="mb-4 text-[13px] font-medium text-ink-400">{col.heading}</h3>
+              <ul className="space-y-2.5">
+                {col.links.map((l) => {
+                  const cls = "text-[14px] text-ink-700 transition-colors hover:text-ink-900";
+                  if (l.href.startsWith("/")) {
                     return (
                       <li key={l.href}>
-                        {l.href.startsWith("/") ? (
-                          <Link href={l.href} className="transition-colors hover:text-white">
-                            {l.label}
-                          </Link>
-                        ) : (
-                          <a
-                            href={l.href}
-                            className="break-all transition-colors hover:text-white sm:break-normal"
-                            {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                          >
-                            {l.label}
-                          </a>
-                        )}
+                        <Link href={l.href} className={cls}>
+                          {l.label}
+                        </Link>
                       </li>
                     );
-                  })}
-                </ul>
-              </div>
-            ))}
-          </div>
+                  }
+                  const external = l.href.startsWith("http");
+                  return (
+                    <li key={l.href}>
+                      <a
+                        href={l.href}
+                        className={cls}
+                        {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                      >
+                        {l.label}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+          ))}
         </div>
 
-        <div className="mt-16 border-t border-white/12 pt-8 text-[13px] leading-relaxed text-white/50">
-          <p className="max-w-[52rem]">
-            GlucoSolutions is a wellness product. It is not a medical device, is not
-            intended to diagnose, treat, cure, or prevent any disease, and is not a
-            substitute for medical-grade glucose monitoring or professional medical advice.
+        <div className="mt-14 border-t border-line pt-6 text-[13px] text-ink-400">
+          <p className="max-w-3xl leading-relaxed">
+            GlucoSolutions is a wellness product. It is not a medical device, is not intended
+            to diagnose, treat, cure, or prevent any disease, and is not a substitute for
+            medical-grade glucose monitoring or professional medical advice.
           </p>
-          <p className="mt-4">&copy; 2026 GlucoSolutions Inc.</p>
+          <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:justify-between">
+            <span>&copy; 2026 GlucoSolutions Inc.</span>
+            <span>Toronto, Canada</span>
+          </div>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 }

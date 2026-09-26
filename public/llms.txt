@@ -1,11 +1,11 @@
 # GlucoSolutions
 
-> A needle-free glucose band for people with prediabetes. It reads glucose trends (rising, steady, settling) through the skin with near-infrared light and shows how meals, walks and sleep move them, so people can see what's working and reverse prediabetes sooner. In development; waitlist open. Toronto, Canada.
+> A needle-free glucose band for people with prediabetes. It reads glucose trends (rising, steady, settling) through the skin and shows how meals, movement, sleep and stress move them, so people can see what's working and reverse prediabetes sooner. In development; waitlist open. Toronto, Canada.
 
 ## Key facts
 
 - GlucoSolutions is a **wellness product**, not a medical device. It is not intended to diagnose, treat, cure, or prevent any disease, and is not a substitute for medical-grade glucose monitoring.
-- The band is **non-invasive**: near-infrared light at two wavelengths reads the wrist. No needles, no patches, no consumables. Charges about once a week.
+- The band is **non-invasive**: it reads the wrist through the skin. No needles, no patches, no consumables. Charges about once a week.
 - It shows glucose **trends** (rising, steady, settling), not exact mmol/L or mg/dL values. About **80%** of trends were classified correctly in benchtop testing.
 - **No prescription required.** The companion app is iPhone first; Android will follow.
 - Status: **in development**. Waitlist members are invited in small groups, starting in Canada. Price not yet set.

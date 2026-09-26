@@ -3,7 +3,7 @@ export type Faq = { q: string; a: string };
 export const FAQS: readonly Faq[] = [
   {
     q: "What does the band actually measure?",
-    a: "The direction of your glucose: whether it's rising, holding steady or settling back down. It uses near-infrared light through the skin of your wrist. It doesn't give you an exact number in mmol/L or mg/dL the way a finger-prick meter or CGM does.",
+    a: "The direction of your glucose: whether it's rising, holding steady or settling back down. It reads through the skin of your wrist. It doesn't give you an exact number in mmol/L or mg/dL the way a finger-prick meter or CGM does.",
   },
   {
     q: "How accurate is it?",
