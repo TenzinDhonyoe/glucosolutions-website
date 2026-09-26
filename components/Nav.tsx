@@ -7,11 +7,11 @@ import { cn } from "@/lib/utils";
 import { track } from "@/lib/analytics";
 import { Wordmark } from "@/components/brand/Wordmark";
 import { Button } from "@/components/ui";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const LINKS = [
-  { href: "/product", label: "For Clinicians" },
-  { href: "/security", label: "Security" },
-  { href: "/redu", label: "Redu" },
+  { href: "/#how", label: "How it works" },
+  { href: "/#faq", label: "FAQ" },
   { href: "/team", label: "Team" },
 ];
 
@@ -19,7 +19,7 @@ export function Nav({
   transparentOverHero = false,
   revealUntilSelector,
 }: {
-  /** Homepage only: light text while the bar floats over the dark hero image. */
+  /** Homepage only: light text while the bar sits over the dark hero. */
   transparentOverHero?: boolean;
   /**
    * CSS selector for an element that must be fully read before the bar starts
@@ -81,7 +81,7 @@ export function Nav({
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 px-4 pt-6 will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+        "fixed inset-x-0 top-0 z-50 pt-5 will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
         hidden && !open ? "-translate-y-[150%]" : "translate-y-0",
       )}
     >
@@ -90,13 +90,20 @@ export function Nav({
         className={cn(
           // Only ONE layout property animates — max-width — so the side-shrink
           // stays smooth. Everything else is paint (surface) or constant.
-          "mx-auto flex h-16 w-full items-center justify-between rounded-full border px-6 transition-[max-width,background-color,border-color,box-shadow,backdrop-filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:px-8",
+          // At rest the bar uses the same measure and gutters as <Container>
+          // (1320px, px-6 / md:px-10), so the wordmark lines up with the page
+          // content. Floating, it narrows into a pill with a 16px inset.
+          "mx-auto flex h-16 w-full items-center justify-between rounded-full border px-6 transition-[max-width,background-color,border-color,box-shadow,backdrop-filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:px-10",
           floating
-            ? "max-w-[1080px] border-line bg-card/75 shadow-lg backdrop-blur-md"
-            : "max-w-[1392px] border-transparent bg-transparent shadow-none backdrop-blur-0",
+            ? "max-w-[min(1080px,calc(100%-2rem))] border-line bg-card/80 shadow-lg backdrop-blur-md"
+            : "max-w-measure border-transparent bg-transparent shadow-none backdrop-blur-0",
         )}
       >
-        <Wordmark href="/" size={22} />
+        <Wordmark
+          href="/"
+          size={22}
+          className={cn("transition-[filter] duration-300", light && "brightness-0 invert")}
+        />
 
         <ul className="hidden items-center gap-8 md:flex">
           {LINKS.map((l) => (
@@ -106,7 +113,7 @@ export function Nav({
                 className={cn(
                   "text-[14px] font-medium transition-colors duration-300",
                   light
-                    ? "text-page/85 hover:text-page"
+                    ? "text-white/75 hover:text-white"
                     : "text-ink-700 hover:text-ink-900",
                 )}
               >
@@ -117,15 +124,19 @@ export function Nav({
         </ul>
 
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           <Button
-            href="/contact"
+            href="/#waitlist"
             size="sm"
             pill
             iconRight={ArrowRight}
-            className="hidden sm:inline-flex"
+            className={cn(
+              "hidden sm:inline-flex",
+              light && "bg-white text-ink-900 hover:bg-white/85",
+            )}
             onClick={() => track("cta_click", { location: "nav" })}
           >
-            Book a demo
+            Join the waitlist
           </Button>
           <button
             type="button"
@@ -134,7 +145,7 @@ export function Nav({
             onClick={() => setOpen((v) => !v)}
             className={cn(
               "inline-flex items-center justify-center rounded-md p-2 md:hidden",
-              light ? "text-page" : "text-ink-700",
+              light ? "text-white" : "text-ink-700",
             )}
           >
             {open ? <X size={22} /> : <Menu size={22} />}
@@ -143,7 +154,7 @@ export function Nav({
       </nav>
 
       {open ? (
-        <div className="mx-auto mt-2 max-w-[1280px] overflow-hidden rounded-2xl border border-line bg-page/97 backdrop-blur-md md:hidden">
+        <div className="mx-4 mt-2 overflow-hidden rounded-2xl border border-line bg-page/97 backdrop-blur-md md:hidden">
           <ul className="flex flex-col px-5 py-4">
             {LINKS.map((l) => (
               <li key={l.href}>
@@ -158,7 +169,7 @@ export function Nav({
             ))}
             <li className="pt-3">
               <Button
-                href="/contact"
+                href="/#waitlist"
                 pill
                 fullWidth
                 iconRight={ArrowRight}
@@ -167,7 +178,7 @@ export function Nav({
                   setOpen(false);
                 }}
               >
-                Book a demo
+                Join the waitlist
               </Button>
             </li>
           </ul>

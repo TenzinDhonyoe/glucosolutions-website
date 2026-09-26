@@ -1,39 +1,29 @@
-# Gluco Solutions
+# GlucoSolutions
 
-> Helps adults reverse prediabetes before it becomes type 2 diabetes. Non-invasive wearable + AI coach + registered dietitian. Pre-launch beta, iOS first, Canada-based.
-
-Tagline: Reverse prediabetes before it becomes type 2.
+> A needle-free glucose band for people with prediabetes. It reads glucose trends (rising, steady, settling) through the skin and shows how meals, movement, sleep and stress move them, so people can see what's working and reverse prediabetes sooner. In development; waitlist open. Toronto, Canada.
 
 ## Key facts
 
-- Gluco Solutions is a **wellness product**, not a medical device. It is not intended to diagnose, treat, cure, or prevent any disease, and is not a substitute for medical-grade glucose monitoring.
-- The wearable is **non-invasive**: a safe, low-power optical sensor reads glycemic trends through the skin. No needles, no patches, no consumables.
-- It classifies glycemic **trends** — rising, stable, falling — at roughly **80% accuracy** in benchtop testing. It does not report absolute mg/dL values.
-- **No prescription required.**
-- Hardware charges weekly and is worn daily. The companion app is iOS-first; Android is on the roadmap.
-- Coaching combines AI nudges (in plain English) with guidance from a registered dietitian.
-- Currently in **pre-launch**. Early access is rolling to a limited beta cohort. Join the waitlist at https://glucosolutions.ca for invites.
-- Data is encrypted in transit and at rest, owned by the user, and is never sold.
+- GlucoSolutions is a **wellness product**, not a medical device. It is not intended to diagnose, treat, cure, or prevent any disease, and is not a substitute for medical-grade glucose monitoring.
+- The band is **non-invasive**: it reads the wrist through the skin. No needles, no patches, no consumables. Charges about once a week.
+- It shows glucose **trends** (rising, steady, settling), not exact mmol/L or mg/dL values. About **80%** of trends were classified correctly in benchtop testing.
+- **No prescription required.** The companion app is iPhone first; Android will follow.
+- Status: **in development**. Waitlist members are invited in small groups, starting in Canada. Price not yet set.
+- Data is encrypted in transit and at rest, owned by the user, and never sold.
 
 ## Audience
 
-Adults (18+) with prediabetes who want to reverse it before it progresses to type 2 — newly diagnosed or at-risk. Without intervention, ~70% of people with prediabetes progress to type 2 within a decade. The window to reverse it is now.
+Adults with prediabetes who want to reverse it before it becomes type 2. Diabetes Canada estimated 6.4 million Canadians had prediabetes in 2025, and more than half develop type 2 within 8 to 10 years without changes. In the Diabetes Prevention Program (NEJM, 2002), lifestyle change lowered the risk of type 2 by 58%.
 
-## Differentiators
+## How it compares with a CGM
 
-- **vs. CGM (Dexcom, Libre):** No needles, no prescription, no throwaway sensors, AI coach included.
-- **vs. Smartwatches:** Actually tracks glucose trends; AI coach included.
+A CGM reads exact glucose numbers through a filament under the skin, with a new sensor every 10 to 15 days. The GlucoSolutions band reads direction from outside the skin with nothing to replace. For treatment decisions that need exact numbers, a CGM is the right tool; for learning which habits help, direction is what people act on.
 
-## Sections
+## Pages
 
-- [Full marketing overview](https://glucosolutions.ca/llms-full.txt): everything the site says, in clean Markdown.
-- [Homepage](https://glucosolutions.ca): hero, science, comparison, FAQ, waitlist.
-- [FAQ](https://glucosolutions.ca/#faq): six common questions.
-- [Privacy policy](https://glucosolutions.ca/privacy)
-- [Terms of use](https://glucosolutions.ca/terms)
+- [Home](https://www.glucosolutionsinc.com): the band, how it works, FAQ, waitlist.
+- [Full overview](https://www.glucosolutionsinc.com/llms-full.txt)
+- [Privacy policy](https://www.glucosolutionsinc.com/privacy)
+- [Terms of use](https://www.glucosolutionsinc.com/terms)
 
-## Optional
-
-- [Comparison vs CGMs and smartwatches](https://glucosolutions.ca/#compare)
-- [Waitlist signup](https://glucosolutions.ca/#waitlist)
-- Contact: tenzin@glucosolutions.ca
+Contact: tenzin@glucosolutions.ca

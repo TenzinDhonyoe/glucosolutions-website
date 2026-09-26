@@ -14,7 +14,7 @@ import { Container, Button } from "@/components/ui";
 // A short mission statement in the Gluco voice. Split on spaces and revealed
 // word by word as the line scrolls toward the centre of the viewport.
 const STATEMENT =
-  "Care happens in the session. Outcomes happen in the weeks between. We make those weeks visible, sourced, and yours to act on.";
+  "Prediabetes can be reversed. The hard part is knowing what's working. We show you how your body responds to your day, so you know exactly what to change.";
 
 function Word({
   children,
@@ -28,10 +28,9 @@ function Word({
   // Each word fades up from a muted warm grey to full ink across its own slice
   // of the scroll. Adjacent slices overlap slightly, so the reveal reads as one
   // travelling wave rather than a row of switches.
-  const opacity = useTransform(progress, range, [0.18, 1]);
-  const color = useTransform(progress, range, ["#a79e90", "#2b2620"]);
+  const opacity = useTransform(progress, range, [0.3, 1]);
   return (
-    <motion.span style={{ opacity, color }}>
+    <motion.span style={{ opacity }} className="text-ink-900">
       {children}{" "}
     </motion.span>
   );
@@ -50,27 +49,23 @@ export function Mission() {
     offset: ["start start", "end end"],
   });
 
-  // The next section (HowItWorks) rises over this panel via -mt-[100vh] + z-10,
-  // and starts entering the viewport at ~0.44 of this track's progress. So the
-  // whole sentence must finish revealing *before* then. Run the reveal across
-  // the front of the pin, complete it by ~0.36, and hold the finished sentence
-  // legible for a beat before the cover begins. The page stays put the entire
-  // time the reader scrubs through the words.
-  const reveal = useTransform(scrollYProgress, [0.04, 0.36], [0, 1]);
+  // Reveal across most of the pin, then hold the finished sentence for a beat
+  // before the panel releases.
+  const reveal = useTransform(scrollYProgress, [0.05, 0.7], [0, 1]);
 
   const words = STATEMENT.split(" ");
 
   // The statement pins inside a tall track. The generous height is the "dwell"
   // the reader scrubs the reveal across before the panel releases.
   return (
-    <section className="relative bg-[#f6f6f4]">
-      <div ref={ref} className="h-[280vh]">
+    <section className="relative bg-page">
+      <div ref={ref} className="h-[220vh]">
         <div className="sticky top-0 z-0 flex h-screen items-center">
           <Container>
             <div className="mx-auto max-w-4xl text-center">
               <p
                 id="mission-statement"
-                className="display-serif text-[clamp(1.8rem,4vw,3rem)] leading-[1.18] text-balance"
+                className="display-serif text-[clamp(1.6rem,1.15rem+1.7vw,2.5rem)] leading-[1.2]"
               >
                 {reduce ? (
                   <span className="text-ink-900">{STATEMENT}</span>
@@ -92,18 +87,9 @@ export function Mission() {
               </p>
 
               <div className="mt-14 flex flex-col items-center gap-5">
-                <Button
-                  href="/contact"
-                  size="lg"
-                  pill
-                  iconRight={ArrowRight}
-                  className="bg-ink-900 px-7 py-3.5 text-[15px] text-white shadow-md hover:bg-ink-700"
-                >
-                  Book a demo
+                <Button href="/#waitlist" size="lg" pill variant="primary" iconRight={ArrowRight}>
+                  Join the waitlist
                 </Button>
-                <p className="max-w-md text-[14px] text-ink-500">
-                  A 20-minute walkthrough on a real, de-identified case.
-                </p>
               </div>
             </div>
           </Container>

@@ -7,10 +7,10 @@ type Size = "sm" | "md" | "lg";
 
 const VARIANTS: Record<Variant, string> = {
   primary:
-    "bg-sky-700 text-white shadow-sm hover:bg-sky-800 active:bg-sky-800",
+    "bg-ink-900 text-on-ink shadow-sm hover:bg-ink-700 active:bg-ink-700",
   secondary:
     "bg-card text-ink-900 border border-line-2 hover:bg-sunken active:bg-sunken",
-  ghost: "bg-transparent text-sky-700 hover:bg-sky-50 active:bg-sky-100",
+  ghost: "bg-transparent text-ink-900 hover:bg-sunken active:bg-sunken",
 };
 
 const SIZES: Record<Size, string> = {
@@ -48,7 +48,7 @@ function classes({
   className,
 }: Pick<CommonProps, "variant" | "size" | "pill" | "fullWidth" | "className">) {
   return cn(
-    "inline-flex items-center justify-center font-semibold font-sans transition-colors duration-150 outline-none disabled:cursor-not-allowed disabled:bg-sunken disabled:text-ink-400 disabled:border-transparent disabled:shadow-none",
+    "inline-flex items-center justify-center font-semibold font-sans transition-colors duration-150 outline-none disabled:cursor-not-allowed disabled:opacity-60 disabled:border-transparent disabled:shadow-none",
     VARIANTS[variant],
     SIZES[size],
     pill ? "rounded-full" : "rounded-md",

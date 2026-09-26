@@ -1,338 +1,233 @@
 @import "tailwindcss";
 
 /* =========================================================================
-   GlucoSolutions Design System — v1.0  ·  "warm clinical / digital health"
-   Source of truth: GlucoSolutions Design System.dc.html (Claude Design).
-   Fonts: Hanken Grotesk (sans / UI), Newsreader (serif / display),
-          Geist Mono (data, units, labels).
-   Principles: human first · clinically credible · calm clarity.
+   GlucoSolutions design system.
+   Token names follow the main-branch system so the shared primitives
+   (Button, Container, Section, Accordion, Nav) work unchanged. The palette is
+   neutral and minimal; the only strong color on the page is the red particle
+   field in the hero. Type is Geist throughout.
    ========================================================================= */
 
 @theme {
-  /* ---- Surfaces & lines ---- */
-  --color-page: #f7f3ec;        /* warm cream page canvas */
+  /* Surfaces & lines */
+  --color-page: #f6f6f4;
   --color-card: #ffffff;
-  --color-card-2: #fcfaf5;      /* warm card */
-  --color-sunken: #efeae0;
-  --color-line: #e5dfd3;
-  --color-line-2: #d8d1c2;      /* stronger hairline */
+  --color-sunken: #ececea;
+  --color-line: #e3e3df;
+  --color-line-2: #d4d4cf;
 
-  /* ---- Ink (brown-toned) ---- */
-  --color-ink-900: #2b2620;
-  --color-ink-700: #4c453c;
-  --color-ink-500: #6e665a;     /* secondary type — darkened from #847B6F to clear WCAG AA on cream/white/sunken */
-  --color-ink-400: #897f70;     /* muted labels — darkened from #A79E90 for legibility */
+  /* Ink */
+  --color-ink-900: #161616;
+  --color-ink-700: #3d3d3b;
+  --color-ink-500: #676764;
+  --color-ink-400: #8b8b87;
 
-  /* ---- Brand — sky & green ---- */
+  /* Brand */
   --color-sky-800: #0e5c7a;
-  --color-sky-700: #127399;     /* primary */
-  --color-sky-600: #1690c2;
-  --color-sky-500: #2bb0dc;
-  --color-sky-100: #dcf0f8;
+  --color-sky-700: #127399;
   --color-sky-50: #eff8fb;
-  --color-green-600: #4e9a6b;
-  --color-green-100: #e3f1e8;
+  --color-teal: #1aabb3;
+  --color-signal: #e5332a; /* the hero particle red, reused sparingly */
+  /* Text on an ink-900 surface (primary buttons). */
+  --color-on-ink: #ffffff;
 
-  /* ---- Glucose data semantics (meaning, never decoration) ---- */
-  --color-good: #3f9a63;        /* in range */
-  --color-good-bg: #e2f0e7;
-  --color-warn: #c98a2e;        /* elevated */
-  --color-warn-bg: #f7ecd6;
-  --color-high: #c2402b;        /* high */
-  --color-high-bg: #f7e2dd;
-  --color-low: #4e72a8;         /* low */
-  --color-low-bg: #e1e9f3;
-  --color-info: #5e6b7a;
-
-  /* ---- Type families (wired to next/font in layout.tsx) ----
-     Nunito Sans is the primary face site-wide so every section matches the
-     hero. The display token resolves to it too, keeping headlines in-family. */
-  --font-sans: var(--font-nunito-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-serif: var(--font-nunito-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  /* Type */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
 
-  /* ---- Radii ---- */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
+  /* Layout: one content measure site-wide, paired with px-6 / md:px-10
+     gutters inside <Container>. */
+  --container-measure: 1320px;
+  --container-narrow: 1120px;
+
   --radius-xl: 24px;
 
-  /* ---- Layout — content measure (the site-wide side-margin standard) ----
-     One container width for the whole site so every page — home and subpages
-     alike — lines up on the same side margins. Applied through the <Container>
-     primitive, which always pairs the measure with the standard side gutters
-     (px-6 · md:px-10). `measure` is the default for every page; `narrow` is an
-     opt-in tighter column for reading-heavy sections. Long-form legal pages
-     keep their own centered max-w-3xl reading column. The --container-* names
-     emit Tailwind v4 utilities: max-w-measure / max-w-narrow. */
-  --container-measure: 1320px;  /* default page width → max-w-measure */
-  --container-narrow: 1120px;   /* tighter editorial  → max-w-narrow  */
-
-  /* ---- Depth (warm-tinted shadows) ---- */
-  --shadow-sm: 0 1px 2px rgba(60, 50, 40, 0.06);
-  --shadow-md: 0 6px 20px -6px rgba(60, 50, 40, 0.12);
-  --shadow-lg: 0 18px 48px -12px rgba(60, 50, 40, 0.16);
-
-  /* ---- Brand gradient + display tracking (emitted as CSS vars) ---- */
-  --brand-gradient: linear-gradient(100deg, #2bb0dc 0%, #34a89a 50%, #4e9a6b 100%);
-  --tracking-display: -0.015em;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 6px 20px -8px rgba(0, 0, 0, 0.14);
+  --shadow-lg: 0 18px 48px -16px rgba(0, 0, 0, 0.18);
 }
 
-/* =========================================================================
-   2026 hero direction — teal/gold brand tokens
-   Scoped brand palette for the redesigned hero. Kept as plain custom
-   properties (referenced via var() in the Hero) so they sit alongside the
-   v1.0 sky/green system without colliding with its --color-* utilities.
-   ========================================================================= */
-
+/* The white studio stage behind hero-scale moments. */
 :root {
-  --gluco-teal: #1aabb3;       /* primary — emphasis text, accents */
-  --gluco-gold: #f5a623;       /* primary accent — CTA, callouts */
-  --gluco-black: #0a0a0a;      /* body text on light background */
-  --gluco-white: #ffffff;
-  --gluco-teal-light: #a8d8da; /* secondary — subtle tints */
-  --gluco-yellow: #ffcf40;     /* secondary accent */
-  --gluco-offwhite: #f5f5f0;   /* light section background, if needed */
-  --gluco-muted: #6b7280;      /* de-emphasized text — muted H1 half + eyebrow icon */
+  --stage-center: #ffffff;
+  --stage-mid: #fafaf9;
+  color-scheme: light;
 }
 
-/* =========================================================================
-   Base
-   ========================================================================= */
+/* Dark mode: the same system at night. Surfaces go charcoal, ink goes to a
+   warm off-white, the red stays the red. Set by the toggle in the nav
+   (data-theme on <html>, remembered in localStorage). */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-page: #0f0f10;
+  --color-card: #19191b;
+  --color-sunken: #1f1f22;
+  --color-line: #2a2a2d;
+  --color-line-2: #3b3b3f;
+  --color-ink-900: #f1f0ec;
+  --color-ink-700: #d0cfca;
+  --color-ink-500: #a09f9a;
+  --color-ink-400: #797874;
+  --color-sky-50: #10222a;
+  --color-on-ink: #111112;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 6px 20px -8px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 18px 48px -16px rgba(0, 0, 0, 0.7);
+  --stage-center: #1d1d20;
+  --stage-mid: #151517;
+}
 
 html {
-  scroll-behavior: smooth;
   background: var(--color-page);
-  scroll-padding-top: 84px; /* clears the sticky nav on anchor jumps */
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
 }
 
 body {
   background: var(--color-page);
   color: var(--color-ink-700);
   font-family: var(--font-sans);
-  line-height: 1.5;
-  /* Reveal entrance offsets (x: ±44) must never widen the page — clip, not
-     hidden, so position: sticky keeps working. */
+  line-height: 1.55;
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
-/* Lenis momentum scroll — toggled on <html> by the SmoothScroll provider.
-   When active, native smooth-behavior is handed off to Lenis. */
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-.lenis.lenis-stopped {
-  overflow: clip;
-}
-.lenis.lenis-smooth iframe {
-  pointer-events: none;
-}
-
-/* Display headings share the hero's Nunito Sans, dialed to a tight bold weight
-   so they read as strong display type rather than body copy. */
+/* Display headings. The class name is kept from the main-branch system; it
+   now resolves to Geist set tight. */
 .display-serif {
-  font-family: var(--font-serif);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-}
-
-.display-serif-italic {
-  font-family: var(--font-serif);
-  font-style: italic;
+  font-family: var(--font-sans);
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  color: var(--color-ink-900);
+  text-wrap: balance;
 }
 
-/* =========================================================================
-   Editorial labels
-   ========================================================================= */
-
-/* Numbered section eyebrow — "01 — Brand" */
-.eyebrow {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--color-sky-700);
-}
-
-/* Mono micro-label — figure tags, units, caption keys */
-.mono-label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-ink-500);
-}
-
-/* Tabular, slashed-zero numerals for any clinical figure. */
 .tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* -------------------------------------------------------------------------
+   Legal / long-form prose
+   ------------------------------------------------------------------------- */
+
+.legal {
+  color: var(--color-ink-700);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+.legal h2 {
+  color: var(--color-ink-900);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  margin-top: 2.75rem;
+  margin-bottom: 0.75rem;
+}
+.legal p + p,
+.legal ul + p,
+.legal ol + p,
+.legal div + p,
+.legal p + ul {
+  margin-top: 1rem;
+}
+.legal ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+  margin-top: 1rem;
+}
+.legal ol.legal-ol {
+  list-style: decimal;
+  padding-left: 1.25rem;
+  margin-top: 1rem;
+}
+.legal li + li {
+  margin-top: 0.5rem;
+}
+.legal li::marker {
+  color: var(--color-ink-400);
+}
+.legal strong {
+  color: var(--color-ink-900);
+  font-weight: 600;
+}
+.legal a {
+  color: var(--color-ink-900);
+  text-decoration: underline;
+  text-decoration-color: var(--color-line-2);
+  text-underline-offset: 4px;
+}
+.legal a:hover {
+  text-decoration-color: var(--color-ink-900);
+}
+.legal code {
   font-family: var(--font-mono);
-  font-variant-numeric: tabular-nums slashed-zero;
+  font-size: 0.875em;
+  background: var(--color-sunken);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+.legal .legal-sample {
+  margin-top: 1rem;
+  border: 1px solid var(--color-line);
+  background: var(--color-card);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  color: var(--color-ink-700);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.65;
 }
 
-/* =========================================================================
-   Brand accents
-   ========================================================================= */
+/* -------------------------------------------------------------------------
+   Accessibility
+   ------------------------------------------------------------------------- */
 
-/* Cyan-to-green wordmark / accent text. */
-.text-gradient {
-  background: var(--brand-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.bg-brand-gradient {
-  background: var(--brand-gradient);
-}
-
-/* Horizontal marquee — the closing CTA band. Content is duplicated in markup;
-   translating -50% loops seamlessly. Pauses on hover, stills for reduced-motion. */
-.marquee-track {
-  display: inline-flex;
-  flex-shrink: 0;
-  white-space: nowrap;
-  will-change: transform;
-  animation: marquee 32s linear infinite;
-}
-.marquee-viewport:hover .marquee-track {
-  animation-play-state: paused;
-}
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--color-teal);
+    outline-offset: 3px;
   }
 }
 
-/* Subtle hover-raise for cards. Used sparingly. */
-.lift {
-  transition: transform 0.4s cubic-bezier(0.2, 0.6, 0.2, 1),
-    box-shadow 0.4s ease, border-color 0.4s ease;
-}
-.lift:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+::selection {
+  background: var(--color-ink-900);
+  color: var(--color-page);
 }
 
-/* Live-status dot — a quiet pulse for "live glucose". */
-.pulse-dot {
-  position: relative;
+/* How it works: each step's rule fills in turn, on a nine-second loop. */
+.step-rail {
+  transform: scaleX(0);
+  animation: step-rail 9s cubic-bezier(0.22, 1, 0.36, 1) infinite both;
 }
-.pulse-dot::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 9999px;
-  background: currentColor;
-  opacity: 0.5;
-  animation: pulse-ring 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
-}
-@keyframes pulse-ring {
+@keyframes step-rail {
   0% {
-    transform: scale(1);
-    opacity: 0.5;
+    transform: scaleX(0);
+    opacity: 1;
   }
-  80%,
+  30% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  36%,
   100% {
-    transform: scale(2.6);
+    transform: scaleX(1);
     opacity: 0;
   }
 }
 
-/* =========================================================================
-   Accessibility
-   ========================================================================= */
-
-*:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--color-page), 0 0 0 4px var(--color-sky-500);
-  border-radius: 6px;
-}
-
-::selection {
-  background: var(--color-sky-100);
-  color: var(--color-sky-700);
-}
-
-/* =========================================================================
-   Showcase — animated "liquid metal" band. Three stacked layers: a slowly
-   panning color base, drifting iridescent sheen blobs, and a periodic diagonal
-   glint that sweeps across like light on brushed metal. All auto-freeze under
-   the reduced-motion rule below.
-   ========================================================================= */
-
-.showcase-bg {
-  position: absolute;
-  inset: 0;
-  background-image: url("/showcase-metal.jpg");
-  background-size: 132% 132%;
-  background-position: 0% 42%;
-  will-change: background-position;
-  animation: showcase-pan 28s ease-in-out infinite alternate;
-}
-
-.showcase-glint {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    100deg,
-    transparent 38%,
-    rgba(255, 255, 255, 0.28) 48%,
-    rgba(255, 255, 255, 0.55) 50%,
-    rgba(255, 255, 255, 0.28) 52%,
-    transparent 62%
-  );
-  background-size: 300% 100%;
-  background-repeat: no-repeat;
-  mix-blend-mode: soft-light;
-  animation: showcase-glint 9s ease-in-out infinite;
-}
-
-@keyframes showcase-pan {
-  0% {
-    background-position: 0% 38%;
-  }
-  100% {
-    background-position: 100% 62%;
-  }
-}
-
-@keyframes showcase-glint {
-  0% {
-    background-position: 175% 0;
-  }
-  55% {
-    background-position: -75% 0;
-  }
-  100% {
-    background-position: -75% 0;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
   }
 }

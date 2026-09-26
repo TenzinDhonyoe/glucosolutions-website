@@ -1,16 +1,15 @@
 import type { Faq } from "@/lib/seo/faqs";
 
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://glucosolutions.ca";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.glucosolutionsinc.com";
 
 const ORG_ID = `${SITE_URL}/#organization`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
 const PRODUCT_ID = `${SITE_URL}/#product`;
 const APP_ID = `${SITE_URL}/#softwareapplication`;
-const SERVICE_ID = `${SITE_URL}/#service`;
 
 const ORG_DESCRIPTION =
-  "GlucoSolutions is clinical software for dietitians. Patients log in the Redu app; the dashboard turns that daily behavior into sourced, traceable clinical insight and cuts the admin around every appointment.";
+  "GlucoSolutions makes a needle-free glucose band for people with prediabetes. It reads glucose trends through the skin and shows how meals, movement, sleep and stress move them, so people can reverse prediabetes sooner.";
 
 export type JsonLdNode = Record<string, unknown>;
 
@@ -27,7 +26,7 @@ export function organization(): JsonLdNode {
     },
     image: `${SITE_URL}/logo.svg`,
     description: ORG_DESCRIPTION,
-    slogan: "Clinical software for dietitians.",
+    slogan: "See what moves your blood sugar.",
     email: "tenzin@glucosolutions.ca",
     address: {
       "@type": "PostalAddress",
@@ -37,7 +36,7 @@ export function organization(): JsonLdNode {
     },
     areaServed: { "@type": "Country", name: "Canada" },
     // [CONFIRM] company social handles
-    sameAs: ["https://x.com/_tenZdhon_"],
+    sameAs: ["https://x.com/gluco_solutions"],
   };
 }
 
@@ -74,10 +73,10 @@ export function product(): JsonLdNode {
   return {
     "@type": "Product",
     "@id": PRODUCT_ID,
-    name: "Gluco Solutions Wearable",
+    name: "GlucoSolutions band",
     category: "Wellness",
     description:
-      "A non-invasive optical wearable that reads glycemic trends through the skin to help adults reverse prediabetes. No needles, no consumables, weekly charging. Wellness device, not a medical device.",
+      "A non-invasive band that reads glucose trends (rising, steady, settling) through the skin, to help adults with prediabetes see which habits move them. No needles, no consumables, weekly charging. In development. Wellness device, not a medical device.",
     brand: { "@id": ORG_ID },
     manufacturer: { "@id": ORG_ID },
     image: `${SITE_URL}/logo.png`,
@@ -87,7 +86,7 @@ export function product(): JsonLdNode {
       audienceType: "Adults with prediabetes",
     },
     additionalProperty: [
-      { "@type": "PropertyValue", name: "Sensing", value: "Non-invasive optical" },
+      { "@type": "PropertyValue", name: "Sensing", value: "Non-invasive, through the skin" },
       { "@type": "PropertyValue", name: "Consumables", value: "None" },
       { "@type": "PropertyValue", name: "Charging", value: "Weekly" },
       { "@type": "PropertyValue", name: "Prescription required", value: "No" },
@@ -102,7 +101,7 @@ export function product(): JsonLdNode {
       availability: "https://schema.org/PreOrder",
       priceCurrency: "CAD",
       price: "0",
-      url: `${SITE_URL}/#waitlist`,
+      url: `${SITE_URL}/#join`,
       seller: { "@id": ORG_ID },
     },
   };
@@ -112,35 +111,17 @@ export function softwareApplication(): JsonLdNode {
   return {
     "@type": "SoftwareApplication",
     "@id": APP_ID,
-    name: "Gluco Solutions",
+    name: "GlucoSolutions",
     applicationCategory: "HealthApplication",
     operatingSystem: "iOS",
     description:
-      "iOS app that pairs with the Gluco Solutions wearable to surface meal scores, activity context, and one plain-English nudge at a time.",
+      "iPhone app that pairs with the GlucoSolutions band to show how meals, movement and sleep moved your glucose, with one plain-English suggestion at a time.",
     publisher: { "@id": ORG_ID },
     offers: {
       "@type": "Offer",
       availability: "https://schema.org/PreOrder",
       priceCurrency: "CAD",
       price: "0",
-    },
-  };
-}
-
-export function service(): JsonLdNode {
-  return {
-    "@type": "Service",
-    "@id": SERVICE_ID,
-    name: "Gluco Solutions coaching",
-    serviceType: "Wellness coaching",
-    description:
-      "AI coaching combined with registered dietitian guidance for reversing prediabetes. Personalized, plain-English nudges on meals, activity, and sleep — built around the habit changes that compound into a healthier metabolic decade.",
-    provider: { "@id": ORG_ID },
-    areaServed: { "@type": "Country", name: "Canada" },
-    audience: {
-      "@type": "PeopleAudience",
-      suggestedMinAge: 18,
-      audienceType: "Adults with prediabetes",
     },
   };
 }

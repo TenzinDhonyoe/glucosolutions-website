@@ -1,352 +1,154 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { ArrowRight } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { Container } from "@/components/ui";
+import { cn } from "@/lib/utils";
+import { WaitlistForm } from "@/components/WaitlistForm";
+import { HeroParticles, HERO_TIMELINE } from "@/components/home/HeroParticles";
+import { STAGE_BACKGROUND } from "@/components/stage/Stage";
+
+const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
+const smooth = ([a, b]: readonly [number, number], v: number) => {
+  const t = clamp01((v - a) / (b - a));
+  return t * t * (3 - 2 * t);
+};
 
 /**
- * WritingLoop — a flipbook of the dietitian illustration. Every frame is
- * pixel-identical except the pen/hand position (frames generated with Gemini),
- * so cycling them reads as her writing a meal plan. All frames are stacked and
- * cross-toggled by opacity (no reflow, no flash). Static on reduced-motion.
+ * The hero is a scroll track with a pinned stage. The band comes apart into
+ * glucose molecules, it "locks on" to one and scans it, and the left column swaps the
+ * pitch for an explanation of what you're seeing. Timings come from
+ * HERO_TIMELINE so the copy and the canvas stay in step. Styles are written
+ * straight to the DOM on scroll so nothing re-renders.
  */
-const WRITE_FRAMES = [
-  "/dietitian-0.png",
-  "/dietitian-1.png",
-  "/dietitian-3.png",
-  "/dietitian-2.png",
-  "/dietitian-4.png",
-];
-
-function WritingLoop({
-  reduce,
-  className,
-}: {
-  reduce: boolean;
-  className: string;
-}) {
-  const [frame, setFrame] = useState(0);
-  useEffect(() => {
-    if (reduce) return;
-    const id = setInterval(
-      () => setFrame((f) => (f + 1) % WRITE_FRAMES.length),
-      300,
-    );
-    return () => clearInterval(id);
-  }, [reduce]);
-  return (
-    <span className="relative inline-block align-middle">
-      {WRITE_FRAMES.map((src, idx) => (
-        <Image
-          key={src}
-          src={src}
-          alt=""
-          width={874}
-          height={850}
-          priority
-          className={`${idx === 0 ? "block" : "absolute left-0 top-0 block"} ${className}`}
-          style={{ opacity: frame === idx ? 1 : 0 }}
-        />
-      ))}
-    </span>
-  );
-}
-
-// 2026 hero direction — compact centered block on a near-white ground,
-// matching the supplied reference. Typeface: Nunito Sans (--font-nunito-sans),
-// dialed to 700 with tight tracking so it reads clean rather than bubbly.
-
-const WORD_EASE = [0.25, 1, 0.5, 1] as const;
-
-/**
- * Words — renders a phrase word-by-word. Each word rises out of a clipped
- * wrapper (masked reveal) with a 50ms stagger from `baseDelay`.
- */
-function Words({
-  words,
-  baseDelay,
-  color,
-  reduce,
-}: {
-  words: string[];
-  baseDelay: number;
-  color: string;
-  reduce: boolean;
-}) {
-  return (
-    <>
-      {words.map((word, i) => (
-        <span key={`${word}-${i}`}>
-          <span className="inline-block overflow-hidden pb-[0.12em] -mb-[0.12em] align-bottom">
-            <motion.span
-              className="inline-block"
-              style={{ color }}
-              initial={reduce ? { opacity: 0 } : { y: "110%", opacity: 0 }}
-              animate={reduce ? { opacity: 1 } : { y: "0%", opacity: 1 }}
-              transition={{
-                duration: reduce ? 0.4 : 0.6,
-                ease: WORD_EASE,
-                delay: reduce ? 0 : baseDelay + i * 0.05,
-              }}
-            >
-              {word}
-            </motion.span>
-          </span>
-          {i < words.length - 1 ? " " : null}
-        </span>
-      ))}
-    </>
-  );
-}
-
-/**
- * RotatingWord — the closing word of the headline cycles through the practice
- * types we serve. Each term rolls up through the same overflow mask the Words
- * cascade uses (plus a touch of blur), so the swap reads as one continuous
- * choreography. First term enters on the cascade's schedule; reduced motion
- * gets a plain crossfade.
- */
-const PRACTICE_TERMS = [
-  "Dietitian Clinic",
-  "Solo Practice",
-  "Nutrition Practice",
-  "Endo Clinic",
-  "Wellness Center",
-];
-
-const LONGEST_TERM = PRACTICE_TERMS.reduce((a, b) =>
-  b.length > a.length ? b : a,
-);
-
-function RotatingWord({ reduce }: { reduce: boolean }) {
-  const [index, setIndex] = useState(0);
-  const [cycled, setCycled] = useState(false);
+export function Hero() {
+  const trackRef = useRef<HTMLElement>(null);
+  const copyRef = useRef<HTMLDivElement>(null);
+  const captionRef = useRef<HTMLDivElement>(null);
+  const hintRef = useRef<HTMLDivElement>(null);
+  const scatterRef = useRef<HTMLDivElement>(null);
+  const [scattered, setScattered] = useState(false);
 
   useEffect(() => {
-    const id = setInterval(() => {
-      setIndex((i) => (i + 1) % PRACTICE_TERMS.length);
-      setCycled(true);
-    }, 2600);
-    return () => clearInterval(id);
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const el = trackRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const span = rect.height - window.innerHeight;
+      const p = span > 0 ? clamp01(-rect.top / span) : 0;
+
+      const out = smooth(HERO_TIMELINE.copyOut, p);
+      if (copyRef.current) {
+        copyRef.current.style.opacity = String(1 - out);
+        copyRef.current.style.transform = `translateY(${-out * 24}px)`;
+        copyRef.current.style.visibility = out > 0.98 ? "hidden" : "visible";
+      }
+      const idle = 1 - smooth([0, 0.05], p);
+      if (hintRef.current) hintRef.current.style.opacity = String(idle);
+      if (scatterRef.current) {
+        scatterRef.current.style.opacity = String(idle);
+        scatterRef.current.style.visibility = idle < 0.02 ? "hidden" : "visible";
+      }
+      const cap = smooth(HERO_TIMELINE.captionIn, p);
+      if (captionRef.current) {
+        captionRef.current.style.opacity = String(cap);
+        captionRef.current.style.transform = `translateY(${(1 - cap) * 20}px)`;
+      }
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
-  return (
-    <span className="relative inline-block overflow-hidden pb-[0.12em] -mb-[0.12em] text-left align-bottom">
-      {/* invisible sizer — holds the slot at the widest term so the headline's
-          line breaks (and everything below the hero) never move as terms rotate */}
-      <span aria-hidden className="invisible whitespace-nowrap">
-        {LONGEST_TERM}
-      </span>
-      <AnimatePresence mode="wait" initial={!reduce}>
-        <motion.span
-          key={PRACTICE_TERMS[index]}
-          className="absolute left-0 top-0 inline-block whitespace-nowrap"
-          style={{ color: "#b7b6b0" }}
-          initial={
-            reduce
-              ? { opacity: 0 }
-              : { y: "110%", opacity: 0, filter: "blur(5px)" }
-          }
-          animate={
-            reduce
-              ? { opacity: 1 }
-              : { y: "0%", opacity: 1, filter: "blur(0px)" }
-          }
-          exit={
-            reduce
-              ? { opacity: 0 }
-              : { y: "-110%", opacity: 0, filter: "blur(5px)" }
-          }
-          transition={{
-            duration: reduce ? 0.4 : cycled ? 0.5 : 0.6,
-            ease: WORD_EASE,
-            delay: cycled || reduce ? 0 : 0.75,
-          }}
-        >
-          {PRACTICE_TERMS[index]}
-        </motion.span>
-      </AnimatePresence>
-    </span>
-  );
-}
-
-export function Hero() {
-  const reduce = useReducedMotion() ?? false;
-
-  const rise = (delay: number, duration: number) => ({
-    initial: reduce ? { opacity: 0 } : { opacity: 0, y: 24 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: reduce ? 0.4 : duration, ease: "easeOut" as const, delay: reduce ? 0 : delay },
-  });
-
-  const pop = (delay: number, duration = 0.5) => ({
-    initial: reduce ? { opacity: 0 } : { opacity: 0, scale: 0.6 },
-    animate: { opacity: 1, scale: 1 },
-    transition: { duration: reduce ? 0.4 : duration, ease: "backOut" as const, delay: reduce ? 0 : delay },
-  });
+  // Phones: the words sit under the band. Desktop: vertically centred on the
+  // band, in the left column.
+  const slot =
+    "pointer-events-none absolute inset-x-0 bottom-0 lg:bottom-auto lg:top-1/2 lg:-translate-y-[42%]";
 
   return (
-    <section
-      className="relative flex flex-col items-center overflow-hidden px-6 pt-24 pb-12 text-center md:px-10 md:pt-32 md:pb-16"
-      style={{ fontFamily: "var(--font-nunito-sans)", background: "#f6f6f4" }}
-    >
-      {/* Ambient life — slow-drifting brand-tinted glows behind the content */}
-      {!reduce && (
-        <>
-          <motion.div
-            aria-hidden
-            className="pointer-events-none absolute rounded-full blur-3xl"
-            style={{
-              width: 560,
-              height: 560,
-              left: "4%",
-              top: "8%",
-              background:
-                "radial-gradient(circle, rgba(26,171,179,0.20), transparent 70%)",
-            }}
-            animate={{ x: [0, 44, 0], y: [0, 30, 0], scale: [1, 1.08, 1] }}
-            transition={{ duration: 17, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div
-            aria-hidden
-            className="pointer-events-none absolute rounded-full blur-3xl"
-            style={{
-              width: 480,
-              height: 480,
-              right: "3%",
-              top: "18%",
-              background:
-                "radial-gradient(circle, rgba(245,166,35,0.16), transparent 70%)",
-            }}
-            animate={{ x: [0, -40, 0], y: [0, 26, 0], scale: [1.05, 1, 1.05] }}
-            transition={{ duration: 21, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </>
-      )}
+    <section ref={trackRef} id="top" aria-labelledby="hero-title" className="relative h-[190vh]">
+      <div className="sticky top-0 h-[100svh] overflow-hidden" style={{ background: STAGE_BACKGROUND }}>
+        <HeroParticles trackRef={trackRef} scattered={scattered} className="absolute inset-0" />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-[1020px] flex-col items-center">
-        {/* 1 — Eyebrow pill (restrained, monochrome) */}
-        <motion.div
-          {...rise(0.1, 0.6)}
-          className="inline-flex items-center"
-          style={{
-            gap: "8px",
-            padding: "4px 10px 4px 4px",
-            borderRadius: "9px",
-            background: "#efeeea",
-            border: "1px solid rgba(0,0,0,0.05)",
-          }}
+        {/* Copy ignores the pointer so hovering anywhere stirs the particles;
+            only the form takes input. */}
+        <div className={slot}>
+          <div ref={copyRef} className="will-change-transform">
+            <Container className="pb-10 lg:pb-0">
+              <div className="max-w-[26rem]">
+                <h1
+                  id="hero-title"
+                  className="text-[clamp(2rem,1.3rem+2.2vw,3.25rem)] font-semibold leading-[1.05] tracking-[-0.038em] text-ink-900 text-balance"
+                >
+                  See what moves your blood sugar.
+                </h1>
+                <p className="mt-4 text-[16px] leading-relaxed text-ink-500">
+                  A needle-free wristband for people with prediabetes that shows how meals,
+                  movement, sleep and stress affect your glucose.
+                </p>
+                <div className="pointer-events-auto mt-7">
+                  <WaitlistForm source="hero" />
+                </div>
+              </div>
+            </Container>
+          </div>
+        </div>
+
+        <div className={slot}>
+          <div ref={captionRef} className="opacity-0">
+            <Container className="pb-10 lg:pb-0">
+              <div className="max-w-[26rem]">
+                <p className="text-[13px] font-medium text-ink-400">What the band reads</p>
+                <p className="mt-3 text-[clamp(1.75rem,1.2rem+1.8vw,2.6rem)] font-semibold leading-[1.05] tracking-[-0.035em] text-ink-900">
+                  Glucose, C<sub className="text-[0.55em]">6</sub>H<sub className="text-[0.55em]">12</sub>O
+                  <sub className="text-[0.55em]">6</sub>
+                </p>
+                <p className="mt-4 text-[16px] leading-relaxed text-ink-500">
+                  Everything in your day, from meals and walks to sleep and stress, shows
+                  up in the glucose in your blood. The band reads it through your skin and
+                  tells you whether it&rsquo;s rising, steady or settling.
+                </p>
+              </div>
+            </Container>
+          </div>
+        </div>
+
+        <div
+          ref={hintRef}
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-10 hidden lg:block"
         >
-          <span
-            className="inline-flex items-center justify-center"
-            style={{
-              width: "26px",
-              height: "20px",
-              borderRadius: "5px",
-              background: "#ffffff",
-              border: "1px solid rgba(0,0,0,0.08)",
-              boxShadow: "0 1px 1px rgba(0,0,0,0.04)",
-              color: "#374151",
-              fontSize: "11px",
-              fontWeight: 700,
-            }}
-          >
-            AI
-          </span>
-          <span style={{ fontSize: "13px", fontWeight: 500, color: "#6b7280" }}>
-            Continuity between sessions &amp; outcomes reporting
-          </span>
-        </motion.div>
+          <Container className="text-[12px] text-ink-400">Scroll to see how it works</Container>
+        </div>
 
-        {/* 2 — H1 (compact, tight tracking, Bold not ExtraBold) */}
-        <h1
-          className="mt-6 text-[clamp(32px,4.2vw,52px)]"
-          style={{ fontWeight: 700, lineHeight: 1.1, letterSpacing: "-0.03em" }}
+        {/* A small toy: scatter the dots into a spectroscope (a beam of light
+            split by a prism into a spectrum), then gather them back into the
+            hand. Top right on phones (the copy owns the bottom), bottom right
+            on desktop. */}
+        <div
+          ref={scatterRef}
+          className="pointer-events-none absolute inset-x-0 top-[4.75rem] lg:bottom-9 lg:top-auto"
         >
-          <span className="block">
-            <Words
-              words={["AI", "copilot", "for", "managing", "prediabetes"]}
-              baseDelay={0.3}
-              color="#0a0a0a"
-              reduce={reduce}
-            />
-          </span>
-          <span className="block">
-            <Words
-              words={["in", "your"]}
-              baseDelay={0.6}
-              color="#0a0a0a"
-              reduce={reduce}
-            />{" "}
-            <span className="relative mx-1 my-[-8px] inline-flex items-center justify-center align-middle md:mx-2 md:my-[-12px]">
-              {/* soft breathing glow behind the illustration */}
-              {!reduce && (
-                <motion.span
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 rounded-full blur-xl"
-                  style={{
-                    background:
-                      "radial-gradient(circle, rgba(26,171,179,0.28), transparent 70%)",
-                  }}
-                  animate={{ scale: [1, 1.18, 1], opacity: [0.45, 0.85, 0.45] }}
-                  transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
-                />
-              )}
-              {/* entrance scale-in + the writing animation (no up/down float) */}
-              <motion.span {...pop(0.75, 0.6)} className="relative inline-block" aria-hidden>
-                <WritingLoop reduce={reduce} className="h-[60px] w-auto md:h-[88px]" />
-              </motion.span>
-            </span>{" "}
-            <RotatingWord reduce={reduce} />
-          </span>
-        </h1>
-
-        {/* 3 — Subheading (light gray, narrow measure) */}
-        <motion.p
-          {...rise(1.0, 0.8)}
-          className="mt-6 max-w-[600px]"
-          style={{ fontSize: "17px", fontWeight: 400, lineHeight: 1.55, color: "#9aa0a6" }}
-        >
-          Clients go quiet between sessions and never come back. GlucoSolutions
-          tracks the gap and briefs you before every visit, so you catch the
-          drop-off before it happens.
-        </motion.p>
-
-        {/* 4 — CTA row (soft rounded rectangles, yellow accent) */}
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <motion.div {...pop(1.2)}>
-            <Link
-              href="/#how"
-              className="inline-flex items-center justify-center rounded-full px-7 py-3.5 transition-transform"
-              style={{
-                background: "#ffffff",
-                border: "1px solid var(--color-line)",
-                boxShadow: "0 1px 2px rgba(60,50,40,0.06)",
-                color: "#0a0a0a",
-                fontSize: "15px",
-                fontWeight: 600,
-              }}
+          <Container className="flex justify-end">
+            <button
+              type="button"
+              aria-pressed={scattered}
+              onClick={() => setScattered((v) => !v)}
+              className="pointer-events-auto inline-flex items-center gap-2 rounded-full border border-line bg-card/80 px-3.5 py-1.5 text-[13px] font-medium text-ink-700 backdrop-blur transition-colors duration-300 hover:border-line-2 hover:text-ink-900"
             >
-              Let&apos;s Talk
-            </Link>
-          </motion.div>
-          <motion.div {...pop(1.3)}>
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 shadow-md transition-transform hover:scale-[1.02]"
-              style={{
-                background: "var(--color-ink-900)",
-                color: "#ffffff",
-                fontSize: "15px",
-                fontWeight: 700,
-              }}
-            >
-              Book a Demo
-              <ArrowRight size={17} />
-            </Link>
-          </motion.div>
+              <span aria-hidden className={cn("size-1.5 rounded-full bg-signal", scattered && "animate-pulse")} />
+              {scattered ? "Gather" : "Scatter"}
+            </button>
+          </Container>
         </div>
       </div>
     </section>
