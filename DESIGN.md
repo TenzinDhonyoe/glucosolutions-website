@@ -64,8 +64,11 @@ in localStorage and applied before first paint by a script in the root
 layout; the default is light. Dark mode redefines the same tokens in
 `globals.css`: page `#0f0f10`, card `#19191b`, lines `#2a2a2d`, ink a warm
 off-white `#f1f0ec` down to `#797874`, and `on-ink` (text on primary buttons)
-near-black. The stage uses `--stage-center` / `--stage-mid`. The red never
-changes. Canvas art reads `components/stage/theme.ts`: ink dots become warm
+near-black. The stage uses `--stage-center` / `--stage-mid`. The red
+brightens to a coral `#ff6155` (`signal` token, and `dotRed` for canvas art),
+because the brand red sinks into near-black (about 3.6:1 against the page,
+versus 6.4:1). The logo turns pure white (`dark:` follows the toggle, not
+the OS). Canvas art reads `components/stage/theme.ts`: ink dots become warm
 off-white, gray dots dim, and labels and floor lines follow, redrawn the moment
 the theme flips. Use tokens, never hex, so new work works in both themes.
 

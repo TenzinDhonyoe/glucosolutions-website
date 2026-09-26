@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* `dark:` follows the site's own toggle (data-theme on <html>), not the OS. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 /* =========================================================================
    GlucoSolutions design system.
    Token names follow the main-branch system so the shared primitives
@@ -70,6 +73,8 @@
   --color-ink-400: #797874;
   --color-sky-50: #10222a;
   --color-on-ink: #111112;
+  /* The brand red sinks into near-black; a brighter coral reads at night. */
+  --color-signal: #ff6155;
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 6px 20px -8px rgba(0, 0, 0, 0.6);
   --shadow-lg: 0 18px 48px -16px rgba(0, 0, 0, 0.7);
