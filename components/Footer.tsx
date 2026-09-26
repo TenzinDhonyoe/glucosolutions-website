@@ -14,7 +14,8 @@ const COLUMNS: { heading: string; links: { label: string; href: string }[] }[] =
   {
     heading: "Company",
     links: [
-      { label: "Contact", href: "mailto:tenzin@glucosolutions.ca" },
+      { label: "Team", href: "/team" },
+      { label: "Contact", href: "mailto:justin@glucosolutions.ca,tenzin@glucosolutions.ca" },
       { label: "X", href: "https://x.com/gluco_solutions" },
     ],
   },

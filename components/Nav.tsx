@@ -12,6 +12,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 const LINKS = [
   { href: "/#how", label: "How it works" },
   { href: "/#faq", label: "FAQ" },
+  { href: "/team", label: "Team" },
 ];
 
 export function Nav({
