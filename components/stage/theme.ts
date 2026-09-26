@@ -26,6 +26,14 @@ export function onThemeChange(cb: (dark: boolean) => void) {
 
 type RGB = [number, number, number];
 
+/**
+ * The particle red. The brand red (#e5332a) by day; at night a brighter coral
+ * (#ff6155), because the brand red sinks into near-black (about 3.6:1 against
+ * the page, versus 6.4:1).
+ */
+export const dotRed = (dark: boolean): RGB => (dark ? [255, 97, 85] : [229, 51, 42]);
+export const rgba = (c: readonly number[], a = 1) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+
 /** The particle ink: near-black by day, warm off-white by night. */
 export const dotInk = (dark: boolean): RGB => (dark ? [236, 234, 228] : [28, 28, 27]);
 /** The particle gray (hydrogen, secondary dots). */

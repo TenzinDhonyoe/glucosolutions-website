@@ -8,7 +8,8 @@ const RATIO = 1440 / 225;
 /**
  * Brand wordmark — the real GlucoSolutions logo (public/logo.svg).
  * `size` is the rendered box height in px; width scales from the source ratio.
- * The SVG carries the cyan→green gradient, so it sits on light surfaces as-is.
+ * The SVG carries the cyan→green gradient, so it sits on light surfaces as-is;
+ * in dark mode it turns pure white.
  */
 export function Wordmark({
   href = "/",
@@ -28,7 +29,7 @@ export function Wordmark({
       height={size}
       priority
       unoptimized
-      className={cn("block w-auto select-none", className)}
+      className={cn("block w-auto select-none dark:brightness-0 dark:invert", className)}
       style={{ height: size }}
     />
   );

@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { rng } from "@/components/stage/dots";
 import { BAND_KIND, BAND_POSE, bandShade, sampleBand } from "@/components/stage/band";
-import { dotGray, dotInk, isDark, onThemeChange } from "@/components/stage/theme";
+import { dotGray, dotInk, dotRed, isDark, onThemeChange, rgba } from "@/components/stage/theme";
 
 /*
  * Small live particle figures in the language of the hero: dots in 3D,
@@ -16,7 +16,7 @@ import { dotGray, dotInk, isDark, onThemeChange } from "@/components/stage/theme
 const PERSPECTIVE = 3.4;
 /** Red, ink, gray: ink and gray follow the theme. */
 const palette = (dark: boolean) => [
-  "#e5332a",
+  rgba(dotRed(dark)),
   `rgb(${dotInk(dark).join(",")})`,
   `rgb(${dotGray(dark).join(",")})`,
 ];
@@ -364,16 +364,16 @@ const SCENES = {
 
 export type FigureName = keyof typeof SCENES;
 
-function makeSprite(color: string, soft = false) {
+function makeSprite(color: string, soft = false, red: readonly number[] = [229, 51, 42]) {
   const s = document.createElement("canvas");
   s.width = s.height = soft ? 64 : 32;
   const c = s.getContext("2d");
   if (!c) return s;
   if (soft) {
     const g = c.createRadialGradient(32, 32, 0, 32, 32, 32);
-    g.addColorStop(0, "rgba(229,51,42,0.5)");
-    g.addColorStop(0.4, "rgba(229,51,42,0.14)");
-    g.addColorStop(1, "rgba(229,51,42,0)");
+    g.addColorStop(0, rgba(red, 0.5));
+    g.addColorStop(0.4, rgba(red, 0.14));
+    g.addColorStop(1, rgba(red, 0));
     c.fillStyle = g;
     c.fillRect(0, 0, 64, 64);
   } else {
@@ -416,7 +416,7 @@ export function ParticleFigure({
       s: new Float32Array(n),
     };
     let sprites = palette(isDark()).map((c) => makeSprite(c));
-    const glowSprite = makeSprite("#e5332a", true);
+    let glowSprite = makeSprite("", true, dotRed(isDark()));
     const off = new Float32Array(n * 2);
     const vel = new Float32Array(n * 2);
 
@@ -545,6 +545,7 @@ export function ParticleFigure({
     draw();
     const offTheme = onThemeChange((dark) => {
       sprites = palette(dark).map((c) => makeSprite(c));
+      glowSprite = makeSprite("", true, dotRed(dark));
       if (!running) draw();
     });
     const ro = new ResizeObserver(() => {

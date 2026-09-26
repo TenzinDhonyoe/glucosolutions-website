@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, type RefObject } from "react";
 import { cn } from "@/lib/utils";
-import { canvasText, dotGray, dotInk, isDark, onThemeChange } from "@/components/stage/theme";
+import { canvasText, dotGray, dotInk, dotRed, isDark, onThemeChange, rgba } from "@/components/stage/theme";
 import { BAND_KIND, bandShade, sampleBand } from "@/components/stage/band";
 import { preload } from "react-dom";
 import {
@@ -53,10 +53,9 @@ const SATELLITES: { at: V3; compact: V3; scale: number; spin: [number, number] }
   { at: [0.95, -1.6, 3.2], compact: [0.05, 2.35, 3.2], scale: 0.34, spin: [-0.0045, -0.003] },
 ];
 
-const RED = [229, 51, 42] as const;
-/** Element colours: oxygen stays the brand red; carbon and hydrogen follow the theme. */
+/** Element colours: oxygen is the particle red; all three follow the theme. */
 const elementRgb = (dark: boolean): Record<El, readonly number[]> => ({
-  O: RED,
+  O: dotRed(dark),
   C: dotInk(dark),
   H: dotGray(dark),
 });
@@ -214,15 +213,15 @@ function makeSprite(rgb: readonly number[]) {
 }
 
 /** Soft red halo drawn behind the sensor's LEDs. */
-function makeGlow() {
+function makeGlow(red: readonly number[]) {
   const s = document.createElement("canvas");
   s.width = s.height = 64;
   const c = s.getContext("2d");
   if (c) {
     const g = c.createRadialGradient(32, 32, 0, 32, 32, 32);
-    g.addColorStop(0, "rgba(229,51,42,0.55)");
-    g.addColorStop(0.35, "rgba(229,51,42,0.18)");
-    g.addColorStop(1, "rgba(229,51,42,0)");
+    g.addColorStop(0, rgba(red, 0.55));
+    g.addColorStop(0.35, rgba(red, 0.18));
+    g.addColorStop(1, rgba(red, 0));
     c.fillStyle = g;
     c.fillRect(0, 0, 64, 64);
   }
@@ -298,15 +297,18 @@ const SPECTRUM_STOPS: [number, number, number][] = [
   [70, 181, 110],
   [226, 190, 64],
   [238, 138, 44],
-  [229, 51, 42],
+  [229, 51, 42], // the particle red; swapped for the night red in dark mode
 ];
-const SPECTRUM_STEPS = Array.from({ length: 24 }, (_, k) => {
-  const f = (k / 23) * (SPECTRUM_STOPS.length - 1);
-  const a = SPECTRUM_STOPS[Math.floor(f)];
-  const b = SPECTRUM_STOPS[Math.min(SPECTRUM_STOPS.length - 1, Math.floor(f) + 1)];
-  const t = f - Math.floor(f);
-  return a.map((v, c) => Math.round(v + (b[c] - v) * t));
-});
+const spectrumSteps = (dark: boolean) => {
+  const stops = [...SPECTRUM_STOPS.slice(0, -1), dotRed(dark)];
+  return Array.from({ length: 24 }, (_, k) => {
+    const f = (k / 23) * (stops.length - 1);
+    const a = stops[Math.floor(f)];
+    const b = stops[Math.min(stops.length - 1, Math.floor(f) + 1)];
+    const t = f - Math.floor(f);
+    return a.map((v, c) => Math.round(v + (b[c] - v) * t));
+  });
+};
 /**
  * The hand spans far more depth than the molecules, so its z is compressed
  * (a longer lens) to keep the forearm from ballooning toward the camera.
@@ -577,7 +579,7 @@ export function HeroParticles({
       let txt = canvasText(dark);
       const makeSets = () => {
         const el = elementRgb(dark);
-        return [RED, dotInk(dark)].flatMap((from) =>
+        return [dotRed(dark), dotInk(dark)].flatMap((from) =>
           ELEMENTS.map((to) =>
             Array.from({ length: COLOR_STEPS }, (_, s) => {
               const k = s / (COLOR_STEPS - 1);
@@ -587,9 +589,10 @@ export function HeroParticles({
         );
       };
       let spriteSet = makeSets();
-      const glow = makeGlow();
+      let red = dotRed(dark);
+      let glow = makeGlow(red);
       // Scatter's spectrum: violet through the brand teal to the brand red.
-      const spectrum = SPECTRUM_STEPS.map((c) => makeSprite(c));
+      let spectrum = spectrumSteps(dark).map((c) => makeSprite(c));
       let inkDot = spriteSet[3 + ELEMENTS.indexOf("C")][0];
 
       const target = new Float32Array(count * 3);
@@ -1218,11 +1221,11 @@ export function HeroParticles({
           const sy = box.y0 + (box.y1 - box.y0) * scan;
           const tail = sy - dir * 48;
           const glow = ctx.createLinearGradient(0, tail, 0, sy);
-          glow.addColorStop(0, "rgba(229,51,42,0)");
-          glow.addColorStop(1, "rgba(229,51,42,0.12)");
+          glow.addColorStop(0, rgba(red, 0));
+          glow.addColorStop(1, rgba(red, dark ? 0.16 : 0.12));
           ctx.fillStyle = glow;
           ctx.fillRect(x0, Math.min(tail, sy), x1 - x0, 48);
-          ctx.strokeStyle = "rgba(229,51,42,0.9)";
+          ctx.strokeStyle = rgba(red, 0.9);
           ctx.lineWidth = 1.25;
           ctx.beginPath();
           ctx.moveTo(x0, sy);
@@ -1234,7 +1237,7 @@ export function HeroParticles({
         ctx.font = `500 12.5px ${fontFamily}`;
         ctx.textBaseline = "alphabetic";
         if (detected) {
-          ctx.fillStyle = "#e5332a";
+          ctx.fillStyle = rgba(red);
           ctx.beginPath();
           ctx.arc(x0 + 4, y0 - 14, 3.5, 0, Math.PI * 2);
           ctx.fill();
@@ -1244,7 +1247,7 @@ export function HeroParticles({
           ctx.textAlign = "right";
           ctx.fillStyle = txt.body;
           ctx.fillText("Trend: rising", x1 - 16, y1 + 22);
-          ctx.strokeStyle = "#e5332a";
+          ctx.strokeStyle = rgba(red);
           ctx.lineWidth = 1.5;
           ctx.beginPath();
           ctx.moveTo(x1 - 8, y1 + 23);
@@ -1319,6 +1322,9 @@ export function HeroParticles({
         txt = canvasText(d);
         spriteSet = makeSets();
         inkDot = spriteSet[3 + ELEMENTS.indexOf("C")][0];
+        red = dotRed(d);
+        glow = makeGlow(red);
+        spectrum = spectrumSteps(d).map((c) => makeSprite(c));
         if (!running) draw();
       });
 
